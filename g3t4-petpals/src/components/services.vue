@@ -8,7 +8,7 @@
         <div v-if="hover[service]" class="pt-4">
             <p>{{tag}}</p>
         </div>
-        
+
         <div v-else class="pt-4">
             <h3 class="pb-3">{{service}}</h3>
         </div>
@@ -17,10 +17,6 @@
         
     </div>
 
-    <!-- <div v-else @mouseover="hover[service] = false" @mouseleave="hover[service] = true" class="col-xxl-2 col-md-4 p-3 mx-auto service-tag my-auto">
-        <h3 class="pb-3">{{service}}</h3>
-        <p>{{tag}}</p>
-    </div> -->
 </template>
 
 <script>
