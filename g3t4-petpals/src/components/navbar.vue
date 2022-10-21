@@ -39,23 +39,23 @@
                         id="navbarSupportedContent">
                         <ul class="navbar-nav">
 
-                            <li class="nav-item px-1">
+                            <li class="nav-item px-2">
                                 <router-link to="/search">Search</router-link>
                             </li>
 
-                            <li class="nav-item px-1">
+                            <li class="nav-item px-2">
                                 <router-link to="/bookings">Bookings</router-link>
                             </li>
 
-                            <li class="nav-item px-1">
+                            <li class="nav-item px-2">
                                 <router-link to="/chat">Chats</router-link>
                             </li>
 
-                            <li class="nav-item active px-1">
+                            <li class="nav-item active px-2">
                                 <router-link to="/profile">Profile</router-link>
                             </li>
 
-                            <li class="nav-item active px-1">
+                            <li class="nav-item active px-2">
                                 <router-link to="/" style="color:rgb(195, 82, 82)" target="blank">Log Out</router-link>
                             </li>
 

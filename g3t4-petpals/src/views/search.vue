@@ -92,16 +92,15 @@
                     </div>
 
                     <div class="row mt-2">
+                        <span class="required me-2">Your Location:</span>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" class="form-control" aria-label="Small"
+                                aria-describedby="inputGroup-sizing-sm">
+                        </div>
+
                         <map></map>
 
-                        <div class="col-7">
-
-                            <div class="input-group input-group-sm mb-3">
-                                <input type="text" class="form-control" aria-label="Small"
-                                    aria-describedby="inputGroup-sizing-sm">
-                            </div>
-
-                        </div>
+                        <button class="btn btn-go">Go</button>
 
                     </div>
 

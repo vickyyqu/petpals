@@ -321,6 +321,11 @@ Buttons
     color: #9C796A;
 }
 
+.btn-go {
+    background-color: #dfd1cd;
+    color: #fff;
+}
+
 .homebtn {
     font-size: 30px;
 }
