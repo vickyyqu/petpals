@@ -1,8 +1,5 @@
 
 <style>
-    .service-png {
-        
-    }
 
 </style>
 
@@ -11,7 +8,7 @@
     <div id="top-header" class="header-home">
         <img src="../img/logo2.png" style="width: 125px">
 
-        <button class="btn openbtn" v-on:click="Nav()">&#9776; Menu</button>
+        <button class="btn openbtn btn-dark" v-on:click="Nav()">&#9776; Menu</button>
 
         <div v-if="counter == 0" id="mySidepanel" class="closed">
         </div>
@@ -19,7 +16,7 @@
         <div v-else id="mySidepanel" class="sidepanel">
             <a href="#services">Services</a>
             <a href="#about">About</a>
-            <a href="#">Gallery</a>
+            <a href="#gallery">Gallery</a>
             <a href="#">New User?</a>
         </div>
 
@@ -35,7 +32,7 @@
                 <p>Entrust your pet with us and allow our experienced service providers to elevate your pet-owning experience. Join PetPals today and access these services offered by our providers!</p>
                 <h3 style="color:#f8f1ef">New to PetPals?</h3>
                 <div class="dropdown">
-                    <button onclick="myFunction()" class="btn dropbtn">Register Here</button>
+                    <button onclick="myFunction()" class="btn dropbtn btn-light">Register Here</button>
                     <div id="myDropdown" class="dropdown-content">
                       <a href="#">I am a pet owner.</a>
                       <a href="#">I am a pet service provider.</a>
@@ -58,7 +55,7 @@
                         </div>
 
                         <div class="login-btn">
-                            <button class="btn login-btn">Login</button>
+                            <button class="btn login-btn btn-dark">Login</button>
                         </div>
                     </div>
                 </div>
@@ -85,6 +82,8 @@
         <div class="row p-5">
             <services v-for="(each) of services" v-bind:tag="tags[each]" v-bind:png="png[each]" v-bind:service="each"></services>
         </div>
+
+        <hr>
 
         <div class="row join py-4">
             <h1 class="pb-3" style="color:#F8AA9D">Join PetPals today</h1>
@@ -152,7 +151,47 @@
         <path d="M0 0 C 50 100 80 100 100 0 Z"></path>
     </svg>
 
-    <div class="links"></div>
+
+    <div class="m-5 pt-5" id="gallery">
+        <h1 class="m-2 text-center">Gallery</h1>
+        <div class="row">
+            <div class="col-sm-4 mb-4 mb-lg-0 ">
+              <img
+                src="../img/gallery/img1.jpeg"
+                class="w-100 shadow-1-strong rounded mb-4"
+              />
+          
+              <img
+                src="../img/gallery/img4.jpeg"
+                class="w-100 shadow-1-strong rounded mb-4"
+              />
+            </div>
+          
+            <div class="col-sm-4 mb-4 mb-lg-0">
+              <img
+                src="../img/gallery/img3.jpeg"
+                class="w-100 shadow-1-strong rounded mb-4"
+              />
+          
+              <img
+                src="../img/gallery/img2.jpeg"
+                class="w-100 shadow-1-strong rounded mb-4"
+              />
+            </div>
+          
+            <div class="col-sm-4 mb-4 mb-lg-0">
+              <img
+                src="../img/gallery/img6.jpeg"
+                class="w-100 shadow-1-strong rounded mb-4"
+              />
+          
+              <img
+                src="../img/gallery/img5.webp"
+                class="w-100 shadow-1-strong rounded mb-4"
+              />
+            </div>
+          </div>
+    </div>
 
     <footer>
         <p>&#169 PetPals 2022</p>

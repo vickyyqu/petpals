@@ -20,6 +20,23 @@ Footer
 ********************************************************* */
 
 /* *********************************************************
+Search
+********************************************************* */
+
+.search-providers h3{
+    font-style: normal;
+    margin-top: 100px;
+}
+
+/* *********************************************************
+Side Panel
+********************************************************* */
+
+.sides {
+    background-color: #fffbfa;
+}
+
+/* *********************************************************
 Fonts
 ********************************************************* */
 
@@ -78,9 +95,15 @@ h6 {
     line-height: .5em;
 }
 
-p, label, a{
+p, label{
     color: #4b3830;
     font-family: 'Figtree', Helvetica, Arial, sans-serif;
+}
+
+hr {
+    color: #4b3830;
+    width: 80%;
+    margin:auto;
 }
 
 .curveUpColor,
@@ -199,7 +222,7 @@ Side panel
  }
   
   /* Position and style the close button (top right corner) */
-.sidepanel .closebtn {
+.sidepanel, .closebtn {
     position: absolute;
     top: 0;
     right: 0px;
@@ -212,13 +235,12 @@ Side panel
     font-size: 15px;
     cursor: pointer;
     background-color: transparent;
-    color: #856658;
     padding: 10px;
 }
   
 .openbtn:hover {
     color: #ECF0F1;
-  }
+}
 
 .login a {
     color: #4b3830;
@@ -270,7 +292,6 @@ Buttons
     display: inline-block;
     margin-top:20px;
     padding: .6em 1.6em;
-    color: #fff;
     font-size: 1.0em;
     font-family: 'Figtree';
     border-color: #f8f1ef;
@@ -283,6 +304,7 @@ Buttons
 
 .btn:hover {
     background-color:#F8AA9D;
+    border-color: #F8AA9D;
 }
 
 .openbtn {
@@ -291,8 +313,17 @@ Buttons
     margin-top:0px;
 }
 
-.login-btn {
+.btn-light {
+    color: #fff;
+}
+
+.btn-dark {
     color: #9C796A;
+}
+
+.btn-go {
+    background-color: #dfd1cd;
+    color: #fff;
 }
 
 .homebtn {
@@ -550,6 +581,7 @@ Footer
 
 footer {
     background-color: #958289;
+    text-align: center;
 }
 
 

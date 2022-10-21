@@ -7,52 +7,7 @@
 </script>
 
 <template>
-    <!-- Navbar -->
-    <div class="row">
-        <div class="navbar-header" id="navbar-header">
-            <div class="container-fluid">
-                <nav class="navbar navbar-expand-sm ">
-                    <img src="./img/logo2.png" style="width: 80px">
-                    <button class="navbar-toggler" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-            
-                    <div class="collapse navbar-collapse justify-content-end text-center" id="navbarSupportedContent">
-                        <ul class="navbar-nav">
-            
-                            <li class="nav-item px-1">
-                                <a class="nav-link" href="index.html" target="blank">Home</a>
-                            </li>
-            
-                            <li class="nav-item px-1">
-                                <a class="nav-link" href="#" target="blank">Search</a>
-                            </li>
-            
-                            <li class="nav-item px-1">
-                                <a class="nav-link" href="chatpage.html" target="blank">Messages</a>
-                            </li>
-            
-                            <li class="nav-item px-1">
-                                <a class="nav-link" href="#" target="blank">Bookings</a>
-                            </li>
-            
-                            <li class="nav-item active px-1">
-                                <a class="nav-link" href="#" target="blank">Profile</a>
-                            </li>
-            
-                            <li class="nav-item active px-1">
-                                <a class="nav-link" href="#" target="blank" style="color:rgb(195, 82, 82)">Log Out</a>
-                            </li>
-            
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </div>
-
+    <navbar></navbar>
 
     <!--   Chat    -->
     <div class = 'container-fluid '>
@@ -64,6 +19,14 @@
 
 <!-- Connecting firebase to talkjs -->
 <script type = 'module'>
+    import navbar from '@/components/navbar.vue'
+
+    export default {
+        components: {
+            navbar
+        }
+    }
+
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
 
