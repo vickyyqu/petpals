@@ -12,7 +12,7 @@
     var myid = 1235
     var myusername = 'benny'
     var myphoto = 'https://talkjs.com/images/avatar-2.jpg'
-    var newusername = 'benni'
+    var newname = 'benni'
 </script>
 
 <script type="module">
@@ -46,7 +46,7 @@
 
     // create new user and check status
     set(myinfo, {
-        username: myusername,
+        username: myname,
         profilepic : myphoto,
     })
     .then(() => {
@@ -61,9 +61,10 @@
     });
 
     // update user information and check status
-    update(ref(db), {
-        'users/1235/username' : newusername
-    })
+    var updateobj = {};
+    updateobj[`users/${myid}/nickname`] = newname
+
+    update(ref(db), updateobj)
     .then(() => {
         var status = document.getElementById('status')
         status.innerText = 'data updated successfully'
@@ -75,14 +76,14 @@
     });
     
     // can use this for profile page to show user profile info -> updates itself
-    onValue(ref(db, 'users/1235'), (snapshot) => {
+    onValue(ref(db, `users/${myid}`), (snapshot) => {
         console.log(snapshot.val()); // get the new value
         document.getElementById('username').innerText = snapshot.val().username;
         document.getElementById('pic').src = snapshot.val().profilepic;
     });
     
     // getting user information once 
-    get(ref(db, `users/123`))
+    get(ref(db, `users/${myid}`))
     .then((snapshot) => {
         if (snapshot.exists()) {
         console.log(snapshot.val());
