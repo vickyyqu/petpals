@@ -7,10 +7,10 @@
 </script>
 
 <template>
-    <navbar></navbar>
-
     <!--   Chat    -->
     <div class = 'container-fluid '>
+        <navbar></navbar>
+        
         <div id="talkjs-container" style="width: 80%; margin: 80px; height: 500px; float: right; ">
             <i>Loading chat...</i>
         </div>
