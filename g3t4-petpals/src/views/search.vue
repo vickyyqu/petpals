@@ -3,9 +3,24 @@
     font-style: italic;
     color: #dfd1cd;
 }
+input[type=text]{
+    height: 38px;
+}
+.search-provider {
+    font-size: 3em;
+}
+
+.form-select {
+    color: #4b3830;
+    font-family: 'Figtree', Helvetica, Arial, sans-serif;
+}
+.provider-location, .provider-rate {
+    color:#F8AA9D
+}
 </style>
 
 <template>
+    
     <div class="container-fluid">
         <navbar></navbar>
 
@@ -20,85 +35,62 @@
                 <img src="../img/header.jpeg" class="w-100 mt-5 pt-3 rounded-3" alt="">
 
                 <div class="px-5">
-
-                    <h3 class="my-4">Search Providers</h3>
-
-                    <div class="input-group">
-                        <input type="text" class="form-control" aria-label="Sizing example input"
-                            aria-describedby="inputGroup">
-                        <span class="input-group-text py-0" id="inputGroup" style="background-color:white"><button
-                                class="btn btn-dark my-2">Search</button></span>
-                    </div>
+                    
+                    <h3 class="search-provider mt-4"><i class="bi bi-search-heart"></i> Search Providers</h3>
 
                     <div class="row mt-2">
-                        <div class="col-sm-8">
-                            <div class="required-services my-2">
+                        <div class="col-md-9">
+                            <div class="required-services mt-3">
                                 <span class="required me-2">Required Services:</span>
+                                
                                 <br>
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="checkbox" value="" id="petSitter">
-                                    <label class="form-check-label ps-2" for="flexCheckDefault">
-                                        Pet Sitter
+
+                                <div v-for="service of services" class="form-check-inline py-1">
+                                    <input class="form-check-input" type="checkbox">
+                                    <label class="form-check-label ps-2">
+                                        {{service}}
                                     </label>
                                 </div>
 
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="checkbox" value="" id="petWalker">
-                                    <label class="form-check-label ps-2" for="flexCheckDefault">
-                                        Pet Walker
-                                    </label>
-                                </div>
-
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="checkbox" value="" id="petGroomer">
-                                    <label class="form-check-label ps-2" for="flexCheckDefault">
-                                        Pet Groomer
-                                    </label>
-                                </div>
-
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="checkbox" value="" id="petHotel">
-                                    <label class="form-check-label ps-2" for="flexCheckDefault">
-                                        Pet Hotel
-                                    </label>
-                                </div>
-
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="checkbox" value="" id="petTrainer">
-                                    <label class="form-check-label ps-2" for="flexCheckDefault">
-                                        Pet Trainer
-                                    </label>
-                                </div>
-
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="checkbox" value="" id="petMover">
-                                    <label class="form-check-label ps-2" for="flexCheckDefault">
-                                        Pet Mover
-                                    </label>
-                                </div>
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
-                            <span class="required me-2 d-block mt-2">Filter by:</span>
+                        <div class="col-md-3">
+                            <span class="required me-2 d-block mt-3">Filter by:</span>
                             <select class="form-select" aria-label="Default select example">
                                 <option id="reviews">Reviews</option>
-                                <option id="yearsOfExperience">Years of experience</option>
-                                <option id="rates">Rates</option>
+                                <option id="yearsOfExperience" class="select-option">Years of experience</option>
+                                <option id="rates" class="select-option">Rates</option>
                             </select>
                         </div>
 
-
                     </div>
 
-                    <div class="row mt-2">
-                        <span class="required me-2">Your Location:</span>
-                        <div class="input-group input-group-sm mb-3">
+                    <div class="row my-3">
+                        <div class="col-lg-9">
+                            <span class="required me-2">Your Location:</span>
+                            <div class="input-group input-group-sm mb-3">
                             <input type="text" class="form-control" aria-label="Small"
                                 aria-describedby="inputGroup-sizing-sm">
+                            </div>
                         </div>
 
-                        <map></map>
+                        <div class="col-lg-3">
+                            <span class="required me-2 ">Search Radius:</span>
+                            <select class="form-select mb-3" aria-label="Default select example">
+                                <option id="1" class="select-option">1km</option>
+                                <option id="3" class="select-option">3km</option>
+                                <option id="5" class="select-option">5km</option>
+                                <option id="10" class="select-option">10km</option>
+                                <option id="15" class="select-option">15km</option>
+                            </select>
+                        </div>
+                        
+                        
+                        <div class="my-2">
+                            <myMap></myMap>
+                        </div>
+                        
 
                         <button class="btn btn-go">Go</button>
 
@@ -106,53 +98,8 @@
 
                     <div class="row">
                         <h3 class="my-4">Best Matches Near You:</h3>
-                        <div class="col-xl-3 col-md-6 p-2">
-                            <div class="card">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the card's content.</p>
-                                    <a href="#" class="btn">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-xl-3 col-md-6 p-2">
-                            <div class="card">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the card's content.</p>
-                                    <a href="#" class="btn">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6 p-2">
-                            <div class="card">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the card's content.</p>
-                                    <a href="#" class="btn">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6 p-2">
-                            <div class="card">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the card's content.</p>
-                                    <a href="#" class="btn">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
+                        <profileCard v-for="n in 10"></profileCard>
 
                     </div>
 
@@ -170,18 +117,20 @@
 
 <script>
     import navbar from '@/components/navbar.vue'
-    import map from '@/components/map.vue'
+    import myMap from '@/components/myMap.vue'
+    import profileCard from '@/components/profileCard.vue'
 
     export default {
         data() {
             return {
-                
+                services: ['Pet Walker','Pet Groomer','Pet Hotel','Pet Sitter','Pet Trainer','Pet Mover']
             }
         },
         components: {
             navbar, 
-            map
+            myMap,
+            profileCard
         }
     }
-
+   
 </script>

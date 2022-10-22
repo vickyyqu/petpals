@@ -305,6 +305,7 @@ Buttons
 .btn:hover {
     background-color:#F8AA9D;
     border-color: #F8AA9D;
+    color: #fff;
 }
 
 .openbtn {

@@ -1,3 +1,9 @@
+
+<template>
+    <div id="googleMap" class="rounded-3"></div>
+    <component :is="'script'" type="application/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw&callback=initMap"></component>
+</template>
+
 <script>
     function initMap(){
         var lat = 1.2973784
@@ -15,19 +21,14 @@
         });
         
     }
-
+    
     window.initMap = initMap;
 
 </script>
 
-<template>
-    <div id="googleMap"></div>
-    <component :is="'script'" type="application/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw&callback=initMap"></component>
-</template>
-
 <style>
     #googleMap {
         width:100%;
-        height:200px;
+        height:250px;
     }
 </style>
