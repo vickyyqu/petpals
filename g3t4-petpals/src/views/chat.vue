@@ -61,7 +61,7 @@
         Talk.ready.then(function () {
             var me = new Talk.User({
                 id: myId,
-                name: snapshot.val().name,
+                name: snapshot.val().nickname,
                 photoUrl: snapshot.val().profilepic,
                 role: 'default'
             })
