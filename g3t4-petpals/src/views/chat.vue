@@ -31,13 +31,13 @@
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
 
     const firebaseConfig = {
-    apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
-    authDomain: "petpals-623e3.firebaseapp.com",
-    projectId: "petpals-623e3",
-    storageBucket: "petpals-623e3.appspot.com",
-    messagingSenderId: "949038254831",
-    appId: "1:949038254831:web:82d399649bb06e8389e91a",
-    databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+        apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+        authDomain: "petpals-623e3.firebaseapp.com",
+        projectId: "petpals-623e3",
+        storageBucket: "petpals-623e3.appspot.com",
+        messagingSenderId: "949038254831",
+        appId: "1:949038254831:web:82d399649bb06e8389e91a",
+        databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
     };
 
     // Initialize Firebase
@@ -45,21 +45,15 @@
     const analytics = getAnalytics(app);
 
 
-    import { getDatabase, ref, onValue, set, get, child } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";;
+    import { getDatabase, ref, get} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";;
 
     // connect to the realtime database
     const db = getDatabase(app);
 
     var myId = '123';
 
-
     const user = ref(db, `users/${myId}`);
-    // onValue(user, (snapshot) => {
-    //     var myname = snapshot.val().username;
-    //     var myphoto = snapshot.val().profilepic;
-    // })
-
-    // var myInfo = []
+    
     get(user).then((snapshot) => {
         if (snapshot.exists()) {
         // console.log(snapshot.val());
@@ -67,7 +61,7 @@
         Talk.ready.then(function () {
             var me = new Talk.User({
                 id: myId,
-                name: snapshot.val().name,
+                name: snapshot.val().nickname,
                 photoUrl: snapshot.val().profilepic,
                 role: 'default'
             })
