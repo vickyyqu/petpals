@@ -110,7 +110,6 @@ input[type=text]{
 
             <div class="col-1 sides">
             </div>
-
         </div>
     </div>
 </template>
