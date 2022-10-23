@@ -1,11 +1,18 @@
+<style>
+    .chat {
+        background-color: #f8f1ef;
+        height: 725px;
+    }
+
+</style>
 
 <template>
-    <div class = 'container-fluid'>
-        <div class = 'row'>
+    <div class = 'container-fluid chat'>
+        <div class = 'row m-0'>
             <navbar></navbar>
         </div>
         
-        <div ref="talkjs" style="width: 85%; height: 500px; margin: 80px;" > 
+        <div ref="talkjs" style="width: 100%; height: 600px;" class = 'my-5 py-5'> 
             <i>Loading chat...</i>
         </div>
     </div>
@@ -39,24 +46,19 @@
     // connect to the realtime database
     const db = getDatabase(app);
 
-    const myid = 123
+    const myid = 123 // need to get the id of the 
 
 
     //Inbox.vue
     export default {
             name: 'Inbox',
-            // props: {
-            //     currentUser: {
-            //         type: Object,
-            //         required: true,
-            //     }
-            // },
             components: {
                 navbar
             },
 
             async mounted() {
                 await Talk.ready
+
 
                 // getting user information 
                 get(ref(db, `users/${myid}`))
