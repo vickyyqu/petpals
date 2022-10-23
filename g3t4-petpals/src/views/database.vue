@@ -1,22 +1,34 @@
-<style></style>
-
-<template>
-    <h1 >testing firebase realtime database</h1>
-    
-    <p id = 'username'></p>
-    <img id = 'pic' src = '' alt = ''>
-    <p id = 'status'></p>
-</template>
-
-<script setup>
+<!-- <script setup>
     var myid = 1235
     var myusername = 'benny'
     var myphoto = 'https://talkjs.com/images/avatar-2.jpg'
     var newname = 'benni'
-</script>
+</script> -->
 
-<script type="module">
-    // Import the functions you need from the SDKs you need
+<template>
+    <div class = 'container-fluid'>
+        <div class = 'row'>
+            <navbar></navbar>
+        </div>
+
+        <div class = 'row m-5'>
+            <h1>testing firebase realtime database</h1>
+            
+            <p ref = 'username'>hi</p>
+            <img id = 'pic' src = '' alt = ''>
+            <p id = 'status'>hi</p>    
+        </div>
+    </div>
+</template>
+
+
+<script >
+    const myid = 1235
+    const myusername = 'benny'
+    const myphoto = 'https://talkjs.com/images/avatar-2.jpg'
+    const newname = 'benni'
+
+    import navbar from '@/components/navbar.vue'
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
 
@@ -27,7 +39,6 @@
         storageBucket: "petpals-623e3.appspot.com",
         messagingSenderId: "949038254831",
         appId: "1:949038254831:web:82d399649bb06e8389e91a",
-    //   measurementId: "G-T2RHSRBRN0",
         databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
     };
     
@@ -44,55 +55,87 @@
     // create new user 
     const myinfo = ref(db, `users/${myid}`)
 
-    // create new user and check status
-    set(myinfo, {
-        username: myname,
-        profilepic : myphoto,
-    })
-    .then(() => {
-        // Data saved successfully!
-        var status = document.getElementById('status')
-        status.innerText = 'data saved successfully'
-    })
-    .catch((error) => {
-        // The write failed...
-        var status = document.getElementById('status')
-        status.innerText = 'create user unsuccessful'
-    });
 
-    // update user information and check status
-    var updateobj = {};
-    updateobj[`users/${myid}/nickname`] = newname
+    export default {
+        // data() {
+        //     return {}
+        // },
 
-    update(ref(db), updateobj)
-    .then(() => {
-        var status = document.getElementById('status')
-        status.innerText = 'data updated successfully'
-    })
-    .catch((error) => {
-        // The write failed...
-        var status = document.getElementById('status')
-        status.innerText = ' update unsuccessful'
-    });
-    
-    // can use this for profile page to show user profile info -> updates itself
-    onValue(ref(db, `users/${myid}`), (snapshot) => {
-        console.log(snapshot.val()); // get the new value
-        document.getElementById('username').innerText = snapshot.val().username;
-        document.getElementById('pic').src = snapshot.val().profilepic;
-    });
-    
-    // getting user information once 
-    get(ref(db, `users/${myid}`))
-    .then((snapshot) => {
-        if (snapshot.exists()) {
-        console.log(snapshot.val());
-        } else {
-        console.log("No data available");
+        components: {
+            navbar
+        },
+
+        async mounted() {
+            set(myinfo, {
+                username: myusername,
+                profilepic : myphoto,
+                nickname: newname
+            })
+            .then(() => {
+                // Data saved successfully!
+                var status = document.getElementById('status')
+                status.innerText = 'data saved successfully'
+            })
+            .catch((error) => {
+                // The write failed...
+                var status = document.getElementById('status')
+                status.innerText = 'create user unsuccessful'
+            });
+
+
+            
         }
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+    }
+
+    // create new user and check status
+    // set(myinfo, {
+    //     username: myname,
+    //     profilepic : myphoto,
+    // })
+    // .then(() => {
+    //     // Data saved successfully!
+    //     var status = document.getElementById('status')
+    //     status.innerText = 'data saved successfully'
+    // })
+    // .catch((error) => {
+    //     // The write failed...
+    //     var status = document.getElementById('status')
+    //     status.innerText = 'create user unsuccessful'
+    // });
+
+    // // update user information and check status
+    // var updateobj = {};
+    // updateobj[`users/${myid}/nickname`] = newname
+
+    // update(ref(db), updateobj)
+    // .then(() => {
+    //     var status = document.getElementById('status')
+    //     status.innerText = 'data updated successfully'
+    // })
+    // .catch((error) => {
+    //     // The write failed...
+    //     var status = document.getElementById('status')
+    //     status.innerText = ' update unsuccessful'
+    // });
+    
+    // // can use this for profile page to show user profile info -> updates itself
+    // onValue(ref(db, `users/${myid}`), (snapshot) => {
+    //     console.log(snapshot.val()); // get the new value
+    //     document.getElementById('username').innerText = snapshot.val().username;
+    //     document.getElementById('pic').src = snapshot.val().profilepic;
+    // });
+    
+    // // getting user information once 
+    // get(ref(db, `users/${myid}`))
+    // .then((snapshot) => {
+    //     if (snapshot.exists()) {
+    //     console.log(snapshot.val());
+    //     } else {
+    //     console.log("No data available");
+    //     }
+    // })
+    // .catch((error) => {
+    //     console.error(error);
+    // });
 
 </script>

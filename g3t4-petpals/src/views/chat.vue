@@ -1,56 +1,92 @@
-<script setup>
-</script>
 
 <template>
-    <navbar></navbar>
-
-    <div ref="talkjs" style="width: 90%; margin: 30px; height: 500px">
-        <i>Loading chat...</i>
+    <div class = 'container-fluid'>
+        <div class = 'row'>
+            <navbar></navbar>
+        </div>
+        
+        <div ref="talkjs" style="width: 85%; height: 500px; margin: 80px;" > 
+            <i>Loading chat...</i>
+        </div>
     </div>
+    
 
 </template>
 
 <script>
     import navbar from '@/components/navbar.vue'
     import Talk from 'talkjs';
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+        authDomain: "petpals-623e3.firebaseapp.com",
+        projectId: "petpals-623e3",
+        storageBucket: "petpals-623e3.appspot.com",
+        messagingSenderId: "949038254831",
+        appId: "1:949038254831:web:82d399649bb06e8389e91a",
+        databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    // Import the functions needed to read from realtime database
+    import { getDatabase, ref, onValue, set, update, get} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+
+    // connect to the realtime database
+    const db = getDatabase(app);
+
+    const myid = 123
+
 
     //Inbox.vue
-
     export default {
             name: 'Inbox',
-            props: {
-                currentUser: {
-                    type: object,
-                    required: true,
-                    name: 'alice', 
-                    id: 123,
-                    pic: 'https://talkjs.com/images/avatar-1.jpg'
-                }
-            },
+            // props: {
+            //     currentUser: {
+            //         type: Object,
+            //         required: true,
+            //     }
+            // },
             components: {
                 navbar
             },
+
             async mounted() {
                 await Talk.ready
+
+                // getting user information 
+                get(ref(db, `users/${myid}`))
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const me = new Talk.User({
+                            id: myid,
+                            name: snapshot.val().nickname,  
+                            photoUrl: snapshot.val().profilepic,
+                            role: "default"
+                            })
+
+                            const talkSession = new Talk.Session({
+                                appId: 'tLVsZwjE',
+                                me: me,
+                            });
+
+                            var inbox = talkSession.createInbox();
+                            // inbox.select(conversation);
+
+                            inbox.mount(this.$refs.talkjs);
+
+
+                    } else {
+                        console.log("No data available");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
             }
         }
-
-    //Inbox.vue
-
-    const me = new Talk.User({
-    id: this.currentUser.id,
-    name: this.currentUser.name,  
-    photoUrl: this.currentUser.pic,
-    role: "default"
-    })
-
-    const talkSession = new Talk.Session({
-        appId: 'tLVsZwjE',
-        me: me,
-    });
-
-    var inbox = talkSession.createInbox();
-    // inbox.select(conversation);
-
-    inbox.mount(this.$refs.talkjs);
 </script>
