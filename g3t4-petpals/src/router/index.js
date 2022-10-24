@@ -4,6 +4,7 @@ import search from "../views/search.vue"
 import profile from "../views/profile.vue"
 import bookings from "../views/bookings.vue"
 import registerowner from "../views/registerowner.vue"
+import registerprovider from "../views/registerprovider.vue"
 import {createRouter, createWebHistory} from "vue-router"
 
 export const router = createRouter({
@@ -38,6 +39,11 @@ export const router = createRouter({
             path: "/registerowner",
             name: "registerowner",
             component: registerowner
+        },
+        {
+            path: "/registerprovider",
+            name: "registerprovider",
+            component: registerprovider
         }
 
     ]
