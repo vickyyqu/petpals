@@ -3,6 +3,7 @@ import chat from "../views/chat.vue"
 import search from "../views/search.vue"
 import profile from "../views/profile.vue"
 import bookings from "../views/bookings.vue"
+import registerowner from "../views/registerowner.vue"
 import {createRouter, createWebHistory} from "vue-router"
 
 export const router = createRouter({
@@ -32,6 +33,11 @@ export const router = createRouter({
             path: "/profile",
             name: "profile",
             component: profile
+        },
+        {
+            path: "/registerowner",
+            name: "registerowner",
+            component: registerowner
         }
 
     ]
