@@ -1,90 +1,94 @@
-<script setup>
-    (function(t,a,l,k,j,s){
-    s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.head.appendChild(s)
-    ;k=t.Promise;t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l
-    .push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);  
-    
-</script>
+<style>
+    .chat {
+        background-color: #f8f1ef;
+        height: 725px;
+    }
+
+</style>
 
 <template>
-    <navbar></navbar>
-
-    <!--   Chat    -->
-    <div class = 'container-fluid '>
-        <div id="talkjs-container" style="width: 80%; margin: 80px; height: 500px; float: right; ">
+    <div class = 'container-fluid chat'>
+        <div class = 'row m-0'>
+            <navbar></navbar>
+        </div>
+        
+        <div ref="talkjs" style="width: 100%; height: 600px;" class = 'my-5 py-5'> 
             <i>Loading chat...</i>
         </div>
     </div>
+    
+
 </template>
 
-<!-- Connecting firebase to talkjs -->
-<script type = 'module'>
+<script>
     import navbar from '@/components/navbar.vue'
-
-    export default {
-        components: {
-            navbar
-        }
-    }
-
+    import Talk from 'talkjs';
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
 
     const firebaseConfig = {
-    apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
-    authDomain: "petpals-623e3.firebaseapp.com",
-    projectId: "petpals-623e3",
-    storageBucket: "petpals-623e3.appspot.com",
-    messagingSenderId: "949038254831",
-    appId: "1:949038254831:web:82d399649bb06e8389e91a",
-    databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+        apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+        authDomain: "petpals-623e3.firebaseapp.com",
+        projectId: "petpals-623e3",
+        storageBucket: "petpals-623e3.appspot.com",
+        messagingSenderId: "949038254831",
+        appId: "1:949038254831:web:82d399649bb06e8389e91a",
+        databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
     };
-
+    
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
 
-
-    import { getDatabase, ref, onValue, set, get, child } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";;
+    // Import the functions needed to read from realtime database
+    import { getDatabase, ref, onValue, set, update, get} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
     // connect to the realtime database
     const db = getDatabase(app);
 
-    var myId = '123';
+    const myid = 123 // need to get the id of the 
 
 
-    const user = ref(db, `users/${myId}`);
-    // onValue(user, (snapshot) => {
-    //     var myname = snapshot.val().username;
-    //     var myphoto = snapshot.val().profilepic;
-    // })
+    //Inbox.vue
+    export default {
+            name: 'Inbox',
+            components: {
+                navbar
+            },
 
-    // var myInfo = []
-    get(user).then((snapshot) => {
-        if (snapshot.exists()) {
-        // console.log(snapshot.val());
+            async mounted() {
+                await Talk.ready
 
-        Talk.ready.then(function () {
-            var me = new Talk.User({
-                id: myId,
-                name: snapshot.val().name,
-                photoUrl: snapshot.val().profilepic,
-                role: 'default'
-            })
 
-            window.talkSession = new Talk.Session({
-            appId: 'tLVsZwjE',
-            me: me,
-            });
+                // getting user information 
+                get(ref(db, `users/${myid}`))
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const me = new Talk.User({
+                            id: myid,
+                            name: snapshot.val().nickname,  
+                            photoUrl: snapshot.val().profilepic,
+                            role: "default"
+                            })
 
-            var inbox = talkSession.createInbox();
-            inbox.mount(document.getElementById('talkjs-container'));
-        });
+                            const talkSession = new Talk.Session({
+                                appId: 'tLVsZwjE',
+                                me: me,
+                            });
 
-    } else {
-        console.log("No data available");
-    }
-    }).catch((error) => {
-    console.error(error);
-    });
+                            var inbox = talkSession.createInbox();
+                            // inbox.select(conversation);
+
+                            inbox.mount(this.$refs.talkjs);
+
+
+                    } else {
+                        console.log("No data available");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+            }
+        }
 </script>

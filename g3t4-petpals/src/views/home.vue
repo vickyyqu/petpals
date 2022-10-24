@@ -32,7 +32,7 @@
                 <p>Entrust your pet with us and allow our experienced service providers to elevate your pet-owning experience. Join PetPals today and access these services offered by our providers!</p>
                 <h3 style="color:#f8f1ef">New to PetPals?</h3>
                 <div class="dropdown">
-                    <button onclick="myFunction()" class="btn dropbtn btn-light">Register Here</button>
+                    <button class="btn dropbtn btn-light">Register Here</button>
                     <div id="myDropdown" class="dropdown-content">
                       <a href="#">I am a pet owner.</a>
                       <a href="#">I am a pet service provider.</a>
