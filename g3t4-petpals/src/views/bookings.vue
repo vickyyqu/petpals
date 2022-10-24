@@ -1,26 +1,15 @@
 <style>
-    .requests-made {
-        border-right: 2px solid #f8f1ef;
-        border-bottom: 2px solid #f8f1ef;
-    }
 
-    .confirmed-bookings {
-        border-left: 2px solid #f8f1ef;
-        border-bottom: 2px solid #f8f1ef;
-    }
-
-    .nil {
-        color:#9C796A;
-        font-style: italic;
-    }
-    template {
-        height: 100%;
-    }
+.required {
+    font-style: italic;
+    color: #dfd1cd;
+}
 </style>
 
 <template>
     <div class="container-fluid">
         <navbar></navbar>
+
         <div class="row">
             <div class="col-1 sides">
             </div>
@@ -47,10 +36,12 @@
 
     <petpalsFooter></petpalsFooter>
 
+
 </template>
 
 <script>
     import navbar from '@/components/navbar.vue'
+
     import petpalsFooter from '@/components/petpalsFooter.vue'
 
     export default {
@@ -65,4 +56,3 @@
         }
     }
 </script>
-
