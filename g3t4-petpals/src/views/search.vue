@@ -112,23 +112,40 @@ input[type=text]{
             </div>
         </div>
     </div>
+
+    <petpalsFooter></petpalsFooter>
+
+
+    <vueper-slides>
+        <vueper-slide
+          v-for="(slide, i) in slides"
+          :key="i"
+          :title="slide.title"
+          :content="slide.content">
+        </vueper-slide>
+      </vueper-slides>
+
+
 </template>
 
 <script>
     import navbar from '@/components/navbar.vue'
     import myMap from '@/components/myMap.vue'
     import profileCard from '@/components/profileCard.vue'
+    import petpalsFooter from '@/components/petpalsFooter.vue'
 
     export default {
         data() {
             return {
-                services: ['Pet Walker','Pet Groomer','Pet Hotel','Pet Sitter','Pet Trainer','Pet Mover']
+                services: ['Pet Walker','Pet Groomer','Pet Hotel','Pet Sitter','Pet Trainer','Pet Mover'],
+                slides: {1: "a", 2: "b", 3: "c",}
             }
         },
         components: {
             navbar, 
             myMap,
-            profileCard
+            profileCard,
+            petpalsFooter
         }
     }
    

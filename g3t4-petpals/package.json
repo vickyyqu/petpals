@@ -9,7 +9,9 @@
   "dependencies": {
     "talkjs": "^0.15.5",
     "vue": "^3.2.38",
-    "vue-router": "^4.1.5"
+    "vue-carousel": "^0.18.0",
+    "vue-router": "^4.1.5",
+    "vueperslides": "^3.5.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.3",

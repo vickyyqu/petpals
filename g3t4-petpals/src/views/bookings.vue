@@ -45,10 +45,13 @@
         </div>
     </div>
 
+    <petpalsFooter></petpalsFooter>
+
 </template>
 
 <script>
     import navbar from '@/components/navbar.vue'
+    import petpalsFooter from '@/components/petpalsFooter.vue'
 
     export default {
         data() {
@@ -57,7 +60,8 @@
             }
         },
         components: {
-            navbar
+            navbar,
+            petpalsFooter
         }
     }
 </script>

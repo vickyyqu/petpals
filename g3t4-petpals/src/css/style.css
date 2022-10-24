@@ -305,7 +305,6 @@ Buttons
     background-color:#F8AA9D;
     border-color: #F8AA9D;
     color: #fff;
-    border-color: #f8f1ef;
 }
 
 .openbtn {
@@ -313,7 +312,8 @@ Buttons
     padding: .3em 1.0em;
     margin-top:0px;
     background-color: transparent;
-    border-color: #f8f1ef;
+    color: #9C796A;
+    font-size: 20px;
 }
 
 .btn-light {

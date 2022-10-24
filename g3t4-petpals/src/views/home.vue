@@ -8,7 +8,7 @@
     <div id="top-header" class="header-home">
         <img src="../img/logo2.png" style="width: 125px">
 
-        <button class="btn openbtn btn-dark" v-on:click="Nav()">&#9776; Menu</button>
+        <button class="btn openbtn" v-on:click="Nav()">&#9776; Menu</button>
 
         <div v-if="counter == 0" id="mySidepanel" class="closed">
         </div>
@@ -75,15 +75,17 @@
         <!-- Services Section -->
         <div class="row" id="services">
             <h1 class="pt-5">Our Services</h1>
-            <h3 class="pt-0">Choose from as many services as you like.</h3>
 
-            <div class="row p-5">
+            <h3 class="mt-3" style="font-style:normal;font-family: 'Figtree'">Choose from as many services as you like.</h3>
+            <h3 class="mt-3" style="font-style:normal;font-family: 'Figtree'">Match with the perfect pet service provider.</h3>
+            
+            <div class="row p-5 m-3">
                 <services v-for="(each) of services" v-bind:tag="tags[each]" v-bind:png="png[each]" v-bind:service="each"></services>
             </div>
 
             <hr>
 
-            <div class="row join py-4">
+            <div class="row join py-5">
                 <h1 class="pb-3" style="color:#F8AA9D">Join PetPals today</h1>
                 
                 <div class="col-2"></div>
@@ -151,8 +153,8 @@
 
 
         <div class="m-5 pt-5" id="gallery">
-            <h1 class="m-2 text-center">Gallery</h1>
-            <div class="row">
+            <h1 class="mt-5 text-center">Gallery</h1>
+            <div class="row m-5">
                 <div class="col-sm-4 mb-4 mb-lg-0 ">
                 <img
                     src="../img/gallery/img1.jpeg"
@@ -191,11 +193,7 @@
             </div>
         </div>
 
-        <footer>
-            <p>&#169 PetPals 2022</p>
-        </footer>
-      
-
+        <petpalsFooter></petpalsFooter>
         
     </div>
     
@@ -205,6 +203,7 @@
 
 <script>
     import services from '@/components/services.vue'
+    import petpalsFooter from '@/components/petpalsFooter.vue'
 
     export default {
         data() {
@@ -225,7 +224,8 @@
             }
         },
         components: {
-            services
+            services,
+            petpalsFooter
         }
     }
 </script>

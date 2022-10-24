@@ -15,6 +15,9 @@
     .card {
         border-color:#fcf5f7;
     }
+    i {
+        color: #F8AA9D;
+    }
 </style>
 
 <template>
