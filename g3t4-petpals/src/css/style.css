@@ -63,7 +63,6 @@ h6{
     position: relative;
     margin: 1em 0 1.4em;
     color: #58484e;
-    font-style: italic;
     margin:0;
 }
 
@@ -76,6 +75,7 @@ h6{
 h1,
 h2 {
     text-transform: uppercase;
+    font-style: italic;
 }
 
 h1 {
@@ -86,12 +86,13 @@ h1 {
 h3 {
     font-size: 1.8em;
     line-height: .9em;
+    font-style: italic;
 }
 
 h4,
 h5,
 h6 {
-    font-size: 1.125em;
+    font-size: 1.0em;
     line-height: .5em;
 }
 
@@ -185,16 +186,16 @@ Side panel
 }
 .sidepanel {
     height: 200px; /* Specify a height */
-    width: 115px; /* 0 width - change this with JavaScript */
+    width: 115px;
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 100px;
     left: 0;
-    background-color: white; /* Black*/
+    background-color: white;
     opacity: 70%;
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 22px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
+    overflow-x: hidden; 
+    padding-top: 22px;
+    transition-duration: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
     border-radius: 0 5px 5px 0;
     font-family: 'Karla', Helvetica, Arial, sans-serif;
     margin:0;
@@ -294,15 +295,13 @@ Buttons
     padding: .6em 1.6em;
     font-size: 1.0em;
     font-family: 'Figtree';
-    border-color: #f8f1ef;
     
     -webkit-border-radius: 30px;
     -moz-border-radius: 30px;
     border-radius: 30px;
-    background-color: transparent;
 }
 
-.btn:hover {
+.openbtn:hover,  .btn-light:hover, .btn-dark:hover, .btn-go:hover, .homebtn:hover{
     background-color:#F8AA9D;
     border-color: #F8AA9D;
     color: #fff;
@@ -312,23 +311,33 @@ Buttons
     margin-right: 10px;
     padding: .3em 1.0em;
     margin-top:0px;
+    background-color: transparent;
+    color: #9C796A;
+    font-size: 20px;
 }
 
 .btn-light {
     color: #fff;
+    background-color: transparent;
+    border-color: #f8f1ef;
 }
 
 .btn-dark {
     color: #9C796A;
+    background-color: transparent;
+    border-color: #f8f1ef;
 }
 
 .btn-go {
     background-color: #dfd1cd;
-    color: #fff;
+    color: #9C796A;
+    border-color: #f8f1ef;
 }
 
 .homebtn {
     font-size: 30px;
+    background-color: transparent;
+    border-color: #f8f1ef;
 }
 
 .btn:hover,
@@ -482,7 +491,6 @@ Parallax
 }
 
 .parallax-section .content {
-    /* margin: 0 auto; */
     text-align: center;
     padding: 105px 0 180px;
 }

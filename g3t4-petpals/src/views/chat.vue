@@ -1,27 +1,31 @@
 <style>
     .chat {
-        background-color: #f8f1ef;
         height: 725px;
     }
 
 </style>
 
 <template>
-    <div class = 'container-fluid chat'>
+    <div class = 'container-fluid chat sides'>
         <div class = 'row m-0'>
             <navbar></navbar>
         </div>
         
         <div ref="talkjs" style="width: 100%; height: 600px;" class = 'my-5 py-5'> 
-            <i>Loading chat...</i>
+            <i class="m-5" style="color: #4b3830;font-family: 'Figtree';">Loading chat...</i>
         </div>
     </div>
+
+    <petpalsFooter></petpalsFooter>
+
+
     
 
 </template>
 
 <script>
     import navbar from '@/components/navbar.vue'
+    import petpalsFooter from '@/components/petpalsFooter.vue'
     import Talk from 'talkjs';
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
@@ -53,7 +57,8 @@
     export default {
             name: 'Inbox',
             components: {
-                navbar
+                navbar,
+                petpalsFooter
             },
 
             async mounted() {

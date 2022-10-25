@@ -86,11 +86,9 @@ input[type=text]{
                             </select>
                         </div>
                         
-                        
                         <div class="my-2">
                             <myMap></myMap>
                         </div>
-                        
 
                         <button class="btn btn-go">Go</button>
 
@@ -98,27 +96,27 @@ input[type=text]{
 
                     <div class="row">
                         <h3 class="my-4">Best Matches Near You:</h3>
-
                         <profileCard v-for="n in 10"></profileCard>
-
                     </div>
 
                 </div>
-
 
             </div>
 
             <div class="col-1 sides">
             </div>
-
         </div>
     </div>
+
+    <petpalsFooter></petpalsFooter>
+
 </template>
 
 <script>
     import navbar from '@/components/navbar.vue'
     import myMap from '@/components/myMap.vue'
     import profileCard from '@/components/profileCard.vue'
+    import petpalsFooter from '@/components/petpalsFooter.vue'
 
     export default {
         data() {
@@ -129,7 +127,8 @@ input[type=text]{
         components: {
             navbar, 
             myMap,
-            profileCard
+            profileCard,
+            petpalsFooter
         }
     }
    

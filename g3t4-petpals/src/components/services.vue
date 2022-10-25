@@ -6,7 +6,7 @@
         <img v-bind:src="png" class="w-100">
 
         <div v-if="hover[service]" class="pt-4">
-            <p>{{tag}}</p>
+            <p style="color:#856658">{{tag}}</p>
         </div>
 
         <div v-else class="pt-4">
