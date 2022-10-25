@@ -17,6 +17,9 @@ input[type=text]{
 .provider-location, .provider-rate {
     color:#F8AA9D
 }
+.bi-search-heart {
+    color: #4b3830;
+}
 </style>
 
 <template>

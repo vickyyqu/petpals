@@ -1,0 +1,256 @@
+<template>
+    <navbar></navbar>
+    <div class="profile-page">
+        <div class="profile-container">
+            
+            <!--Left column-->
+            <div class="profile-info">
+                <div class="container">
+                    <div class="row-image">
+                        <img src="../img/dog.jpeg" style="border-radius:50%; width:300px; height:200px;">
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <h2>Hello <div class="username">{USERNAME}</div></h2>  
+                        <hr>
+                        <p>{pet service owner/provider}</p>
+                    </div>    
+
+                    <br>
+
+                    <div class="row">
+                        <div class="bio">
+                            <h4>Bio &nbsp;<button v-on:click="changeMessage('custom message')" type="button" class="bio-btn"><i class="bi bi-pencil-square"></i></button></h4>
+                            <p class="bio-message">{{message}}</p>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row">
+                    <h4>My Pets</h4>
+                    <br>
+                    <vueper-slides style="height:150px;">
+                        <vueper-slide 
+                            v-for="(slide, i) in slides"
+                            :key="i"
+                            :title="slide.title"
+                            :content="slide.content">
+                        </vueper-slide>
+                    </vueper-slides>
+                    </div>
+                </div>
+            <!--Right column-->
+            <div class="profile-about">
+                <img src="../img/animallogo/doglogo2.png">&nbsp;<img src="../img/animallogo/catlogo2.png">&nbsp;<img src="../img/animallogo/rabbitlogo2.png">&nbsp;<img src="../img/animallogo/guineapiglogo2.png">&nbsp;<img src="../img/animallogo/birdlogo2.png">
+                
+                <div id="app">
+                    <TabNav :tabs="['My Bookings', 'My Services', 'My Reviews']" :selected="selected" @selected="setSelected">  
+                        <Tab :isSelected="selected === 'My Bookings'" >
+                            <p>Shows a list of the bookings made by this user</p>  
+                        </Tab>
+                        <Tab :isSelected="selected === 'My Services'" >
+                            <p>Shows a list of the services offered by this user</p>  
+                        </Tab>
+                        <Tab :isSelected="selected === 'My Reviews'" >
+                            <p>Shows a list of reviews left for this user</p>                           
+                            <Post v-for="(user, i) in user_list" :key="i" :user="user" />
+                        </Tab>
+                    </TabNav>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</template>
+  
+<script>
+    import navbar from '../components/navbar.vue'
+    import TabNav from '../components/TabNav.vue';
+    import Tab from '../components/Tab.vue';
+    import { VueperSlides, VueperSlide } from 'vueperslides'
+    import Post from "../components/Post.vue";
+    
+
+    export default {
+        name: "profile",
+        components: {
+            navbar, TabNav, Tab, VueperSlides, VueperSlide, Post, 
+        },
+        data() {
+            return {
+                // Selected tab
+                selected: 'My Bookings',
+
+                // Current bio
+                message: "lorem ipsum dolor sit amet, consectetur",
+
+                // My pets info
+                slides: [
+                    {
+                        title: 'Petname1',
+                        content: ['Image of pet1', 
+                        'age', 
+                        'breed']
+                    },
+                    {
+                        title: 'Petname2',
+                        content: ['Image of pet2', 
+                        'age',
+                        'breed']
+                    }
+                ],
+
+                // Reviews list
+                user_list: [],
+            }
+        },
+
+        methods: {
+            // Changing tabs
+            setSelected(tab) {
+                this.selected = tab;
+            },
+
+            // Edit bio
+            changeMessage(message) {
+                this.message = message
+            },
+
+            // Reviews list
+            getuser() {  //replace this with api
+                const user_titles = [
+                    "Review 1",
+                    "Review 2",
+                    "Review 3",
+                    "Review 4",
+			    ];
+                const user = [];
+			    for (let i = 0; i < 4; i++) {
+                    user.push({
+                        title: user_titles[
+                            i
+                        ],
+                        description:
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqu"
+				    });
+			    }   
+                return user;
+            },
+
+            // Reviews list scrolling 
+            handleScroll() {
+                if (
+                    window.scrollY + window.innerHeight >=
+                    document.body.scrollHeight - 300
+                ) {
+                    const new_user = this.getuser();
+                    this.user_list = [...this.user_list, ...new_user];
+                }
+		    },
+
+        },
+        mounted() {
+                // Reviews list scrolling 
+                this.user_list = this.getuser();
+                window.addEventListener("scroll", this.handleScroll);
+            }
+    }
+    
+</script>
+  
+<style lang="scss" scoped>
+
+* {
+    box-sizing: border-box;
+}
+
+.profile-page {
+        margin:0;
+        padding-top:50px;
+        align-items: center;
+        justify-content: center;
+}
+
+.profile-container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 20px 50px;
+}
+
+.profile-container:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.profile-info{
+    margin-top:40px;
+    margin-left: 20px;
+    flex: 30%;
+    display: table;
+    padding: 20px 30px;
+    font-size: 20px;
+    background-color: #fffbfa;
+    border-radius: 20px;
+}
+
+.profile-about{
+    margin-top:40px;
+    margin-left: 20px;
+    flex: 70%;
+    display: table;
+    padding: 20px 30px;
+    font-size: 20px;
+    background-color: #fffbfa;
+    border-radius: 20px;
+}
+
+.row {
+    text-align: center;
+}
+.row-image {
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .profile-info, .profile-about {
+        width: 100%;
+    }
+}
+.bio-message {
+    margin: 30px;
+}
+
+.bio-btn {
+        background-color: #9C796A;
+        color: white;
+        font-size: 14px;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+}
+
+.bio-btn:hover {
+    background-color:#F8AA9D;
+    border-color: #F8AA9D;
+    color: #fff;
+}
+
+// Tab
+#app {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+</style>
