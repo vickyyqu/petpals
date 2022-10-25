@@ -1,6 +1,40 @@
 
 <style>
 
+.fade-in-text {
+    animation: fadeIn 5s;
+    -webkit-animation: fadeIn 5s;
+    -moz-animation: fadeIn 5s;
+    -o-animation: fadeIn 5s;
+    -ms-animation: fadeIn 5s;
+    animation-direction: alternate;
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-o-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-ms-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
 </style>
 
 <template>
@@ -20,6 +54,8 @@
             <a href="#">New User?</a>
         </div>
 
+        
+
     </div>
     <!-- End Header -->
 
@@ -28,14 +64,14 @@
     <div class="container-flex">
         <div class="row parallax-section">
             <div class="col-md-8 content">
-                <h2 class="headline">Bringing the best pet service providers to you</h2>
+                <h2 class="headline fade-in-text" v-html="msg1"></h2>
                 <p>Entrust your pet with us and allow our experienced service providers to elevate your pet-owning experience. Join PetPals today and access these services offered by our providers!</p>
                 <h3 style="color:#f8f1ef">New to PetPals?</h3>
                 <div class="dropdown">
                     <button class="btn dropbtn btn-light">Register Here</button>
                     <div id="myDropdown" class="dropdown-content">
-                      <a href="#">I am a pet owner.</a>
-                      <a href="#">I am a pet service provider.</a>
+                        <router-link to="/registerowner">I am a pet owner.</router-link>
+                        <router-link to="/registerprovider">I am a pet service provider.</router-link>
                     </div>
                 </div>
             </div>
@@ -194,16 +230,21 @@
         </div>
 
         <petpalsFooter></petpalsFooter>
-        
     </div>
+    <FadeInOut entry="left" exit="left" :duration="500">
+        <h1>Fade in and out transition</h1>
+    </FadeInOut>
     
-
 </template>
 
 
 <script>
     import services from '@/components/services.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
+    import Vue3Transitions from 'vue3-transitions'
+    import { defineComponent, ref } from 'vue'
+    import { FadeInOut } from 'vue3-transitions'
+    import anime from "animejs/lib/anime.es.js"
 
     export default {
         data() {
@@ -211,9 +252,12 @@
                 counter: 0,
                 services: ['Pet Walking','Pet Grooming','Pet Hotels','Pet Sitters','Pet Trainers','Pet Transport'],
                 tags: {'Pet Walking': 'Take your pet out on scheduled walks with our Pet Walkers.', 'Pet Grooming': 'Be returned a clean and fresh pet with our experienced Pet Groomers.', 'Pet Hotels': 'Leave your pet with our trusted Pet Hotel Providers while on holiday.', 'Pet Sitters': 'Leave your pet with our trusted Pet Sitters while running errands.', 'Pet Trainers': 'Train your pet with our qualified Pet Trainers.', 'Pet Transport': 'Transport your pet safely with our Pet Movers.'},
-                png: {'Pet Walking': 'src/img/png/walker.png', 'Pet Grooming': 'src/img/png/groomer.png', 'Pet Hotels': 'src/img/png/hotel.png', 'Pet Sitters': 'src/img/png/sitter.png', 'Pet Trainers': 'src/img/png/trainer.png', 'Pet Transport': 'src/img/png/catincar.png'}
+                png: {'Pet Walking': 'src/img/png/walker.png', 'Pet Grooming': 'src/img/png/groomer.png', 'Pet Hotels': 'src/img/png/hotel.png', 'Pet Sitters': 'src/img/png/sitter.png', 'Pet Trainers': 'src/img/png/trainer.png', 'Pet Transport': 'src/img/png/catincar.png'},
+                msg1: "Bringing the best pet service providers to you"
+            
             }
         },
+
         methods: {
             Nav(){
                 if (this.counter == 1){
@@ -221,11 +265,43 @@
                 } else {
                     this.counter++;
                 }
+            },
+            textWrapper1(){
+                // var textWrapper1 = document.querySelector('.abt');
+                this.msg1 = this.msg1.replace(/\S/g, "<span class='letter'>$&</span>");
+              
+                anime.timeline({loop: true})
+                .add({
+                    targets: '.headline .letter',
+                    translateX: [40,0],
+                    translateZ: 0,
+                    opacity: [0,1],
+                    easing: "easeOutExpo",
+                    duration: 1200,
+                    delay: (el, i) => 500 + 30 * i
+                }).add({
+                    targets: '.headline .letter',
+                    translateX: [0,-30],
+                    opacity: [1,0],
+                    easing: "easeInExpo",
+                    duration: 1100,
+                    delay: (el, i) => 100 + 30 * i
+                });
             }
+        },
+        beforeMount() {
+            this.textWrapper1()
         },
         components: {
             services,
-            petpalsFooter
+            petpalsFooter,
+            FadeInOut
+        },
+        setup() {
+            const triggerFade = ref(false)
+            return {
+            triggerFade
+            }
         }
     }
 </script>

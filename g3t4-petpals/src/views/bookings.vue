@@ -41,7 +41,6 @@
 
 <script>
     import navbar from '@/components/navbar.vue'
-
     import petpalsFooter from '@/components/petpalsFooter.vue'
 
     export default {

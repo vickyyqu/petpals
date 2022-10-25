@@ -86,11 +86,9 @@ input[type=text]{
                             </select>
                         </div>
                         
-                        
                         <div class="my-2">
                             <myMap></myMap>
                         </div>
-                        
 
                         <button class="btn btn-go">Go</button>
 
@@ -98,13 +96,10 @@ input[type=text]{
 
                     <div class="row">
                         <h3 class="my-4">Best Matches Near You:</h3>
-
                         <profileCard v-for="n in 10"></profileCard>
-
                     </div>
 
                 </div>
-
 
             </div>
 
@@ -114,17 +109,6 @@ input[type=text]{
     </div>
 
     <petpalsFooter></petpalsFooter>
-
-
-    <vueper-slides>
-        <vueper-slide
-          v-for="(slide, i) in slides"
-          :key="i"
-          :title="slide.title"
-          :content="slide.content">
-        </vueper-slide>
-      </vueper-slides>
-
 
 </template>
 
@@ -137,8 +121,7 @@ input[type=text]{
     export default {
         data() {
             return {
-                services: ['Pet Walker','Pet Groomer','Pet Hotel','Pet Sitter','Pet Trainer','Pet Mover'],
-                slides: {1: "a", 2: "b", 3: "c",}
+                services: ['Pet Walker','Pet Groomer','Pet Hotel','Pet Sitter','Pet Trainer','Pet Mover']
             }
         },
         components: {
