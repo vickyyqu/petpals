@@ -3,6 +3,7 @@ import chat from "../views/chat.vue"
 import search from "../views/search.vue"
 import profile from "../views/profile.vue"
 import bookings from "../views/bookings.vue"
+import profilelisting from "../views/profilelisting.vue"
 
 import registerowner from "../views/registerowner.vue"
 import registerprovider from "../views/registerprovider.vue"
@@ -52,6 +53,11 @@ export const router = createRouter({
             path: "/database",
             name: "database",
             component: database
+        },
+        {
+            path: "/profilelisting",
+            name: "profilelisting",
+            component: profilelisting
         }
 
 
