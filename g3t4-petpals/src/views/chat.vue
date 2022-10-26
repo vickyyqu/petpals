@@ -50,7 +50,8 @@
     // connect to the realtime database
     const db = getDatabase(app);
 
-    const myid = 123 // need to get the id of the 
+    const myid = 'alice' // need to get the id 
+    const otherid = 'sebas'
 
 
     //Inbox.vue
@@ -59,6 +60,8 @@
             components: {
                 navbar,
                 petpalsFooter
+            },
+            methods : {
             },
 
             async mounted() {
@@ -81,10 +84,29 @@
                                 me: me,
                             });
 
-                            var inbox = talkSession.createInbox();
-                            // inbox.select(conversation);
+                            get(ref(db,`users/${otherid}`))
+                            .then((snapsht) => {
+                                if (snapsht.exists()) {
+                                    const other = new Talk.User({
+                                        id: otherid,
+                                        name: snapsht.val().nickname,  
+                                        photoUrl: snapsht.val().profilepic,
+                                        role: "default"
+                                    })
 
-                            inbox.mount(this.$refs.talkjs);
+                                    const conversation = talkSession.getOrCreateConversation(
+                                        Talk.oneOnOneId(me, other)
+                                    );
+                              
+
+                                    conversation.setParticipant(me);
+                                    conversation.setParticipant(other);
+
+                                    var inbox = talkSession.createInbox();
+                                    inbox.select(conversation);
+
+                                    inbox.mount(this.$refs.talkjs);
+                                }})
 
 
                     } else {
