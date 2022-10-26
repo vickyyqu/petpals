@@ -57,7 +57,7 @@
                     </div>
 
 
-                    <div class="row mt-2"> <!-- nickname and phone number-->
+                    <div class="row mt-2"> <!-- username nickname and nickname -->
                         <div class="col-md-6">
                             <label for="inputUsername">Username</label>
                             <p class="form-text">This is how we can uniquely identify you!</p>
@@ -119,11 +119,15 @@
 
         </div>
         </div>
+        <footer>
+            <petpalsFooter></petpalsFooter>  
+        </footer>
 </template>
 
 <script>
     import navbar from '@/components/navbar.vue'
     import petprofile from '@/components/petprofile.vue'
+    import petpalsFooter from '@/components/petpalsFooter.vue'
 
 
     export default {
@@ -137,7 +141,8 @@
         },
         components: {
             navbar, 
-            petprofile
+            petprofile, 
+            petpalsFooter
         }
     }
 

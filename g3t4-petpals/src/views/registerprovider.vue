@@ -11,13 +11,11 @@
 
         <div class="row">
             <div class="col-1 sides">
-                <div class="mt-5 pt-3">
-
-                </div>
+                <div class="mt-5 pt-3"></div>
             </div>
 
             <div class="col-10">
-                <img src="" class="w-100 mt-5 pt-3 rounded-3" alt="include a pic?">
+                <img src="" class="w-100 mt-5 pt-3 rounded-3" alt="">
 
                 <div class="px-5">
                     <h3 class="my-4" style="text-align:center">Register as a PetPals Service Provider with us today!</h3>
@@ -28,73 +26,73 @@
                     <form>
                         
                     <div class="row mx-2 mt-2"> <!-- email -->
-                        <label for="inputEmail">Email</label>
-                        <input type="email" class="form-control" id="inputEmail" placeholder="" required>
-                    </div>
-                    <div class="row mx-2 mt-2"> <!-- psw -->
-                        <label for="inputPassword">Password</label>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="" v-model="psw" required>
-                    </div>
-                    <div class="row mx-2 mt-2"> <!-- repeat psw -->
-                        <label for="inputRepeatPassword">Repeat Password</label>
-                        <input type="password" class="form-control" id="inputRepeatPassword" placeholder="" v-model="psw_repeat" required>
-                    </div>
-                    <p v-if="psw == psw_repeat && psw != ''" style="color:green">Passwords match!</p>
-                    <p v-if="psw != psw_repeat && psw_repeat !=''" style="color:red">Passwords do not match!</p>
-                    <div class="row mx-2 mt-2"> <!-- username-->
-                        <label for="inputUsername">Username</label>
-                        <input type="text" class="form-control" id="inputUsername" placeholder="" required>
+                        <div class="col-md-6">
+                            <label for="inputEmail">Email</label>
+                        <input type="email" class="form-control" id="inputEmail" style="background-color: white;" placeholder="" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputNumber">Phone Number</label>
+                            <input type="number" class="form-control" id="inputNumber" placeholder="" aria-describedby="inputGroupPrepend2" min="0" max="99999999" maxlength="8" minlength="8" required>
+                        </div>
                     </div>
 
-                    <div class="row mx-2 mt-2"> <!-- nickname -->
-                        <label for="inputNickname">Nickname</label>
-                        <small id="nicknameHelp" class="form-text text-muted">This is your name to other users!</small>
-                        <input type="text" class="form-control" id="inputNickname" placeholder="" required>
+                    <div class="row mx-2 mt-2"> <!-- psw -->
+                        <div class="col-md-6">
+                            <label for="inputPassword">Password</label>
+                        <input type="password" class="form-control" id="inputPassword" style="background-color: white;" placeholder="" v-model="psw" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputRepeatPassword">Repeat Password</label>
+                            <input type="password" class="form-control" id="inputRepeatPassword" style="background-color: white;" placeholder="" v-model="psw_repeat" required>
+                            <p v-if="psw == psw_repeat && psw != ''" style="color:green">Passwords match!</p>
+                            <p v-if="psw != psw_repeat && psw_repeat !=''" style="color:red">Passwords do not match!</p>
+                        </div>
+                        
                     </div>
-                    <div class="row mx-2 mt-2"> <!-- phone num -->
-                            <label for="inputNumber">Phone Number</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroupPrepend">+65</span>
-                                </div>
-                                <input type="number" class="form-control" id="inputNumber" placeholder="" aria-describedby="inputGroupPrepend2" min="0" max="99999999" maxlength="8" minlength="8" required>
-                            </div>
+                        
+                    <div class="row mx-2 mt-2"> <!-- username-->
+                        <div class="col-md-6">
+                            <label for="inputUsername">Username</label>
+                            <p class="form-text">This is how we can uniquely identify you!</p>
+                            <input type="text" class="form-control w-100" id="inputUsername" placeholder="" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputNickname">Nickname</label>
+                            <p id="nicknameHelp" class="form-text text-muted">This is your name to other users!</p>
+                            <input type="text" class="form-control w-100" id="inputNickname" placeholder="" required>
+                        </div>
                     </div>
                     <div class="row mx-2 mt-2"> <!-- profile picture -->
-                    <label for="profilepicture">Profile Picture</label>
-                        <input type="file" class="form-control-file" id="profilepicture" required>
+                        <div class="col">
+                            <label for="profilePicture">Profile Picture</label>
+                        <input type="file" class="form-control w-100"  id="profilePicture" required>
+                        </div>
+                        
                     </div>
-
                     <div class="row mx-2 mt-2"> <!-- address -->
-                        <label for="inputAddress">Address</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="" required>
-                    </div>
-                    <div class="row mx-1 mt-2"> <!-- postal and region -->
-                        <div class="col-md-6">
-                        <label for="inputPostal">Postal Code</label>
-                        <input type="text" class="form-control" id="inputPostal" required>
-                        </div>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-5">
-                        <label for="inputRegion">Region</label>
-                        <select id="inputRegion" class="form-control" required>
-                            <option selected>North</option>
-                            <option>South</option>
-                            <option>East</option>
-                            <option>West</option>
-                            <option>Central</option>
-                        </select>
+                        <div class="col">
+                            <label for="inputAddress">Address</label>
+                            <input type="text" class="form-control w-100" id="inputAddress" placeholder="" required>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Sign up!</button>
+                    <div class="row mx-2 mt-2"> <!-- postal -->
+                        <div class="col-md-6">
+                            <label for="inputPostal">Postal Code</label>
+                            <input type="text" class="form-control w-50" id="inputPostal" required>
+                        </div>
+                        
+                    </div>
                     </form>
+
                     </div>
                     
                     <div class="col">
                         <div class="row mx-2 mt-2"><!-- profile desc-->
-                        <label for="inputDesc">Tell us more about yourself!</label> 
-                        <textarea class="form-control" id="inputDesc" rows="10"></textarea>
+                            <div class="col">
+                                <label for="inputDesc">Tell us more about yourself!</label> 
+                                <textarea class="form-control" id="inputDesc" rows="8"></textarea>
+                            </div>
                         </div>
                         <div class="row mx-2 mt-2">
                             <div class="col-sm-8"> <!-- services provided -->
@@ -149,7 +147,7 @@
                                     <div class="required-services my-2">
                                     <label class="me-2" for="petRate">Your Hourly Rates</label>
                                     <br>
-                                    <input class="form-input w-100" type="number" value="" id="petRate" min="0" max="50" >
+                                    <input class="form-input w-100" rounded type="number" value="" id="petRate" min="0" max="50" >
             
                                 </div>
                                 </div>
@@ -157,39 +155,40 @@
                                     <div class="required-services my-2">
                                     <label class="me-2" for="yearsofexp">Years of Experience</label>
                                     <br>
-                                    <input class="form-input w-100" type="number" value="" id="yearsofexp" min="0" max="50" >
+                                    <input class="form-input w-100" rounded type="number" value="" id="yearsofexp" min="0" max="50" >
                                 </div>
                                 </div>
                                 
                             </div>
                         </div>
-                        <div class="row mx-2 mt-2">
-                            <div class="required-services my-2">
-                                    <label class="me-2">Are you currently available for our pet owners to engage you?</label>
-                                    <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="avail" value="option1">
-                                        <label class="form-check-label" for="avail">Yes</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="unavail" value="option2">
-                                        <label class="form-check-label" for="unavail">No</label>
-                                        </div>
-                            </div>
-                        </div>
+                    
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-md-5"></div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-dark w-100">Sign up!</button>
+                        </div>
+                        <div class="col-md-5"></div>
+                        
+                    </div>
+                    </div>
             </div>
             </div>
             <div class="col-1 sides">
             </div>
 
         </div>
+        
         </div>
+        <footer>
+            <petpalsFooter></petpalsFooter>  
+        </footer>
+    
 </template>
 
 <script>
     import navbar from '@/components/navbar.vue'
+    import petpalsFooter from '@/components/petpalsFooter.vue'
 
     export default {
         data() {
@@ -201,6 +200,7 @@
         },
         components: {
             navbar, 
+            petpalsFooter
         }
     }
 
