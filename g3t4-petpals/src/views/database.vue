@@ -65,7 +65,7 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-
+ 
     // Import the functions needed to read from realtime database
     import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
 
@@ -75,6 +75,8 @@
     // get user info
     const myinfo = ref(db, `users/${myid}`)
 
+    // const CryptoJS = require("crypto-js");
+    import CryptoJS from "crypto-js"
 
     export default {
         
@@ -303,6 +305,24 @@
         //         var status = document.getElementById('status')
         //         status.innerText = 'create user unsuccessful'
         //     });
+
+        // (A) LOAD ENCRYPT LIBRARY
+        // const CryptoJS = require("crypto-js");
+        
+
+        // (B) SECRET KEY
+        var key = "secret";
+        var pwd = 'mypassword'
+
+        // (C) ENCRYPT
+        var cipher = CryptoJS.AES.encrypt(pwd, key);
+        cipher = cipher.toString();
+        console.log('my encrypted password: ' + cipher);
+
+        // (D) DECRYPT
+        var decipher = CryptoJS.AES.decrypt(cipher, key);
+        decipher = decipher.toString(CryptoJS.enc.Utf8);
+        console.log('my password: ' + decipher);
   
         }
     }

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "animejs": "^3.2.1",
+    "crypto-js": "^4.1.1",
     "firebase": "^9.12.1",
     "talkjs": "^0.15.5",
     "vue": "^3.2.38",

@@ -3,7 +3,7 @@
 .required {
     font-style: italic;
     color: #dfd1cd;
-}
+} 
 </style>
 
 <template>
@@ -35,7 +35,7 @@
     </div>
 
     <petpalsFooter></petpalsFooter>
-
+ 
 
 </template>
 
