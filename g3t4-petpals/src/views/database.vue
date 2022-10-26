@@ -49,8 +49,8 @@
     // const myphoto = 'https://talkjs.com/images/avatar-2.jpg'
 
     import navbar from '@/components/navbar.vue'
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
@@ -67,8 +67,7 @@
     const analytics = getAnalytics(app);
 
     // Import the functions needed to read from realtime database
-    import { getDatabase, ref, onValue, set, update, get, push} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
-
+    import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
 
     // connect to the realtime database
     const db = getDatabase(app);

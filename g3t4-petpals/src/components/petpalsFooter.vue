@@ -1,5 +1,5 @@
 <template>
-    <footer class="mt-5">
+    <footer >
         <p>&#169 PetPals 2022</p>
     </footer>
 </template>
