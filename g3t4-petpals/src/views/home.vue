@@ -64,7 +64,7 @@
     <div class="container-flex">
         <div class="row parallax-section">
             <div class="col-md-8 content">
-                <h2 class="headline fade-in-text" v-html="msg1"></h2>
+                <h2 class="headline" v-html="msg1"></h2>
                 <p>Entrust your pet with us and allow our experienced service providers to elevate your pet-owning experience. Join PetPals today and access these services offered by our providers!</p>
                 <h3 style="color:#f8f1ef">New to PetPals?</h3>
                 <div class="dropdown">
@@ -231,9 +231,6 @@
 
         <petpalsFooter></petpalsFooter>
     </div>
-    <FadeInOut entry="left" exit="left" :duration="500">
-        <h1>Fade in and out transition</h1>
-    </FadeInOut>
     
 </template>
  
@@ -241,10 +238,6 @@
 <script>
     import services from '@/components/services.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
-    import Vue3Transitions from 'vue3-transitions'
-    import { defineComponent, ref } from 'vue'
-    import { FadeInOut } from 'vue3-transitions'
-    import anime from "animejs/lib/anime.es.js"
     import { initializeApp } from "firebase/app";
     import { getAnalytics } from "firebase/analytics";
 
@@ -263,7 +256,7 @@
     const analytics = getAnalytics(app);
  
     // Import the functions needed to read from realtime database
-    import { getDatabase, onValue, set, update, get, push} from "firebase/database";
+    import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
     import CryptoJS from "crypto-js"
 
     // connect to the realtime database
@@ -283,29 +276,27 @@
 
         methods: {
             userLogin(){
-                var email = document.getElementById('email');
-                var username = document.getElementById('username')
-                var pwd = document.getElementById('pwd');
+                var email = document.getElementById('email').value;
+                // var username = document.getElementById('username')
+                var pwd = document.getElementById('pwd').value;
 
-                // (C) ENCRYPT
-                // var cipher = CryptoJS.AES.encrypt(pwd, 'default');
-                // cipher = cipher.toString();
-                // console.log('my encrypted password: ' + cipher);
-
-                // (D) DECRYPT
-                var decipher = CryptoJS.AES.decrypt(cipher, 'default');
-                decipher = decipher.toString(CryptoJS.enc.Utf8);
-                console.log('my password: ' + decipher);
-
-                get(ref(db,`users/${username}`))
+                get(ref(db,`users/${email}`))
                 .then((snapshot) => {
                   if (snapshot.exists()) {
-                    // console.log(snapshot.val());
-                    var decipher = CryptoJS.AES.decrypt(snapshot.val().password, 'default');
+                    console.log('user exists!');
+                    // var cipher = CryptoJS.AES.encrypt(pwd, 'default');
+                    // cipher = cipher.toString();
+                    // console.log('my encrypted password: ' + cipher);
+
+                    var decipher = CryptoJS.AES.decrypt(snapshot.val().hashedpwd, 'default');
                     decipher = decipher.toString(CryptoJS.enc.Utf8);
                     console.log('my password: ' + decipher);
                     if (decipher == pwd){
                         console.log('yay')
+                        window.location.href = `/search`
+
+                    }else{
+                        console.log('nay')
                     }
 
                   } else {
@@ -323,43 +314,11 @@
                 } else {
                     this.counter++;
                 }
-            },
-            textWrapper1(){
-                // var textWrapper1 = document.querySelector('.abt');
-                this.msg1 = this.msg1.replace(/\S/g, "<span class='letter'>$&</span>");
-              
-                anime.timeline({loop: true})
-                .add({
-                    targets: '.headline .letter',
-                    translateX: [40,0],
-                    translateZ: 0,
-                    opacity: [0,1],
-                    easing: "easeOutExpo",
-                    duration: 1200,
-                    delay: (el, i) => 500 + 30 * i
-                }).add({
-                    targets: '.headline .letter',
-                    translateX: [0,-30],
-                    opacity: [1,0],
-                    easing: "easeInExpo",
-                    duration: 1100,
-                    delay: (el, i) => 100 + 30 * i
-                });
             }
-        },
-        beforeMount() {
-            this.textWrapper1()
         },
         components: {
             services,
-            petpalsFooter,
-            FadeInOut
-        },
-        setup() {
-            const triggerFade = ref(false)
-            return {
-            triggerFade
-            }
+            petpalsFooter
         }
     }
 </script>
