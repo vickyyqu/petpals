@@ -51,6 +51,7 @@
     import navbar from '@/components/navbar.vue'
     import { initializeApp } from "firebase/app";
     import { getAnalytics } from "firebase/analytics";
+    import { getAuth } from "firebase/auth";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
@@ -65,9 +66,25 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
+    // const auth = getAuth(app);
  
     // Import the functions needed to read from realtime database
     import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
+    import { createUserWithEmailAndPassword } from "firebase/auth";
+
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth,'abc@gmail.com', '12345')
+    .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log(user.email)
+        // ...
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+    });
 
     // connect to the realtime database
     const db = getDatabase(app);
@@ -310,19 +327,19 @@
         // const CryptoJS = require("crypto-js");
         
 
-        // (B) SECRET KEY
-        var key = "secret";
-        var pwd = 'mypassword'
+        // // (B) SECRET KEY
+        // var key = "secret";
+        // var pwd = 'mypassword'
 
-        // (C) ENCRYPT
-        var cipher = CryptoJS.AES.encrypt(pwd, key);
-        cipher = cipher.toString();
-        console.log('my encrypted password: ' + cipher);
+        // // (C) ENCRYPT
+        // var cipher = CryptoJS.AES.encrypt(pwd, key);
+        // cipher = cipher.toString();
+        // console.log('my encrypted password: ' + cipher);
 
-        // (D) DECRYPT
-        var decipher = CryptoJS.AES.decrypt(cipher, key);
-        decipher = decipher.toString(CryptoJS.enc.Utf8);
-        console.log('my password: ' + decipher);
+        // // (D) DECRYPT
+        // var decipher = CryptoJS.AES.decrypt(cipher, key);
+        // decipher = decipher.toString(CryptoJS.enc.Utf8);
+        // console.log('my password: ' + decipher);
   
         }
     }
