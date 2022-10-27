@@ -44,7 +44,7 @@
     </div>
 
     <petpalsFooter></petpalsFooter>
-
+ 
 
 </template>
 
