@@ -5,7 +5,7 @@
         <div v-show="modalActive" class="modal-inner">
           <!-- Modal Content -->
           <slot/>
-          <button @click="close" type="button" style="width: 50%; margin-left: 25%; margin-top: 20px;">Close</button>
+          <button @click="close" type="btn btn-light" style="width: 50%; margin-left: 25%; margin-top: 20px;">Close</button>
         </div>
       </transition>
     </div>
@@ -72,20 +72,6 @@ export default {
     background-color: #fff;
     padding: 64px 16px;
 
-    button {
-      background-color: #9C796A;
-      width: 150px;
-      height: 40px;
-      color: white;
-      font-size: 14px;
-      border-radius: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color:#F8AA9D;
-      border-color: #F8AA9D;
-    }
   }
 }
 </style>

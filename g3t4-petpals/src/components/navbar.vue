@@ -5,6 +5,7 @@
         position: fixed;
         margin:0;
         z-index: 1000;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
         
     }
 

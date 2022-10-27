@@ -67,7 +67,7 @@
                 <h2 class="headline fade-in-text" v-html="msg1"></h2>
                 <p>Entrust your pet with us and allow our experienced service providers to elevate your pet-owning experience. Join PetPals today and access these services offered by our providers!</p>
                 <h3 style="color:#f8f1ef">New to PetPals?</h3>
-                <div class="dropdown">
+                <div class="dropdown mt-4">
                     <button class="btn dropbtn btn-light">Register Here</button>
                     <div id="myDropdown" class="dropdown-content">
                         <router-link to="/registerowner">I am a pet owner.</router-link>
@@ -231,9 +231,6 @@
 
         <petpalsFooter></petpalsFooter>
     </div>
-    <FadeInOut entry="left" exit="left" :duration="500">
-        <h1>Fade in and out transition</h1>
-    </FadeInOut>
     
 </template>
 
@@ -241,10 +238,6 @@
 <script>
     import services from '@/components/services.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
-    import Vue3Transitions from 'vue3-transitions'
-    import { defineComponent, ref } from 'vue'
-    import { FadeInOut } from 'vue3-transitions'
-    import anime from "animejs/lib/anime.es.js"
 
     export default {
         data() {
@@ -265,43 +258,12 @@
                 } else {
                     this.counter++;
                 }
-            },
-            textWrapper1(){
-                // var textWrapper1 = document.querySelector('.abt');
-                this.msg1 = this.msg1.replace(/\S/g, "<span class='letter'>$&</span>");
-              
-                anime.timeline({loop: true})
-                .add({
-                    targets: '.headline .letter',
-                    translateX: [40,0],
-                    translateZ: 0,
-                    opacity: [0,1],
-                    easing: "easeOutExpo",
-                    duration: 1200,
-                    delay: (el, i) => 500 + 30 * i
-                }).add({
-                    targets: '.headline .letter',
-                    translateX: [0,-30],
-                    opacity: [1,0],
-                    easing: "easeInExpo",
-                    duration: 1100,
-                    delay: (el, i) => 100 + 30 * i
-                });
             }
         },
-        beforeMount() {
-            this.textWrapper1()
-        },
+        
         components: {
             services,
-            petpalsFooter,
-            FadeInOut
-        },
-        setup() {
-            const triggerFade = ref(false)
-            return {
-            triggerFade
-            }
+            petpalsFooter
         }
     }
 </script>
