@@ -12,7 +12,7 @@
         </div>
         
         <div ref="talkjs" style="width: 100%; height: 600px;" class = 'my-5 py-5'> 
-            <i class="m-5" style="color: #4b3830;font-family: 'Figtree';">Loading chat...</i>
+            <i class="m-5" style="color: #4b3830; font-family: 'Figtree';">Loading chat...</i>
         </div>
     </div>
 
@@ -27,8 +27,8 @@
     import navbar from '@/components/navbar.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
     import Talk from 'talkjs';
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
@@ -45,7 +45,7 @@
     const analytics = getAnalytics(app);
 
     // Import the functions needed to read from realtime database
-    import { getDatabase, ref, onValue, set, update, get} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+    import { getDatabase, ref, get} from "firebase/database";
 
     // connect to the realtime database
     const db = getDatabase(app);
