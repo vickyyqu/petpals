@@ -1,28 +1,30 @@
 <template>
-    <navbar></navbar>
-    <div class="profile-page">
+    
+    
+    <div class="container-fluid profile-page">
+        <navbar></navbar>
         <div class="profile-container">
             
             <!--Left column-->
             <div class="profile-info">
                 <div class="container">
-                    <div class="row-image">
-                        <img src="../img/dog.jpeg" style="border-radius:50%; width:300px; height:200px;">
+                    <button @click="toggleModal" class="btn btn-go"><i class="bi bi-pencil-square"></i></button><div class="row-image "> 
+                        <img src="../img/sitter.png" class="rounded rounded-circle">
                     </div>
 
                     <br>
 
                     <div class="row">
-                        <h2>Hello <div class="username">{USERNAME}</div></h2>  
+                        <h2>Hello <div class="username">{{username}}</div></h2>  
                         <hr>
-                        <p>{pet service owner/provider}</p>
+                        <p>{pet owner/pet service provider}</p>         
                     </div>    
 
                     <br>
 
                     <div class="row">
                         <div class="bio">
-                            <h4>Bio &nbsp;<button v-on:click="changeMessage('custom message')" type="button" class="bio-btn"><i class="bi bi-pencil-square"></i></button></h4>
+                            <h4>Bio</h4>
                             <p class="bio-message">{{message}}</p>
                             
                         </div>
@@ -44,6 +46,7 @@
                     </vueper-slides>
                     </div>
                 </div>
+
             <!--Right column-->
             <div class="profile-about">
                 <img src="../img/animallogo/doglogo2.png">&nbsp;<img src="../img/animallogo/catlogo2.png">&nbsp;<img src="../img/animallogo/rabbitlogo2.png">&nbsp;<img src="../img/animallogo/guineapiglogo2.png">&nbsp;<img src="../img/animallogo/birdlogo2.png">
@@ -67,6 +70,32 @@
         
     </div>
 
+    <!--Edit Profile page-->
+    <Modal @close="toggleModal" :modalActive="modalActive">
+        <div class="modal-content">
+            <br>
+
+            Username: <input type="text" id="username" v-model="username">
+            <br>
+
+            Bio: <textarea rows="4" cols="10" id="bio" v-model="message"></textarea> 
+            <br>
+       
+            <div class="form-group">
+                <label class="" for="petowner">
+                <input type="checkbox" name="checkboxes" id="petowner" value="Pet Owner">
+                Pet Owner &nbsp;
+                </label>
+
+                <label class="" for="petserviceprovider">
+                <input type="checkbox" name="checkboxes" id="petserviceprovider" value="Pet Service Provider">
+                Pet Service Provider
+                </label>
+            </div>       
+        </div>          
+    </Modal>
+
+    <petpalsFooter></petpalsFooter>
 </template>
   
 <script>
@@ -75,15 +104,21 @@
     import Tab from '../components/Tab.vue';
     import { VueperSlides, VueperSlide } from 'vueperslides'
     import Post from "../components/Post.vue";
-    
+    import Modal from '../components/Modal.vue'
+    import { ref } from "vue";
+    import petpalsFooter from "../components/petpalsFooter.vue"
 
     export default {
         name: "profile",
         components: {
-            navbar, TabNav, Tab, VueperSlides, VueperSlide, Post, 
+            navbar, TabNav, Tab, VueperSlides, VueperSlide, Post, Modal, petpalsFooter
         },
         data() {
             return {
+
+                // Current Username
+                username: 'My username',
+
                 // Selected tab
                 selected: 'My Bookings',
 
@@ -93,16 +128,18 @@
                 // My pets info
                 slides: [
                     {
-                        title: 'Petname1',
+                        petname: 'Petname1',
                         content: ['Image of pet1', 
                         'age', 
-                        'breed']
+                        'breed',
+                        'description']
                     },
                     {
-                        title: 'Petname2',
+                        petname: 'Petname2',
                         content: ['Image of pet2', 
                         'age',
-                        'breed']
+                        'breed',
+                        'description']
                     }
                 ],
 
@@ -159,7 +196,15 @@
                 // Reviews list scrolling 
                 this.user_list = this.getuser();
                 window.addEventListener("scroll", this.handleScroll);
-            }
+        },
+        
+        setup() {
+            const modalActive = ref(false);
+            const toggleModal = () => {
+            modalActive.value = !modalActive.value;
+      };
+      return { modalActive, toggleModal };
+    },
     }
     
 </script>
@@ -172,7 +217,7 @@
 
 .profile-page {
         margin:0;
-        padding-top:50px;
+        // padding-top:50px;
         align-items: center;
         justify-content: center;
 }
@@ -253,4 +298,25 @@
     width: 100%;
 }
 
+img.rounded {
+  object-fit: cover;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
+
+.modal-content {
+      display: flex;
+      flex-direction: column;
+      h1,
+      p {
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-size: 32px;
+      }
+      p {
+        font-size: 18px;
+      }
+    }
 </style>
