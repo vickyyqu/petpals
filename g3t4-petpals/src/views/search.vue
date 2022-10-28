@@ -221,7 +221,7 @@ export default {
                                 
                             });
 
-                            this.filterResults.push(item) // sorted by service
+                            this.filterResults.push(item) // sorted by service by default
                         }
 
                     }

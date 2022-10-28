@@ -31,13 +31,13 @@
                     <div class="row mt-2"> <!-- email and username-->
                         <div class="col-md-6">
                             <label for="inputEmail">Email</label>
-                            <input type="email" class="form-control w-100" id="inputEmail" style="background-color:white;" placeholder="" required>
+                            <input type="email" v-model = 'email' class="form-control w-100" id="inputEmail" style="background-color:white;" placeholder="" required>
                         </div>
                         <div class="col-md-6">
                             <!-- <label for="inputUsername">Username</label>
                             <input type="text" class="form-control w-100" id="inputUsername" placeholder="" required> -->
                             <label for="inputNumber">Phone Number</label>
-                            <input type="text" class="form-control w-100" id="inputNumber" placeholder="" aria-describedby="inputGroupPrepend2" min="0" max="99999999" maxlength="8" minlength="8" required>
+                            <input type="text" v-model = 'mobile' class="form-control w-100" id="inputNumber" placeholder="" aria-describedby="inputGroupPrepend2" min="0" max="99999999" maxlength="8" minlength="8" required>
                         
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                         <div class="col-md-6">
                             <label for="inputUsername">Username</label>
                             <p class="form-text">This is how we can uniquely identify you!</p>
-                            <input type="text" class="form-control w-100" id="inputUsername" placeholder="" required>
+                            <input type="text" v-model='username' class="form-control w-100" id="inputUsername" placeholder="" required>
                         </div>
                         <div class="col-md-6">
                             <label for="inputNickname">Nickname</label>
@@ -72,7 +72,7 @@
                     <div class="row mt-2"> <!-- profile picture -->
                         <div class="col">
                             <label for="profilePicture">Profile Picture</label>
-                        <input type="file" class="form-control w-100"  id="profilePicture" required>
+                        <input type="file"  class="form-control w-100"  id="profilePicture" required>
                         </div>
                         
                     </div>
@@ -131,8 +131,10 @@
             return {
                 psw: '',
                 psw_repeat: '',
-                numPets: 1,
-                petname: 'Your Pet'
+                numPets: 1, // do we still need this?
+                petname: 'Your Pet', // do we still need this?
+                email : '',
+
             }
         },
         components: {
