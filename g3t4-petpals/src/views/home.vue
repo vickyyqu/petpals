@@ -259,6 +259,7 @@
     // Import the functions needed to read from realtime database
     import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
     import CryptoJS from "crypto-js"
+    
 
     // connect to the realtime database
     const db = getDatabase(app);
@@ -295,7 +296,7 @@
                     console.log('my password: ' + decipher);
                     if (decipher == pwd){
                         console.log('yay')
-                        window.location.href = `/search`
+                        window.location.href = `/search`;
 
                     }else{
                         console.log('nay')
