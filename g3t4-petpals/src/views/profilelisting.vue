@@ -6,7 +6,7 @@
             <h6>Add Your Pet Service</h6>
         </div>
 
-        <div class="input-row">
+        <div class="row">
             <div class="input-container">
             <div class="row">
             <div>Services provided:</div> 
@@ -74,12 +74,12 @@
             </div>
             </div>
 
-            <div class="input-row">
+            <!-- <div class="input-row">
             <div class="input-container">
                 <label for="number">Number of pets you are willing to take in</label>
                 <input type="number" min="1" max="7" v-model="number">
             </div>
-            </div>
+            </div> -->
 
         <div class="input-container">
             <label>Types of pets you accept</label>
@@ -132,6 +132,7 @@
         </div>
         
         <div class="input-row">
+            
             <div class="input-container">
             <label for="petTypes">Size of pets you accept</label>
                 <select name="number" id="size" v-model="sizeofpet" style="height:30px;">
@@ -144,52 +145,55 @@
             </div>
 
             <div class="input-container">
-            <label for="rate">What is your rate SGD (per day)</label>
-                <input type="number" min="0" max="1000" v-model="rate">
+                <label  for="yearsofexp">Years of Experience</label>
+                <input type="number" id="yearsofexp" min="0" max="50" >
             </div>
+
+            <div class="input-container">
+            <label for="rate">What is your rate SGD (per hour)</label>
+                <input type="number" min="0" max="1000" v-model="rate">
+            </div>       
         </div>
+
+        <div class="container" style="text-align: center;"><button @click="toggleModal" class="btn btn-go">Submit</button></div>   
         </div>
-        <div class="input-container" style="text-align: center; margin-left: 42%; margin-top: 10px;"><button @click="toggleModal" type="button">Submit</button></div>   
     </div>
 
     <Modal @close="toggleModal" :modalActive="modalActive">
-        <div class="modal-content" style="text-align: center;">
-            <img class="check" src="../img/check-icon.png" /> <br>
-            <h2>Submitted!</h2>        
-        </div>
+        <h2 style="text-align:center">Submitted!</h2>            
     </Modal>
     
-
+    <petpalsFooter></petpalsFooter>
 </template>
     
 <script>
     import Modal from '../components/Modal.vue'
     import navbar from '../components/navbar.vue'
     import { ref } from "vue";
+    import petpalsFooter from "../components/petpalsFooter.vue"
     
     export default {
-    name: "profilelisting",
-    components: {
-        Modal, navbar
-    },
-    data() {
-            return {
-            showModal: false,
-            services: [],
-            description: '',
-            number: 1,
-            typeofpet: [],
-            sizeofpet:'',
-            rate: 0,
-            }
+        name: "profilelisting",
+        components: {
+            Modal, navbar, petpalsFooter, petpalsFooter
         },
-    setup() {
-        const modalActive = ref(false);
-        const toggleModal = () => {
-        modalActive.value = !modalActive.value;
-        };
-        return { modalActive, toggleModal };
-    },
+        data() {
+                return {
+                showModal: false,
+                services: [],
+                description: '',
+                typeofpet: [],
+                sizeofpet:'',
+                rate: 0,
+                }
+            },
+        setup() {
+            const modalActive = ref(false);
+            const toggleModal = () => {
+            modalActive.value = !modalActive.value;
+            };
+            return { modalActive, toggleModal };
+        },
     };
 </script>
     
@@ -215,23 +219,7 @@
       font-size: 25px;
       font-weight: 500;
     }
-    
-    button {
-        background-color: #9C796A;
-        width: 150px;
-        height: 40px;
-        color: white;
-        font-size: 14px;
-        border-radius: 16px;
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-    }
 
-    button:hover {
-        background-color:#F8AA9D;
-        border-color: #F8AA9D;
-    }
-    
     label {
         margin-bottom: 10px;
     }
@@ -246,11 +234,6 @@
       display: flex;
       flex-direction: column;
       margin-bottom: 30px;
-    }
-    
-    .save-btn {
-      text-align: center;
-      margin-top: 50px;
     }
 
 </style>

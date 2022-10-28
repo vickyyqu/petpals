@@ -67,7 +67,7 @@
                 <h2 class="headline" v-html="msg1"></h2>
                 <p>Entrust your pet with us and allow our experienced service providers to elevate your pet-owning experience. Join PetPals today and access these services offered by our providers!</p>
                 <h3 style="color:#f8f1ef">New to PetPals?</h3>
-                <div class="dropdown">
+                <div class="dropdown mt-4">
                     <button class="btn dropbtn btn-light">Register Here</button>
                     <div id="myDropdown" class="dropdown-content">
                         <router-link to="/registerowner">I am a pet owner.</router-link>
@@ -238,6 +238,7 @@
 <script>
     import services from '@/components/services.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
+
     import { initializeApp } from "firebase/app";
     import { getAnalytics } from "firebase/analytics";
 
@@ -262,6 +263,7 @@
 
     // connect to the realtime database
     const db = getDatabase(app);
+
 
     export default {
         data() {
@@ -317,6 +319,7 @@
                 }
             }
         },
+
         components: {
             services,
             petpalsFooter

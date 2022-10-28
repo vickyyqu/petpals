@@ -93,10 +93,9 @@ h4,
 h5,
 h6 {
     font-size: 1.0em;
-    line-height: .5em;
 }
 
-p, label{
+p, label, small{
     color: #4b3830;
     font-family: 'Figtree', Helvetica, Arial, sans-serif;
 }
@@ -291,7 +290,6 @@ Buttons
 .btn {
     position: relative;
     display: inline-block;
-    margin-top:20px;
     padding: .6em 1.6em;
     font-size: 1.0em;
     font-family: 'Figtree';
@@ -301,7 +299,7 @@ Buttons
     border-radius: 30px;
 }
 
-.openbtn:hover,  .btn-light:hover, .btn-dark:hover, .btn-go:hover, .homebtn:hover{
+.openbtn:hover,  .btn-light:hover, .btn-dark:hover, .btn-go:hover, .homebtn:hover, .btn-select:hover{
     background-color:#F8AA9D;
     border-color: #F8AA9D;
     color: #fff;
@@ -330,6 +328,12 @@ Buttons
 
 .btn-go {
     background-color: #dfd1cd;
+    color: #9C796A;
+    border-color: #f8f1ef;
+}
+
+.btn-select {
+    background-color: #efe2de;
     color: #9C796A;
     border-color: #f8f1ef;
 }
