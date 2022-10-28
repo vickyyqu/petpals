@@ -6,7 +6,7 @@
           <i @click="close" class="far fa-times-circle"></i>
           <!-- Modal Content -->
           <slot />
-          <button @click="close" class="btn btn-light" style="width: 50%; margin-left: 25%; margin-top: 20px;">Done</button>
+          <button @click="close" class="btn btn-go" style="width: 50%; margin-left: 25%; margin-top: 20px;">Done</button>
         </div>
       </transition>
     </div>
@@ -71,21 +71,7 @@ export default {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     background-color: #fff;
     padding: 64px 16px;
-  }
-
-  button {
-    background-color: #9C796A;
-    width: 150px;
-    height: 40px;
-    color: white;
-    font-size: 14px;
-    border-radius: 16px;
-    cursor: pointer;
-  }
-
-  button:hover {
-    background-color:#F8AA9D;
-    border-color: #F8AA9D;
+    border-radius:15px;
   }
 }
 </style>

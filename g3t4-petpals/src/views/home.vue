@@ -35,6 +35,11 @@
     100% { opacity: 1; }
   }
 
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+  }
+
 </style>
 
 <template>
@@ -64,7 +69,7 @@
     <div class="container-flex">
         <div class="row parallax-section">
             <div class="col-md-8 content">
-                <h2 class="headline" v-html="msg1"></h2>
+                <h2 class="headline fade-in-text" v-html="msg1"></h2>
                 <p>Entrust your pet with us and allow our experienced service providers to elevate your pet-owning experience. Join PetPals today and access these services offered by our providers!</p>
                 <h3 style="color:#f8f1ef">New to PetPals?</h3>
                 <div class="dropdown mt-4">
@@ -87,7 +92,7 @@
                         <div class="mb-3">
                         <label for="pwd" class="form-label">Enter your password:</label>
                         <input type="password" class="form-control" id="pwd">
-                        <a href="#">Forgot password?</a>
+                        <a href="#" @click="toggleModal">Forgot password?</a>
                         </div>
 
                         <div class="login-btn">
@@ -229,6 +234,30 @@
             </div>
         </div>
 
+        <Modal @close="toggleModal" :modalActive="modalActive">
+            <div class="modal-content">
+                <br>
+    
+                Username: <input type="text" id="username">
+                <br>
+    
+                Bio: <textarea rows="4" cols="10" id="bio"></textarea> 
+                <br>
+           
+                <div class="form-group">
+                    <label class="" for="petowner">
+                    <input type="checkbox" name="checkboxes" id="petowner" value="Pet Owner">
+                    Pet Owner &nbsp;
+                    </label>
+    
+                    <label class="" for="petserviceprovider">
+                    <input type="checkbox" name="checkboxes" id="petserviceprovider" value="Pet Service Provider">
+                    Pet Service Provider
+                    </label>
+                </div>       
+            </div>          
+        </Modal>
+
         <petpalsFooter></petpalsFooter>
     </div>
     
@@ -236,9 +265,9 @@
  
 
 <script>
-    import services from '@/components/services.vue'
-    import petpalsFooter from '@/components/petpalsFooter.vue'
-
+    import services from '@/components/services.vue';
+    import petpalsFooter from '@/components/petpalsFooter.vue';
+    import Modal from '../components/Modal.vue';
     import { initializeApp } from "firebase/app";
     import { getAnalytics } from "firebase/analytics";
 
@@ -319,10 +348,17 @@
                 }
             }
         },
-
         components: {
             services,
-            petpalsFooter
-        }
+            petpalsFooter,
+            Modal
+        },
+        // setup() {
+        //     const modalActive = ref(false);
+        //     const toggleModal = () => {
+        //     modalActive.value = !modalActive.value;
+        //     };
+        //     return { modalActive, toggleModal };
+        // }
     }
 </script>
