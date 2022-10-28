@@ -89,7 +89,10 @@ h3 {
     font-style: italic;
 }
 
-h4,
+h4{
+    font-size: 1.3em;
+}
+
 h5,
 h6 {
     font-size: 1.0em;
