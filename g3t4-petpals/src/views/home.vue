@@ -111,19 +111,22 @@
                             <input type="email" class="form-control" v-model = 'email' id="email">
                         </div>
 
-                        <div class="mb-3">
+                        <div class="">
                             <label for="pwd" class="form-label">Enter your password:</label>
-                            <input type="password" class="form-control" v-model = 'pwd' id="pwd">
+                            <input type="password" class="form-control" id="pwd">
                             <button class="btn p-0" style="background-color:transparent; border-color:transparent; font-size:12px; color:#F8AA9D" @click="forgot=true">Forgot password?</button>
                         </div>
-                        
-                        <div class="mb-3" v-if='loginError'>
-                            <p>{{errorMsg}}</p>
+
+                        <div v-if="loginError" class="text-center mt-2">
+                            <small style="font-style:italic; color:brown">{{errorMsg}}</small>
                         </div>
 
                         <div class="login-btn">
-                            <button class="btn login-btn btn-dark" v-on:click="userLogin()">Login</button>
+                            <button class="btn login-btn btn-dark mt-3" v-on:click="userLogin()">Login</button>
                         </div>
+
+                       
+
                     </div>
                 </div>
 
@@ -302,11 +305,12 @@
                 .catch((error) => {
                     const errorCode = error.code;
                     let msg = error.message.slice(22,(error.message.length)-2)
-
                     if (msg == 'wrong-password'){
-                        this.errorMsg = 'password is invalid'
+                        this.errorMsg = 'Password is invalid. Please try again.'
                     }else if (msg == 'user-not-found'){
-                        this.errorMsg = 'email is invalid. please register for an account.'
+                        this.errorMsg = 'No account registered. Please register for one first.'
+                    } else if (msg == 'invalid-email'){
+                        this.errorMsg = 'Email is invalid. Please enter a valid email address.'
                     }
                     this.loginError = true
                 });
