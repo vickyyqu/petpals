@@ -1,6 +1,6 @@
 <template>
 
-    <div class="card pb-3">
+    <div class="card mb-3">
         <div class="d-flex align-items-center mt-3 mx-3" >
 
             <div class="d-flex justify-content-start align-items-center">

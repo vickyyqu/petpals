@@ -12,7 +12,7 @@
 </style>
 
 <template>
-    <div v-if=sent class="col-xl-3 col-md-6 pt-3">
+    <div v-if="sent" class="col-xl-3 col-md-6 pt-3">
         <div class="card">
             <div class="d-flex align-items-center mt-3 mx-3">
 
@@ -59,7 +59,7 @@
         <button class="btn mx-5 my-3 btn-select" @click="sent = false">Send Request</button>
     </div>
 
-    <div v-else class="col-xl-3 col-md-6 p-3">
+    <div v-else class="col-xl-3 col-md-6 pt-3">
         <div class="card card-sent" style="background-color: #f8f1ef;">
             <div class="d-flex align-items-center mt-3 mx-3">
 
