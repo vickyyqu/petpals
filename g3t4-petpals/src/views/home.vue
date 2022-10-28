@@ -83,16 +83,35 @@
 
             <div class="col-md-4 content-login">
                 <div class="box">
-                    <div class="login">
+                    <div v-if="forgot" class="login">
+                        <h3>Reset Password</h3>
+                        <div class="my-3">
+                            <label for="email" class="form-label"> Enter your email:</label>
+                            <input type="email" class="form-control" id="email">
+                            <div v-if="emailSent">
+                                <small style="font-style:italic; color:brown" class="text-center py-4">Email sent!</small>
+                            </div>
+                            <small v-else style="font-style:italic" class="pt-2">*An email will be sent to your inbox to reset your password.</small>
+                        </div>
+
+
+                        <div class="login-btn mt-2">
+                            <button class="btn login-btn btn-dark" @click="emailSent=true">Confirm</button>
+                        </div>
+
+                    </div>
+
+                    <div v-else class="login">
                         <h3>Login</h3>
                         <div class="my-3">
                             <label for="email" class="form-label"> Enter your email:</label>
                             <input type="email" class="form-control" id="email">
                         </div>
+
                         <div class="mb-3">
                             <label for="pwd" class="form-label">Enter your password:</label>
                             <input type="password" class="form-control" id="pwd">
-                            <router-link to="/forgotpwd" @click = 'toggleModal'>Forgot password?</router-link>
+                            <button class="btn p-0" style="background-color:transparent; border-color:transparent; font-size:12px; color:#F8AA9D" @click="forgot=true">Forgot password?</button>
                         </div>
                         
                         <div class="mb-3" v-if='loginError'>
@@ -238,30 +257,6 @@
             </div>
         </div>
 
-        <Modal @close="toggleModal" :modalActive="modalActive">
-            <div class="modal-content">
-                <br>
-    
-                Username: <input type="text" id="username">
-                <br>
-    
-                Bio: <textarea rows="4" cols="10" id="bio"></textarea> 
-                <br>
-           
-                <div class="form-group">
-                    <label class="" for="petowner">
-                    <input type="checkbox" name="checkboxes" id="petowner" value="Pet Owner">
-                    Pet Owner &nbsp;
-                    </label>
-    
-                    <label class="" for="petserviceprovider">
-                    <input type="checkbox" name="checkboxes" id="petserviceprovider" value="Pet Service Provider">
-                    Pet Service Provider
-                    </label>
-                </div>       
-            </div>          
-        </Modal>
-
         <petpalsFooter></petpalsFooter>
     </div>
     
@@ -271,7 +266,6 @@
 <script>
     import services from '@/components/services.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
-    import Modal from '../components/Modal.vue';
     import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
     
     export default {
@@ -283,7 +277,9 @@
                 png: {'Pet Walking': 'src/img/png/walker.png', 'Pet Grooming': 'src/img/png/groomer.png', 'Pet Hotels': 'src/img/png/hotel.png', 'Pet Sitters': 'src/img/png/sitter.png', 'Pet Trainers': 'src/img/png/trainer.png', 'Pet Transport': 'src/img/png/catincar.png'},
                 msg1: "Bringing the best pet service providers to you",
                 loginError: false,
-                errorMsg: ''
+                errorMsg: '',
+                forgot: false,
+                emailSent: false
             
             }
         },
@@ -325,15 +321,7 @@
         },
         components: {
             services,
-            petpalsFooter,
-            Modal
-        },
-        // setup() {
-        //     const modalActive = ref(false);
-        //     const toggleModal = () => {
-        //     modalActive.value = !modalActive.value;
-        //     };
-        //     return { modalActive, toggleModal };
-        // }
+            petpalsFooter
+        }
     }
 </script>
