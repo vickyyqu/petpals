@@ -156,8 +156,6 @@
                 username : '',
                 mobile : '',
                 pic : 'https://cdn-icons-png.flaticon.com/512/2102/2102647.png',
-                // desc : '',
-                // yrsOfExp : '',
             }
         },
         components: {
@@ -193,29 +191,20 @@
                             profilepic : this.pic,
                             mobile: this.mobile,
                             type: 'Pet Owner',
-                            // desc: this.desc,
-                            // yrsOfExp : this.yrsOfExp,
                             address: this.address,
                             postalcode : this.postal,
                             ratings : 0, //by default
                         })
-                        .then(() => {
-                            console.log('user added successfully')
-
-                            signInWithEmailAndPassword(auth, this.email, this.psw)
-                            .then((user) => {
-                                window.location.href = `/search`;
-                            })
-                            .catch((error) => {
-                                // const errorCode = error.code;
-                                const errorMessage = error.message.slice(22,(error.message.length)-2)
-                                console.log(errorMessage)
-                            })
-
+                        
+                        signInWithEmailAndPassword(auth, this.email, this.psw)
+                        .then((user) => {
+                            window.location.href = `/search`;
                         })
                         .catch((error) => {
-                            console.log('add user unsuccessful')
-                        });  
+                            // const errorCode = error.code;
+                            const errorMessage = error.message.slice(22,(error.message.length)-2)
+                            console.log(errorMessage)
+                        })
 
 
                     })
