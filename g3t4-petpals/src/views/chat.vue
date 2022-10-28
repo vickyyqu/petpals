@@ -80,7 +80,7 @@
                             me: me,
                         });
 
-                        if (newConvo){
+                        if (this.newConvo){
                             get(ref(db,`users/${otherid}`))
                             .then((snapshot) => {
                                 if (snapshot.exists()) {

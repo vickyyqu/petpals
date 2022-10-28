@@ -72,20 +72,20 @@
                     <div class="row mt-2"> <!-- profile picture -->
                         <div class="col">
                             <label for="profilePicture">Profile Picture</label>
-                        <input type="file"  class="form-control w-100"  id="profilePicture" required>
+                        <input type="file" @change = 'getPic' class="form-control w-100" id="profilePicture" required>
                         </div>
                         
                     </div>
                     <div class="row mt-2"> <!-- address -->
                         <div class="col">
                             <label for="inputAddress">Address</label>
-                            <input type="text" class="form-control w-100" id="inputAddress" placeholder="" required>
+                            <input type="text" v-model = 'address' class="form-control w-100" id="inputAddress" placeholder="" required>
                         </div>
                     </div>
                     <div class="row mt-2"> <!-- postal -->
                         <div class="col-md-6">
                             <label for="inputPostal">Postal Code</label>
-                            <input type="text" class="form-control w-50" id="inputPostal" required>
+                            <input type="text" v-model = 'postal' class="form-control w-50" id="inputPostal" required>
                         </div>
                        
                     </div>
@@ -98,7 +98,7 @@
                     <div class="row"> <!-- submit -->
                         <div class="col-4"></div>
                         <div class="col-4">
-                            <button type="submit" class="btn btn-dark" >Sign up!</button>
+                            <button class="btn btn-dark" v-on:click="registerUser()">Sign up!</button>
                         </div>
                         <div class="col-4"></div>
                     </div>
@@ -124,6 +124,23 @@
 <script>
     import navbar from '@/components/navbar.vue'
     import petprofile from '@/components/petprofile.vue'
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "firebase/auth";
+    import { initializeApp } from "firebase/app";
+    import { getDatabase, ref, set } from "firebase/database";
+
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+        authDomain: "petpals-623e3.firebaseapp.com",
+        projectId: "petpals-623e3",
+        storageBucket: "petpals-623e3.appspot.com",
+        messagingSenderId: "949038254831",
+        appId: "1:949038254831:web:82d399649bb06e8389e91a",
+        databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
 
     export default {
@@ -134,12 +151,82 @@
                 numPets: 1, // do we still need this?
                 petname: 'Your Pet', // do we still need this?
                 email : '',
-
+                postal : '',
+                address : '',
+                username : '',
+                mobile : '',
+                pic : 'https://cdn-icons-png.flaticon.com/512/2102/2102647.png',
+                // desc : '',
+                // yrsOfExp : '',
             }
         },
         components: {
             navbar, 
             petprofile
+        },
+
+        methods : {
+            getPic(event){
+                const files = event.target.files
+                if (!files.length) return 
+
+                const reader = new FileReader()
+                reader.readAsDataURL(files[0])
+                reader.onload = () => (this.pic = reader.result)
+
+                // console.log(this.pic)
+            },
+
+            registerUser(){
+                const auth = getAuth();
+                if (this.psw == this.psw_repeat && this.psw != '' && this.email != '' && this.postal != '' && this.address != '' && this.username != '' && this.mobile != ''){
+                    createUserWithEmailAndPassword(auth,this.email, this.psw)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        console.log('user created!')
+                        updateProfile(auth.currentUser, {
+                            displayName: this.username , photoURL: this.pic
+                        })
+
+                        set(ref(db, `users/${user.uid}`), {
+                            username: this.username,
+                            profilepic : this.pic,
+                            mobile: this.mobile,
+                            type: 'Pet Owner',
+                            // desc: this.desc,
+                            // yrsOfExp : this.yrsOfExp,
+                            address: this.address,
+                            postalcode : this.postal,
+                            ratings : 0, //by default
+                        })
+                        .then(() => {
+                            console.log('user added successfully')
+
+                            signInWithEmailAndPassword(auth, this.email, this.psw)
+                            .then((user) => {
+                                window.location.href = `/search`;
+                            })
+                            .catch((error) => {
+                                // const errorCode = error.code;
+                                const errorMessage = error.message.slice(22,(error.message.length)-2)
+                                console.log(errorMessage)
+                            })
+
+                        })
+                        .catch((error) => {
+                            console.log('add user unsuccessful')
+                        });  
+
+
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                    });     
+                    
+                }
+
+            }
         }
     }
 

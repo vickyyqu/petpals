@@ -293,8 +293,8 @@
                 const auth = getAuth();
                 signInWithEmailAndPassword(auth, email, pwd)
                 .then((userCredential) => {
-                    const user = userCredential.user;
-                    console.log(user)
+                    // const user = userCredential.user;
+                    // console.log(user)
                     window.location.href = `/search`;
                     
                 })
