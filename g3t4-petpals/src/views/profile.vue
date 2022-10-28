@@ -309,6 +309,27 @@
                 }
                 });  
             },
+
+            addPet(){
+                // to be done
+            },
+
+            addService(){
+                // to be done
+            },
+
+            updateUsername(){
+                // to be done
+            },
+
+            updateDescription(){
+                // to be done
+            },
+
+            updatePhoto(){
+                // to be done
+            },
+
         },
         mounted() {
                 // Reviews list scrolling 
