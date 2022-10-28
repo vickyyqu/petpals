@@ -1,6 +1,5 @@
 <template>
     
-    
     <div class="container-fluid profile-page">
         <navbar></navbar>
         <div class="profile-container">
@@ -9,7 +8,7 @@
             <div class="profile-info">
                 <div class="container">
                     <button @click="toggleModal" class="btn btn-go"><i class="bi bi-pencil-square"></i></button><div class="row-image "> 
-                        <img src="../img/sitter.png" class="rounded rounded-circle">
+                        <img v-bind:src="photo" class="rounded rounded-circle">
                     </div>
 
                     <br>
@@ -17,15 +16,15 @@
                     <div class="row">
                         <h2>Hello <div class="username">{{username}}</div></h2>  
                         <hr>
-                        <p>{pet owner/pet service provider}</p>         
+                        <p>{{type}}</p>         
                     </div>    
 
                     <br>
 
                     <div class="row">
-                        <div class="bio">
+                        <div class="bio" v-if = 'type == "Pet Service Provider"'>
                             <h4>Bio</h4>
-                            <p class="bio-message">{{message}}</p>
+                            <p class="bio-message">{{bio}}</p>
                             
                         </div>
                     </div>
@@ -55,13 +54,18 @@
                     <TabNav :tabs="['My Bookings', 'My Services', 'My Reviews']" :selected="selected" @selected="setSelected">  
                         <Tab :isSelected="selected === 'My Bookings'" >
                             <p>Shows a list of the bookings made by this user</p>  
+                            <!-- temporary -->
+                            <p v-for="item in bookings">{{item.other}} ( {{item.service}} ) : {{item.status}}</p> 
                         </Tab>
                         <Tab :isSelected="selected === 'My Services'" >
                             <p>Shows a list of the services offered by this user</p>  
+                            <!-- temporary -->
+                            <p v-for="service in services">{{service.service}} : {{service.price}}/hr </p>
                         </Tab>
                         <Tab :isSelected="selected === 'My Reviews'" >
-                            <p>Shows a list of reviews left for this user</p>                           
+                            <p>Shows a list of reviews left for this user</p>               
                             <Post v-for="(user, i) in user_list" :key="i" :user="user" />
+                            <!-- <Post v-for="review in reviews" :reviewer = 'review.reviewer' :service = 'review.service' :review = 'review.review'/> -->
                         </Tab>
                     </TabNav>
                 </div>
@@ -75,15 +79,15 @@
         <div class="modal-content">
             <br>
 
-            Username: <input type="text" id="username" v-model="username">
+            Username: <input type="text" id="username" v-bind:value ="username">
             <br>
 
-            Bio: <textarea rows="4" cols="10" id="bio" v-model="message"></textarea> 
+            Bio: <textarea rows="4" cols="10" id="bio" v-bind:value="bio"></textarea> 
             <br>
        
             <div class="form-group">
                 <label class="" for="petowner">
-                <input type="checkbox" name="checkboxes" id="petowner" value="Pet Owner">
+                <input type="checkbox" name="checkboxes" id="petowner" value="Pet Owner" >
                 Pet Owner &nbsp;
                 </label>
 
@@ -107,6 +111,24 @@
     import Modal from '../components/Modal.vue'
     import { ref } from "vue";
     import petpalsFooter from "../components/petpalsFooter.vue"
+    import { initializeApp } from "firebase/app";
+    // import { getDatabase, ref, onValue, set, push} from "firebase/database";
+    import { getAuth, onAuthStateChanged} from "firebase/auth";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+        authDomain: "petpals-623e3.firebaseapp.com",
+        projectId: "petpals-623e3",
+        storageBucket: "petpals-623e3.appspot.com",
+        messagingSenderId: "949038254831",
+        appId: "1:949038254831:web:82d399649bb06e8389e91a",
+        databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    // const db = getDatabase(app);
+    const auth = getAuth();
+
 
     export default {
         name: "profile",
@@ -116,14 +138,16 @@
         data() {
             return {
 
-                // Current Username
-                username: 'My username',
-
-                // Selected tab
+                username: '',
                 selected: 'My Bookings',
+                photo: '',
+                bio : '',
+                type : '',
+                bookings : [],
+                services : [],
+                reviews  : [],
+                pets : [],
 
-                // Current bio
-                message: "lorem ipsum dolor sit amet, consectetur",
 
                 // My pets info
                 slides: [
@@ -191,11 +215,117 @@
                 }
 		    },
 
+            getProfile(){
+                onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    this.username = user.displayName
+                    this.photo = user.photoURL 
+                    onValue(ref(db, `users/${user.uid}`), (snapshot) => {
+                        this.bio = snapshot.val().desc
+                        this.type = snapshot.val().type
+                    });
+                }
+                });    
+                
+            },
+
+            getBookings(){
+                onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    onValue(ref(db, `users/${user.uid}/bookings`), (snapshot) => {
+                        for (let key in snapshot.val()){
+                            var obj = {bid: key, status: snapshot.val()[key]}
+                            
+                            onValue(ref(db, `bookings/${key}`), (snapsht) => {
+                                console.log(snapsht.val()['service provided'])
+                                obj['service'] = snapsht.val()['service provided']
+                                if (this.type == 'Pet Owner'){
+                                    obj['otherid'] = snapsht.val()['pet service provider']
+                                }else{
+                                    obj['otherid'] = snapsht.val()['pet owner']
+                                }
+
+                            onValue(ref(db, `users/${obj.otherid}`), (snapsht) => {
+                                console.log(snapsht.val().username)
+                                obj['other'] = snapsht.val().username
+                            });                                
+                                
+                            });
+
+
+                            this.bookings.push(obj)
+                        }
+                    });
+                }
+                });  
+            },
+
+            getServices(){
+                onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    onValue(ref(db, `users/${user.uid}/services`), (snapshot) => {
+                        // console.log(snapshot.val())
+                        for (let item in snapshot.val()){
+                            this.services.push({service: item, price: snapshot.val()[item]})
+                        }
+                    });
+                }
+                });  
+            },
+
+            getReviews(){
+                onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    onValue(ref(db, `users/${user.uid}/reviews`), (snapshot) => {
+                        for (let key in snapshot.val()){
+                            var obj = {bid : key, otherid : snapshot.val()[key].otherid, review : snapshot.val()[key].review}
+
+                            onValue(ref(db, `users/${obj.otherid}`), (snapsht) => {
+                                console.log(snapsht.val().username)
+                                obj['reviewer'] = snapsht.val().username
+                            });
+
+                            onValue(ref(db, `bookings/${key}`), (snapsht) => {
+                                console.log(snapsht.val()['service provided'])
+                                obj['service'] = snapsht.val()['service provided']
+                            });
+
+
+                            this.reviews.push(obj)
+                        }
+                    });
+                }
+                });  
+            },
+
+            getPets(){
+                onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    onValue(ref(db, `users/${user.uid}/pets`), (snapshot) => {
+                        for (let key in snapshot.val()){
+                            this.pets.push({pid : key, name : snapshot.val()[key].name, age : snapshot.val()[key].age, breed : snapshot.val()[key].breed, photo : snapshot.val()[key].photo, desc : snapshot.val()[key].desc})
+                        }
+                    });
+                }
+                });  
+            },
         },
         mounted() {
                 // Reviews list scrolling 
                 this.user_list = this.getuser();
                 window.addEventListener("scroll", this.handleScroll);
+
+                // this.getProfile()
+
+                // this.getBookings()
+
+                // this.getServices()
+
+                // this.getReviews()
+
+                // this.getPets()
+
+
         },
         
         setup() {

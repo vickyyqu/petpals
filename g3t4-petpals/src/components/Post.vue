@@ -1,18 +1,3 @@
-<template>
-	<article>
-		<h2>{{ user.title }}</h2>
-		<p>
-			{{ user.description }}
-		</p>
-	</article>
-</template>
-
-<script>
-export default {
-	props: ["user"],
-};
-</script>
-
 <style>
 article {
 	background-color: #efefef;
@@ -27,3 +12,19 @@ article h2 {
 	margin-bottom: 1rem;
 }
 </style>
+
+<template>
+	<article>
+		<h2>{{ reviewer }} : {{ service }}</h2>
+		<p>
+			{{ review }}
+		</p>
+	</article>
+</template>
+
+<script>
+export default {
+	// props: ["user"],
+	props: ["reviewer", "service", "review"],
+};
+</script>

@@ -183,11 +183,9 @@ export default {
         petpalsFooter
     },
 
-    // mounted() {
-    //     onValue(ref(db,'services'), (snapshot) => {
-    //         console.log('db initialized') 
-    //     })
-    // }, 
+    mounted() {
+        this.filterServices()
+    }, 
 
     methods : {
         filterServices(){

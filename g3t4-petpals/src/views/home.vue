@@ -113,7 +113,7 @@
 
                         <div class="">
                             <label for="pwd" class="form-label">Enter your password:</label>
-                            <input type="password" class="form-control" id="pwd">
+                            <input type="password" v-model = 'pwd' class="form-control" id="pwd">
                             <button class="btn p-0" style="background-color:transparent; border-color:transparent; font-size:12px; color:#F8AA9D" @click="forgot=true">Forgot password?</button>
                         </div>
 
@@ -125,8 +125,7 @@
                             <button class="btn login-btn btn-dark mt-3" v-on:click="userLogin()">Login</button>
                         </div>
 
-                       
-
+                    
                     </div>
                 </div>
 
@@ -304,6 +303,7 @@
                 })
                 .catch((error) => {
                     const errorCode = error.code;
+                    console.log(error.message)
                     let msg = error.message.slice(22,(error.message.length)-2)
                     if (msg == 'wrong-password'){
                         this.errorMsg = 'Password is invalid. Please try again.'
@@ -311,6 +311,8 @@
                         this.errorMsg = 'No account registered. Please register for one first.'
                     } else if (msg == 'invalid-email'){
                         this.errorMsg = 'Email is invalid. Please enter a valid email address.'
+                    }else if (msg == 'missing-password'){
+                        this.errorMsg = 'Please enter your password.'
                     }
                     this.loginError = true
                 });
@@ -323,8 +325,7 @@
                     this.emailSent=true
                 })
                 .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
+                    // this.errorMsg = 'Please enter a valid email address.'
                 });
                 
             },
