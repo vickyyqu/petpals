@@ -8,6 +8,7 @@ import profilelisting from "../views/profilelisting.vue"
 import registerowner from "../views/registerowner.vue"
 import registerprovider from "../views/registerprovider.vue"
 import database from "../views/database.vue"
+import forgotpwd from "../views/forgotpwd.vue"
 
 import {createRouter, createWebHistory} from "vue-router"
 

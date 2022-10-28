@@ -90,9 +90,13 @@
                             <input type="email" class="form-control" id="email">
                         </div>
                         <div class="mb-3">
-                        <label for="pwd" class="form-label">Enter your password:</label>
-                        <input type="password" class="form-control" id="pwd">
-                        <a href="#" @click="toggleModal">Forgot password?</a>
+                            <label for="pwd" class="form-label">Enter your password:</label>
+                            <input type="password" class="form-control" id="pwd">
+                            <router-link to="/forgotpwd" @click = 'toggleModal'>Forgot password?</router-link>
+                        </div>
+                        
+                        <div class="mb-3" v-if='loginError'>
+                            <p>{{errorMsg}}</p>
                         </div>
 
                         <div class="login-btn">
@@ -265,35 +269,11 @@
  
 
 <script>
-    import services from '@/components/services.vue';
-    import petpalsFooter from '@/components/petpalsFooter.vue';
+    import services from '@/components/services.vue'
+    import petpalsFooter from '@/components/petpalsFooter.vue'
     import Modal from '../components/Modal.vue';
-    import { initializeApp } from "firebase/app";
-    import { getAnalytics } from "firebase/analytics";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
-        authDomain: "petpals-623e3.firebaseapp.com",
-        projectId: "petpals-623e3",
-        storageBucket: "petpals-623e3.appspot.com",
-        messagingSenderId: "949038254831",
-        appId: "1:949038254831:web:82d399649bb06e8389e91a",
-        databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
-    };
+    import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
     
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
- 
-    // Import the functions needed to read from realtime database
-    import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
-    import CryptoJS from "crypto-js"
-    
-
-    // connect to the realtime database
-    const db = getDatabase(app);
-
-
     export default {
         data() {
             return {
@@ -301,7 +281,9 @@
                 services: ['Pet Walking','Pet Grooming','Pet Hotels','Pet Sitters','Pet Trainers','Pet Transport'],
                 tags: {'Pet Walking': 'Take your pet out on scheduled walks with our Pet Walkers.', 'Pet Grooming': 'Be returned a clean and fresh pet with our experienced Pet Groomers.', 'Pet Hotels': 'Leave your pet with our trusted Pet Hotel Providers while on holiday.', 'Pet Sitters': 'Leave your pet with our trusted Pet Sitters while running errands.', 'Pet Trainers': 'Train your pet with our qualified Pet Trainers.', 'Pet Transport': 'Transport your pet safely with our Pet Movers.'},
                 png: {'Pet Walking': 'src/img/png/walker.png', 'Pet Grooming': 'src/img/png/groomer.png', 'Pet Hotels': 'src/img/png/hotel.png', 'Pet Sitters': 'src/img/png/sitter.png', 'Pet Trainers': 'src/img/png/trainer.png', 'Pet Transport': 'src/img/png/catincar.png'},
-                msg1: "Bringing the best pet service providers to you"
+                msg1: "Bringing the best pet service providers to you",
+                loginError: false,
+                errorMsg: ''
             
             }
         },
@@ -309,34 +291,27 @@
         methods: {
             userLogin(){
                 var email = document.getElementById('email').value;
-                // var username = document.getElementById('username')
                 var pwd = document.getElementById('pwd').value;
 
-                get(ref(db,`users/${email}`))
-                .then((snapshot) => {
-                  if (snapshot.exists()) {
-                    console.log('user exists!');
-                    // var cipher = CryptoJS.AES.encrypt(pwd, 'default');
-                    // cipher = cipher.toString();
-                    // console.log('my encrypted password: ' + cipher);
 
-                    var decipher = CryptoJS.AES.decrypt(snapshot.val().hashedpwd, 'default');
-                    decipher = decipher.toString(CryptoJS.enc.Utf8);
-                    console.log('my password: ' + decipher);
-                    if (decipher == pwd){
-                        console.log('yay')
-                        window.location.href = `/search`;
-
-                    }else{
-                        console.log('nay')
-                    }
-
-                  } else {
-                    console.log("user is not registered");
-                  }
+                const auth = getAuth();
+                signInWithEmailAndPassword(auth, email, pwd)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user)
+                    window.location.href = `/search`;
+                    
                 })
                 .catch((error) => {
-                  console.error(error);
+                    const errorCode = error.code;
+                    let msg = error.message.slice(22,(error.message.length)-2)
+
+                    if (msg == 'wrong-password'){
+                        this.errorMsg = 'password is invalid'
+                    }else if (msg == 'user-not-found'){
+                        this.errorMsg = 'email is invalid. please register for an account.'
+                    }
+                    this.loginError = true
                 });
             },
 

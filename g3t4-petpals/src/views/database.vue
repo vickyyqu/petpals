@@ -51,7 +51,6 @@
     import navbar from '@/components/navbar.vue'
     import { initializeApp } from "firebase/app";
     import { getAnalytics } from "firebase/analytics";
-    import { getAuth } from "firebase/auth";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
@@ -66,25 +65,62 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-    // const auth = getAuth(app);
  
     // Import the functions needed to read from realtime database
     import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
-    import { createUserWithEmailAndPassword } from "firebase/auth";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged , signOut  } from "firebase/auth";
 
+    // gets the currently logged in user
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth,'abc@gmail.com', '12345')
-    .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        console.log(user.email)
-        // ...
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-    });
+    // onAuthStateChanged(auth, (user) => {
+    // if (user) {
+    //     const uid = user.uid;
+    //     console.log(user.email)
+    //     // ...
+    // } else {
+    //     // User is signed out
+    //     // ...
+    // }
+    // });
+
+    // user log out 
+    // const auth = getAuth();
+    // signOut(auth).then(() => {
+    // // Sign-out successful.
+    // }).catch((error) => {
+    // // An error happened.
+    // });
+
+    // user log in 
+    // const auth = getAuth();
+    // signInWithEmailAndPassword(auth, 'alice123@gmail.com', '1234')
+    // .then((userCredential) => {
+    //     // Signed in 
+    //     const user = userCredential.user;
+    //     console.log(user.email)
+    //     // ...
+    // })
+    // .catch((error) => {
+    //     // const errorCode = error.code;
+    //     const errorMessage = error.message.slice(22,(error.message.length)-2)
+
+    // });
+
+    // registers a user
+    // const auth = getAuth();
+    // createUserWithEmailAndPassword(auth,'alice123@gmail.com', 'alice123')
+    // .then((userCredential) => {
+    //     // Signed in 
+    //     const user = userCredential.user;
+    //     console.log(user.email)
+    //     console.log('user created!')
+    //     // ...
+    // })
+    // .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     // ..
+    // });
 
     // connect to the realtime database
     const db = getDatabase(app);
@@ -164,7 +200,10 @@
 
             // retrieve all services
             getServices(){
-
+                //example
+                query(ref(db, 'user-posts/' + myUserId), orderByChild('starCount'))
+                orderByKey()
+                orderByValue()
             },
             
             // remove service
