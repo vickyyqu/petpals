@@ -87,7 +87,7 @@
                         <h3>Reset Password</h3>
                         <div class="my-3">
                             <label for="email" class="form-label"> Enter your email:</label>
-                            <input type="email" class="form-control" id="email">
+                            <input type="email" class="form-control" v-model = 'email' id="email">
                             <div v-if="emailSent">
                                 <small style="font-style:italic; color:brown" class="text-center py-4">Email sent!</small>
                             </div>
@@ -95,8 +95,11 @@
                         </div>
 
 
-                        <div class="login-btn mt-2">
-                            <button class="btn login-btn btn-dark" @click="emailSent=true">Confirm</button>
+                        <div class="login-btn mt-2" v-if="emailSent">
+                            <button class="btn login-btn btn-dark" @click="forgot=false">Back to login</button>
+                        </div>
+                        <div class="login-btn mt-2" v-else>
+                            <button class="btn login-btn btn-dark" @click="resetPassword()">Confirm</button>
                         </div>
 
                     </div>
@@ -105,12 +108,12 @@
                         <h3>Login</h3>
                         <div class="my-3">
                             <label for="email" class="form-label"> Enter your email:</label>
-                            <input type="email" class="form-control" id="email">
+                            <input type="email" class="form-control" v-model = 'email' id="email">
                         </div>
 
                         <div class="mb-3">
                             <label for="pwd" class="form-label">Enter your password:</label>
-                            <input type="password" class="form-control" id="pwd">
+                            <input type="password" class="form-control" v-model = 'pwd' id="pwd">
                             <button class="btn p-0" style="background-color:transparent; border-color:transparent; font-size:12px; color:#F8AA9D" @click="forgot=true">Forgot password?</button>
                         </div>
                         
@@ -140,8 +143,8 @@
         <div class="row" id="services">
             <h1 class="pt-5">Our Services</h1>
 
-            <h3 class="mt-3" style="font-style:normal;font-family: 'Figtree'">Choose from as many services as you like.</h3>
-            <h3 class="mt-3" style="font-style:normal;font-family: 'Figtree'">Match with the perfect pet service provider.</h3>
+            <h3 class="mt-3" style="font-style:normal;font-family:'Figtree'">Choose from as many services as you like.</h3>
+            <h3 class="mt-3" style="font-style:normal;font-family:'Figtree'">Match with the perfect pet service provider.</h3>
             
             <div class="row p-5 m-3">
                 <services v-for="(each) of services" v-bind:tag="tags[each]" v-bind:png="png[each]" v-bind:service="each"></services>
@@ -266,7 +269,7 @@
 <script>
     import services from '@/components/services.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
-    import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail  } from "firebase/auth";
     
     export default {
         data() {
@@ -279,19 +282,17 @@
                 loginError: false,
                 errorMsg: '',
                 forgot: false,
-                emailSent: false
+                emailSent: false,
+                email: '',
+                pwd: '',
             
             }
         },
 
         methods: {
             userLogin(){
-                var email = document.getElementById('email').value;
-                var pwd = document.getElementById('pwd').value;
-
-
                 const auth = getAuth();
-                signInWithEmailAndPassword(auth, email, pwd)
+                signInWithEmailAndPassword(auth, this.email, this.pwd)
                 .then((userCredential) => {
                     // const user = userCredential.user;
                     // console.log(user)
@@ -312,19 +313,16 @@
             },
 
             resetPassword(){
-                // import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-
-                // const auth = getAuth();
-                // sendPasswordResetEmail(auth, email)
-                // .then(() => {
-                //     // Password reset email sent!
-                //     // ..
-                // })
-                // .catch((error) => {
-                //     const errorCode = error.code;
-                //     const errorMessage = error.message;
-                //     // ..
-                // });
+                const auth = getAuth();
+                sendPasswordResetEmail(auth, this.email)
+                .then(() => {
+                    this.emailSent=true
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                });
+                
             },
 
             Nav(){

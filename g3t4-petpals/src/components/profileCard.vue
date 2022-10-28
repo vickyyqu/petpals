@@ -31,6 +31,7 @@
                         <i v-if = 'ratings >= 4' class="bi bi-star-fill"></i>
                         <i v-if = 'ratings == 5' class="bi bi-star-fill"></i>
                         <i v-if = '!Number.isInteger(ratings)' class="bi bi-star-half"></i>
+                        <i v-else class="bi bi-star"></i>
                         <i v-if = 'ratings < 1' class="bi bi-star"></i>
                         <i v-if = 'ratings < 2' class="bi bi-star"></i>
                         <i v-if = 'ratings < 3' class="bi bi-star"></i>
@@ -78,6 +79,7 @@
                         <i v-if = 'ratings >= 4' class="bi bi-star-fill"></i>
                         <i v-if = 'ratings == 5' class="bi bi-star-fill"></i>
                         <i v-if = '!Number.isInteger(ratings)' class="bi bi-star-half"></i>
+                        <i v-else class="bi bi-star"></i>
                         <i v-if = 'ratings < 1' class="bi bi-star"></i>
                         <i v-if = 'ratings < 2' class="bi bi-star"></i>
                         <i v-if = 'ratings < 3' class="bi bi-star"></i>

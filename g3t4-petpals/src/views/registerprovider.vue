@@ -29,7 +29,7 @@
                         
                     <div class="row mx-2 mt-2"> <!-- email -->
                         <label for="inputEmail">Email</label>
-                        <input type="email" class="form-control" id="inputEmail" placeholder="" required>
+                        <input type="email" v-model="email" class="form-control" id="inputEmail" placeholder="" required>
                     </div>
                     <div class="row mx-2 mt-2"> <!-- psw -->
                         <label for="inputPassword">Password</label>
@@ -87,7 +87,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Sign up!</button>
+                    <button type="submit" v-on:click = 'registerUser()' class="btn btn-primary">Sign up!</button>
                     </form>
                     </div>
                     
@@ -191,7 +191,7 @@
                 pic : 'https://cdn-icons-png.flaticon.com/512/2102/2102647.png',
                 desc : '',
                 rates : 0, // for now until frontend fixed
-                yrsOfExp : '',
+                yrsOfExp : 0,
             }
         },
 
@@ -226,7 +226,7 @@
                             username: this.username,
                             profilepic : this.pic,
                             mobile: this.mobile,
-                            type: 'Pet Owner',
+                            type: 'Pet Service Provider',
                             desc: this.desc, //this is just profile description
                             yrsOfExp : this.yrsOfExp,
                             address: this.address,
@@ -238,6 +238,7 @@
                         signInWithEmailAndPassword(auth, this.email, this.psw)
                         .then((user) => {
                             window.location.href = `/search`;
+
                         })
                         .catch((error) => {
                             // const errorCode = error.code;
