@@ -101,24 +101,13 @@
                 <h4 class="mt-3">More Details:</h4>
 
                 <div class="row w-75 mx-auto">
-                    <div class="col-md-6 form-group mt-3">
-                        <label for="petTypes">Pet Size You Accept:</label>
-                        <select name="number" class="form-control" id="size" v-model="sizeofpet"
-                            placeholder="Choose...">
-                            <option value="1kg">1-5kg</option>
-                            <option value="5kg">5-10kg</option>
-                            <option value="10kg">10-20kg</option>
-                            <option value="20kg">20-40kg</option>
-                            <option value="40kg">40+kg</option>
-                        </select>
-                    </div>
 
                     <div class="col-md-6 mt-3">
                         <label for="yearsofexp">Years of Experience:</label>
                         <input type="number" class="form-control" id="yearsofexp" min="0" max="50">
                     </div>
 
-                    <div class="col-md-12 mt-3">
+                    <div class="col-md-6 mt-3">
                         <label for="rate">Your Rate in SGD (Per Hour):</label>
                         <input type="number" class="form-control" min="0" max="1000" v-model="rate">
                     </div>
@@ -183,8 +172,6 @@ export default {
 </script>
     
 <style scoped>
-.content {}
-
 .inner {
     margin: auto;
     width: 60%;
