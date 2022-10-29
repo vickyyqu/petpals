@@ -16,31 +16,36 @@
           </div>
 
           <div class="row">
-            <h2>
-              Hello
-              <div class="username">{{ username }}</div>
+            <h2 class="mt-3">
+              Hello <div class="username">{{ username }}</div>
             </h2>
-            <small>Pet Service Provider</small>
+            <small class="mt-2">Pet Service Provider
+            <img
+            src="../img/animallogo/pawiconwhite.png"
+            style="width: auto; height: auto"
+          /></small>
           </div>
           <br>
           <hr />
 
-          <div class="row mt-3">
+          <div class="row mt-4">
             <div class="bio">
-              <h4 class="mb-2">Bio</h4>
+              <h4 class="mb-3">Bio</h4>
               <p>{{ message }}</p>
             </div>
 
-            <div class="contact">
-              <h4 class="mb-2">Email</h4>
+            <div class="email mt-3">
+              <h4 class="mb-3">Email</h4>
               <p>{{ email }}</p>
+            </div>
 
-              <h4 class="mb-2">Number</h4>
+            <div class="number mt-3">
+              <h4 class= "mb-3">Number</h4>
               <p>{{ number }}</p>
             </div>
 
-            <div class="address">
-              <h4 class="mb-2">Address</h4>
+            <div class="address mt-3">
+              <h4 class="mb-3">Address</h4>
               <p>{{ address }}</p>
             </div>
           </div>
@@ -52,7 +57,11 @@
       <!--Right column-->
       <div class="col-8 profile-rightbox">
         <div class="row mt-3">
-          <h3>My Pets</h3>
+          <h3 class="mb-3">
+            <img
+            src="../img/animallogo/doglogo3.png"
+            style="width: auto; height: auto"
+          />Pet Gallery</h3>
           <br />
           <vueper-slides>
             <vueper-slide
