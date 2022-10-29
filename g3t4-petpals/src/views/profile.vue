@@ -124,7 +124,7 @@ import TabNav from "../components/TabNav.vue";
 import Tab from "../components/Tab.vue";
 import { VueperSlides, VueperSlide } from "vueperslides";
 import Modal from "../components/Modal.vue";
-import { ref } from "vue";
+import { ref as modalref} from "vue";
 import petpalsFooter from "../components/petpalsFooter.vue";
 
 export default {
@@ -210,7 +210,7 @@ export default {
   },
 
   setup() {
-    const modalActive = ref(false);
+    const modalActive = modalref(false);
     const toggleModal = () => {
       modalActive.value = !modalActive.value;
     };
