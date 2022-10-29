@@ -203,10 +203,8 @@ export default {
                             item.service = service
                             item.oid = uid
                             
+                            this.filterResults.push(item) // sorted by service by default
                         });
-
-                        this.filterResults.push(item) // sorted by service by default
-
                     }
                 });
 

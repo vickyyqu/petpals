@@ -21,7 +21,7 @@
 
             <div class="d-flex justify-content-start align-items-center">
                 <img class="mr-3 rounded-circle"
-                    src="https://assets.codepen.io/460692/internal/avatars/users/default.png"
+                    v-bind:src = 'img'
                     style="max-width:70px">
             </div>
 
@@ -46,8 +46,8 @@
             </div>
             
         </div>
-        <div class="card-body" v-if='type == "Pet Owner"'>
-            <h6 class="card-title">Bio:</h6>
+        <div class="card-body">
+            <h6 v-if='type == "Pet Owner"' class="card-title">Bio:</h6>
             <small class="card-text">{{desc}}</small>
         </div>
         <div class="card-footer">

@@ -5,13 +5,13 @@
 
             <div class="d-flex justify-content-start align-items-center">
                 <img class="mr-3 rounded-circle"
-                    src="https://assets.codepen.io/460692/internal/avatars/users/default.png"
+                    v-bind:src = 'img'
                     style="max-width:70px">
             </div>
 
             <div class="ms-2">
-                <h6>{{name}} Laura Goh</h6>
-                <small style="font-style:italic;">PetPals user since 2022</small>
+                <h6>{{name}}</h6>
+                <small style="font-style:italic;">{{service}}</small>
 
                 <div class="ratings">
                     <i v-if = 'ratings >= 1' class="bi bi-star-fill"></i>
@@ -31,14 +31,14 @@
             
         </div>
         <div class="card-body">
-            <h6 class="card-title">Bio:</h6>
-            <small class="card-text">{{desc}} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non atque unde tempora consectetur est libero modi iure molestias alias similique odit repudiandae minima ab iusto!</small>
+            <h6 v-if='type == "Pet Owner"' class="card-title">Bio:</h6>
+            <small class="card-text">{{desc}}</small>
         </div>
         <div class="card-footer">
             <div class="text-end">
-                <small class="profile-details"><i class="bi bi-currency-dollar"></i> {{rates}} 20/h, </small>
-                <small class="profile-details"><i class="bi bi-geo"></i> {{location}} Bukit Batok, </small>
-                <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} 5 Years of Experience</small>
+                <small class="profile-details"><i class="bi bi-currency-dollar"></i> {{rates}}</small>
+                <small class="profile-details"><i class="bi bi-geo"></i> {{location}}</small>
+                <small v-if='type == "Pet Owner"' class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Years of experience</small>
                 
             
             </div>
@@ -96,7 +96,13 @@ export default {
     props: ['name', 'desc', 'rates', 'location', 'img', 'yrsOfExp', 'ratings','service', 'type', 'otherid'],
     methods: {
         cfmBooking(){
-
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    set(ref(db, `users/${user.uid}/bookings/${this.otherid}/${this.service}/status`), 'booked')
+                } else {
+                    console.log('user is signed out')
+                }
+            });
         },
 
         addChat(){

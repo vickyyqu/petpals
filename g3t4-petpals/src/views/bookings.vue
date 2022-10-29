@@ -26,22 +26,19 @@
                 <!-- <span v-if='type == "Pet Owner"'> hi</span>
                 <span v-else>hm</span> -->
  
-                <RequestPending v-if='type=="Pet Owner"' v-for='item in pendings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></RequestPending>
-                <RequestPending v-else v-for='item in pendings' v-bind:otherid = 'item.otherid' v-bind:service = 'item.service' v-bind:type = 'type' v-bind:name= 'item.name' v-bind:rates = 'item.rates' v-bind:location = 'item.location' v-bind:img = 'item.img' v-bind:ratings = 'item.ratings'></RequestPending>
+                <RequestPending v-for='item in pendings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></RequestPending>
 
                 <h3 class="my-5" >Confirmed Requests</h3>
                 <p class="my-5 text-center nil">No requests yet...</p>
 
-                <RequestConfirmed v-if='type=="Pet Owner"' v-for='item in requests' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name ='item.name' :desc ='item.desc' :rates ='item.rates' :location ='item.location' :yrsOfExp ='item.yrsOfExp' :img ='item.img' :ratings ='item.ratings'></RequestConfirmed>
-                <RequestConfirmed v-else v-for='item in requests' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name ='item.name' :rates ='item.rates' :location ='item.location'  :img ='item.img' :ratings ='item.ratings'></RequestConfirmed>
+                <RequestConfirmed v-for='item in requests' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name ='item.name' :desc ='item.desc' :rates ='item.rates' :location ='item.location' :yrsOfExp ='item.yrsOfExp' :img ='item.img' :ratings ='item.ratings'></RequestConfirmed>
    
             </div>  
  
             <div class="col-lg-5 confirmed-bookings mt-5 p-5">
                 <h3 class="my-5">Confirmed Bookings</h3>
                 <p class="my-5 text-center nil">No bookings yet...</p>
-                <BookingConfirmed v-if='type=="Pet Owner"' v-for='item in bookings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed>
-                <BookingConfirmed v-else v-for='item in bookings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name = 'item.name' :rates = 'item.rates' :location = 'item.location' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed>
+                <BookingConfirmed v-for='item in bookings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed>
             </div>
 
             <div class="col-1 sides">
@@ -98,10 +95,13 @@
             RequestConfirmed,
             BookingConfirmed
         },
+        
         mounted(){
-            this.pendings = this.getBookingsP('pending')
-            this.requests = this.getBookingsP('confirmed')
-            this.bookings = this.getBookingsP('booked')
+            this.pendings = this.getBookings('pending')
+            // this.requests = this.getBookings('confirmed')
+            this.getReq()
+            this.bookings = this.getBookings('booked')
+            // window.setInterval(this.getReq(), 1000);
             console.log(this.pendings, this.requests, this.bookings)
             // bid status service other ratings yrsOfExp desc photo price address
 
@@ -111,23 +111,26 @@
         },
         methods : {
             // get Pet Owners
-            getBookingsP(stat){
-                var lst = []
+            getReq() {
+                const stat = 'confirmed'
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
                         onValue(ref(db, `users/${user.uid}/bookings/`), (snapshot) => {
                             for (let oid in snapshot.val()){
                                 var name = ''
+                                var desc = ''
                                 var loc = ''
+                                var exp = ''
                                 var img = ''
                                 var ratings = ''
 
                                 onValue(ref(db, `users/${oid}`), (snapsht) => {
                                     name = snapsht.val().username;
+                                    desc = snapsht.val().desc;
                                     loc = snapsht.val().address;
+                                    exp = snapsht.val().yrsOfExp;
                                     img = snapsht.val().profilepic;
                                     ratings = snapsht.val().ratings
-                                });   
 
                                 for (let service of this.services){
                                     var obj = {otherid : oid}
@@ -138,28 +141,24 @@
                                             obj['service'] = service 
                                             obj['name'] = name
                                             obj['location'] = loc
+                                            obj['desc'] = desc 
+                                            obj['yrsOfExp'] = exp
                                             obj['img'] = img
                                             obj['ratings'] = ratings
 
                                             
-
-                                            lst.push(obj)
-                                            // console.log(obj)
+                                            this.requests.push(obj)
                                         }
                                     });     
-                                }
-
-
+                                }});
                             }
                         });
                     }
                 });
 
-                return lst
             },
 
-            // get PSP
-            getBookingsO(stat){
+            getBookings(stat) {
                 var lst = []
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
@@ -196,7 +195,6 @@
                                             obj['ratings'] = ratings
 
                                             
-
                                             lst.push(obj)
                                         }
                                     });     
@@ -210,8 +208,6 @@
 
                 return lst
             },
-
-
         },
     }
 </script>
