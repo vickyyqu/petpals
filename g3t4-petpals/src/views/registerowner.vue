@@ -57,7 +57,7 @@
                     </div>
 
 
-                    <div class="row mt-2"> <!-- nickname and phone number-->
+                    <div class="row mt-2"> <!-- username nickname and nickname -->
                         <div class="col-md-6">
                             <label for="inputUsername">Username</label>
                             <p class="form-text">This is how we can uniquely identify you!</p>
@@ -119,28 +119,14 @@
 
         </div>
         </div>
+        <footer>
+            <petpalsFooter></petpalsFooter>  
+        </footer>
 </template>
 
 <script>
     import navbar from '@/components/navbar.vue'
     import petprofile from '@/components/petprofile.vue'
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "firebase/auth";
-    import { initializeApp } from "firebase/app";
-    import { getDatabase, ref, set } from "firebase/database";
-
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
-        authDomain: "petpals-623e3.firebaseapp.com",
-        projectId: "petpals-623e3",
-        storageBucket: "petpals-623e3.appspot.com",
-        messagingSenderId: "949038254831",
-        appId: "1:949038254831:web:82d399649bb06e8389e91a",
-        databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
-    };
-    
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
 
 
     export default {
@@ -161,61 +147,6 @@
         components: {
             navbar, 
             petprofile
-        },
-
-        methods : {
-            getPic(event){
-                const files = event.target.files
-                if (!files.length) return 
-
-                const reader = new FileReader()
-                reader.readAsDataURL(files[0])
-                reader.onload = () => (this.pic = reader.result)
-
-                // console.log(this.pic)
-            },
-
-            registerUser(){
-                const auth = getAuth();
-                if (this.psw == this.psw_repeat && this.psw != '' && this.email != '' && this.postal != '' && this.address != '' && this.username != '' && this.mobile != ''){
-                    createUserWithEmailAndPassword(auth,this.email, this.psw)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        console.log('user created!')
-                        updateProfile(auth.currentUser, {
-                            displayName: this.username , photoURL: this.pic
-                        })
-
-                        set(ref(db, `users/${user.uid}`), {
-                            username: this.username,
-                            profilepic : this.pic,
-                            mobile: this.mobile,
-                            type: 'Pet Owner',
-                            address: this.address,
-                            postalcode : this.postal,
-                            ratings : 0, //by default
-                        })
-                        
-                        signInWithEmailAndPassword(auth, this.email, this.psw)
-                        .then((user) => {
-                            window.location.href = `/search`;
-                        })
-                        .catch((error) => {
-                            // const errorCode = error.code;
-                            const errorMessage = error.message.slice(22,(error.message.length)-2)
-                            console.log(errorMessage)
-                        })
-
-
-                    })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                    });     
-                    
-                }
-
-            }
         }
     }
 
