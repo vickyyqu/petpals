@@ -97,13 +97,10 @@
         },
         
         mounted(){
-            this.pendings = this.getBookings('pending')
-            // this.requests = this.getBookings('confirmed')
-            this.getReq()
-            this.bookings = this.getBookings('booked')
-            // window.setInterval(this.getReq(), 1000);
+            this.getRequests()
+            this.getBookings()
+            this.getPendings()
             console.log(this.pendings, this.requests, this.bookings)
-            // bid status service other ratings yrsOfExp desc photo price address
 
             // :name = 'item.other' :desc = 'item.desc' :rates = 'item.price' 
             // :location = 'item.address' :yrsOfExp = 'item.yrsOfExp' 
@@ -111,8 +108,7 @@
         },
         methods : {
             // get Pet Owners
-            getReq() {
-                const stat = 'confirmed'
+            getRequests() {
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
                         onValue(ref(db, `users/${user.uid}/bookings/`), (snapshot) => {
@@ -136,7 +132,7 @@
                                     var obj = {otherid : oid}
 
                                     onValue(ref(db, `users/${user.uid}/bookings/${oid}/${service}`), (snapsht) => {
-                                        if (snapsht.val() != null && snapsht.val().status == stat){
+                                        if (snapsht.val() != null && snapsht.val().status == 'confirmed'){
                                             obj['rates'] = snapsht.val().price
                                             obj['service'] = service 
                                             obj['name'] = name
@@ -158,8 +154,7 @@
 
             },
 
-            getBookings(stat) {
-                var lst = []
+            getBookings() {
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
                         onValue(ref(db, `users/${user.uid}/bookings/`), (snapshot) => {
@@ -178,13 +173,12 @@
                                     exp = snapsht.val().yrsOfExp;
                                     img = snapsht.val().profilepic;
                                     ratings = snapsht.val().ratings
-                                });   
 
                                 for (let service of this.services){
                                     var obj = {otherid : oid}
 
                                     onValue(ref(db, `users/${user.uid}/bookings/${oid}/${service}`), (snapsht) => {
-                                        if (snapsht.val() != null && snapsht.val().status == stat){
+                                        if (snapsht.val() != null && snapsht.val().status == 'booked'){
                                             obj['rates'] = snapsht.val().price
                                             obj['service'] = service 
                                             obj['name'] = name
@@ -195,19 +189,63 @@
                                             obj['ratings'] = ratings
 
                                             
-                                            lst.push(obj)
+                                            this.bookings.push(obj)
                                         }
                                     });     
-                                }
-
-
+                                }});
                             }
                         });
                     }
                 });
 
-                return lst
             },
+
+            getPendings() {
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        onValue(ref(db, `users/${user.uid}/bookings/`), (snapshot) => {
+                            for (let oid in snapshot.val()){
+                                var name = ''
+                                var desc = ''
+                                var loc = ''
+                                var exp = ''
+                                var img = ''
+                                var ratings = ''
+
+                                onValue(ref(db, `users/${oid}`), (snapsht) => {
+                                    name = snapsht.val().username;
+                                    desc = snapsht.val().desc;
+                                    loc = snapsht.val().address;
+                                    exp = snapsht.val().yrsOfExp;
+                                    img = snapsht.val().profilepic;
+                                    ratings = snapsht.val().ratings
+
+                                for (let service of this.services){
+                                    var obj = {otherid : oid}
+
+                                    onValue(ref(db, `users/${user.uid}/bookings/${oid}/${service}`), (snapsht) => {
+                                        if (snapsht.val() != null && snapsht.val().status == 'pending'){
+                                            obj['rates'] = snapsht.val().price
+                                            obj['service'] = service 
+                                            obj['name'] = name
+                                            obj['location'] = loc
+                                            obj['desc'] = desc 
+                                            obj['yrsOfExp'] = exp
+                                            obj['img'] = img
+                                            obj['ratings'] = ratings
+
+                                            
+                                            this.pendings.push(obj)
+                                        }
+                                    });     
+                                }});
+                            }
+                        });
+                    }
+                });
+
+            },
+
         },
     }
 </script>

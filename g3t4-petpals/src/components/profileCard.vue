@@ -130,7 +130,6 @@ const db = getDatabase(app);
 const auth = getAuth(); 
 
 
-
 export default {
     data() {
         return {
@@ -144,24 +143,29 @@ export default {
         // only pet owners can do these
         sendRequest() {
             this.sent = false
-            const currUser = auth.currentUser
-            var stat = 'pending'
-
-            onValue(ref(db, `users/${currUser.uid}/bookings/${this.oid}/${this.service}/status`), (snapshot) => {
-                if (snapshot.val() != 'cancelled'){
-                    stat = snapshot.val()
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    onValue(ref(db, `users/${user.uid}`), (snapshot) => {
+                        if (snapshot.val()['bookings'] == null ||snapshot.val()['bookings'][this.oid] == null || snapshot.val()['bookings'][this.oid][this.service] == null || snapshot.val().bookings[this.oid][this.service].status == 'cancelled' ){
+                            // no previous bookings or no previous bookings with this user
+                            // or no previous bookings with this user and service 
+                            // or previous booking was cancelled
+                            set(ref(db,`users/${user.uid}/bookings/${this.oid}/${this.service}`), {
+                                'price' : this.rates,
+                                'status' : 'pending'
+                            })
+                            set(ref(db,`users/${this.oid}/bookings/${user.uid}/${this.service}`), {
+                                'price' : this.rates,
+                                'status' : 'pending'
+                            })
+                        }
+                    });
+                } else {
+                    console.log('user is signed out')
                 }
-                
             });
 
-            set(ref(db,`users/${currUser.uid}/bookings/${this.oid}/${this.service}`), {
-                'price' : this.rates,
-                'status' : 'pending'
-            })
-            set(ref(db,`users/${this.oid}/bookings/${currUser.uid}/${this.service}`), {
-                'price' : this.rates,
-                'status' : 'pending'
-            })
+
         },
 
         cancelRequest(){
@@ -177,6 +181,10 @@ export default {
                 'status' : 'cancelled'
             })
         },
+
+        getSent(){
+            
+        }
 
 
 
