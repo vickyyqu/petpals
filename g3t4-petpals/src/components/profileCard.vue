@@ -57,7 +57,7 @@
 
 
         </div>
-        <button class="btn mx-5 my-3 btn-select" @click="sendRequest">Send Request</button>
+        <button class="btn mx-5 my-3 btn-select" @click="sendRequest();">Send Request</button>
     </div>
 
     <div v-else class="col-xl-3 col-md-6 pt-3">
@@ -102,7 +102,10 @@
             </div>
         </div>
 
-        <button class="btn mx-5 my-3 btn-cancel" @click="cancelRequest">Cancel Request</button>
+        <!-- instead of letting them cancel request here, it will jus show request sent 
+        they will have to cancel requests in bookings page -->
+        <!-- <button class="btn mx-5 my-3 btn-cancel" @click="cancelRequest">Cancel Request</button> -->
+        <small style="font-style:italic; color:brown">Request sent!</small>
     </div>
 
  
@@ -134,7 +137,6 @@ export default {
     data() {
         return {
             sent: true,
-            bookingid: '',
         }
     },
     props: ['title', 'desc', 'rates', 'location', 'img', 'ratings', 'yrsOfExp', 'name', 'service', 'oid'],
@@ -145,11 +147,12 @@ export default {
             this.sent = false
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    onValue(ref(db, `users/${user.uid}`), (snapshot) => {
-                        if (snapshot.val()['bookings'] == null ||snapshot.val()['bookings'][this.oid] == null || snapshot.val()['bookings'][this.oid][this.service] == null || snapshot.val().bookings[this.oid][this.service].status == 'cancelled' ){
-                            // no previous bookings or no previous bookings with this user
-                            // or no previous bookings with this user and service 
-                            // or previous booking was cancelled
+                    get(ref(db, `users/${user.uid}/bookings/${this.oid}/${this.service}`))
+                    .then((snapshot) => {
+                        if (snapshot.exists() && snapshot.val().status == 'cancelled') {
+                            set(ref(db,`users/${user.uid}/bookings/${this.oid}/${this.service}/status`), 'pending')
+                            set(ref(db,`users/${this.oid}/bookings/${user.uid}/${this.service}/status`), 'pending')
+                        } else {
                             set(ref(db,`users/${user.uid}/bookings/${this.oid}/${this.service}`), {
                                 'price' : this.rates,
                                 'status' : 'pending'
@@ -159,6 +162,9 @@ export default {
                                 'status' : 'pending'
                             })
                         }
+                    })
+                    .catch((error) => {
+                        console.error(error);
                     });
                 } else {
                     console.log('user is signed out')
@@ -168,6 +174,7 @@ export default {
 
         },
 
+        //remove this?
         cancelRequest(){
             this.sent = true
             const currUser = auth.currentUser
@@ -183,11 +190,26 @@ export default {
         },
 
         getSent(){
-            
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    onValue(ref(db, `users/${user.uid}`), (snapshot) => {
+                        if (snapshot.val()['bookings'] == null || snapshot.val()['bookings'][this.oid] == null || snapshot.val()['bookings'][this.oid][this.service] == null || snapshot.val().bookings[this.oid][this.service].status == 'cancelled' ){
+                            // no previous bookings or no previous bookings with this user
+                            // or no previous bookings with this user and service 
+                            // or previous booking was cancelled
+                            this.sent = true
+                        }else{
+                            this.sent = false
+                        }
+                    });
+                } else {
+                    console.log('user is signed out')
+                }
+            });
         }
-
-
-
+    },
+    mounted() {
+        this.getSent()
     }
   
 }  

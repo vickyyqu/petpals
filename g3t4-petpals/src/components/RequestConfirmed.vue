@@ -99,6 +99,20 @@ export default {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     set(ref(db, `users/${user.uid}/bookings/${this.otherid}/${this.service}/status`), 'booked')
+                    set(ref(db, `users/${this.otherid}/bookings/${user.uid}/${this.service}/status`), 'booked')
+                    window.location.href = `/bookings`;
+                } else {
+                    console.log('user is signed out')
+                }
+            });
+        },
+
+        cancelBooking(){
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    set(ref(db, `users/${user.uid}/bookings/${this.otherid}/${this.service}/status`), 'cancelled')
+                    set(ref(db, `users/${this.otherid}/bookings/${user.uid}/${this.service}/status`), 'cancelled')
+                    window.location.href = `/bookings`;
                 } else {
                     console.log('user is signed out')
                 }
@@ -109,6 +123,7 @@ export default {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     set(ref(db, `users/${user.uid}/chat`), this.otherid)
+                    window.location.href = `/chat`;
                 } else {
                     console.log('user is signed out')
                 }

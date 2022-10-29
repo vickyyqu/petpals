@@ -63,29 +63,68 @@
       
     </div>
     <div class="buttons m-2">
-        <div v-if="delete" class="d-flex justify-content-end"><button class="btn btn-cancel p-2" @click="cancel">Cancel Request</button></div>
+        <div class="d-flex justify-content-end"><button class="btn btn-cancel p-2" @click="cancelRequest">Cancel Request</button></div>
 
-        <div v-else class="d-flex justify-content-end mb-0"><p style="color:brown" class="p-1">Request Cancelled</p></div>
     </div>
  
 
 </template>
 
 <script>
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+    authDomain: "petpals-623e3.firebaseapp.com",
+    projectId: "petpals-623e3",
+    storageBucket: "petpals-623e3.appspot.com",
+    messagingSenderId: "949038254831",
+    appId: "1:949038254831:web:82d399649bb06e8389e91a",
+    databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth();
+
+
 export default {
     data() {
         return {
             img: "src/img/png/groomer.png",
-            delete: true
         }
 
     },
     props: ['name', 'desc', 'rates', 'location', 'img', 'yrsOfExp', 'ratings','service', 'type','otherid'],
     methods: {
-        cancel() {
-            this.delete = false
- 
+        // rename as reject for pet service providers
+        cancelRequest(){
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    set(ref(db, `users/${user.uid}/bookings/${this.otherid}/${this.service}/status`), 'cancelled')
+                    set(ref(db, `users/${this.otherid}/bookings/${user.uid}/${this.service}/status`), 'cancelled')
+                    window.location.href = `/bookings`;
+                } else {
+                    console.log('user is signed out')
+                }
+            });
         },
+
+        // only for pet service Providers
+        acceptRequest(){
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    set(ref(db, `users/${user.uid}/bookings/${this.otherid}/${this.service}/status`), 'confirmed')
+                    set(ref(db, `users/${this.otherid}/bookings/${user.uid}/${this.service}/status`), 'confirmed')
+                    window.location.href = `/bookings`;
+                } else {
+                    console.log('user is signed out')
+                }
+            });
+        }
 
     }
 

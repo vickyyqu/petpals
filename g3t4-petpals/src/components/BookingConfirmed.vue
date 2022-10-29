@@ -78,6 +78,11 @@ export default {
     },
     props: ['name', 'desc', 'rates', 'location', 'img', 'yrsOfExp', 'ratings','service', 'type','otherid'],
     methods: {
+        addReview(){
+            //only can leave 1 review
+            // change status after leaving review?
+            // need /5 
+        }
     }
 
 }

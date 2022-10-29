@@ -180,8 +180,6 @@ export default {
                 this.checkedServices = this.services.slice(1,this.services.length)
             }
 
-            // console.log(this.checkedServices)
-
             for (let key in this.checkedServices){
                 var service = this.checkedServices[key]
 
@@ -202,11 +200,19 @@ export default {
                             item.service = service
                             item.service = service
                             item.oid = uid
+
+                            console.log(item,this.filterResults)
                             
-                            this.filterResults.push(item) // sorted by service by default
+                            if (!this.filterResults.includes(item)){
+                                this.filterResults.push(item) // sorted by service by default
+                            }
+
+                            console.log(this.filterResults)
                         });
+
                     }
                 });
+
 
                 if (this.orderBy == 'desc'){
                     if (this.sortBy == 'rates'){

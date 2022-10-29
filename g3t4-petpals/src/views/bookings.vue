@@ -142,8 +142,10 @@
                                             obj['img'] = img
                                             obj['ratings'] = ratings
 
+                                            if (!this.requests.includes(obj)){
+                                                this.requests.push(obj)
+                                            }
                                             
-                                            this.requests.push(obj)
                                         }
                                     });     
                                 }});
@@ -188,8 +190,10 @@
                                             obj['img'] = img
                                             obj['ratings'] = ratings
 
+                                            if (!this.bookings.includes(obj)){
+                                                this.bookings.push(obj)
+                                            }
                                             
-                                            this.bookings.push(obj)
                                         }
                                     });     
                                 }});
@@ -234,8 +238,10 @@
                                             obj['img'] = img
                                             obj['ratings'] = ratings
 
+                                            if (!this.pendings.includes(obj)){
+                                                this.pendings.push(obj)
+                                            }
                                             
-                                            this.pendings.push(obj)
                                         }
                                     });     
                                 }});
