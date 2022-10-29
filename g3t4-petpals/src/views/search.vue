@@ -96,14 +96,14 @@ input[type=text] {
                     </div>
                     <div class="col-lg-2 col-4 mt-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="sortprofiles" id="highToLow">
+                            <input class="form-check-input" v-model='orderBy' v-bind:value = '"desc"' type="radio" name="sortprofiles" id="highToLow">
                             <label class="form-check-label" for="highToLow">
                               From High to Low
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="sortprofiles" id="lowToHigh">
-                            <label class="form-check-label">
+                            <input class="form-check-input" v-model='orderBy' v-bind:value = '"asc"'  type="radio" name="sortprofiles" id="lowToHigh">
+                            <label class="form-check-label" for="lowToHigh">
                                 From Low to High
                             </label>
                         </div>
@@ -158,7 +158,8 @@ export default {
             checkedServices : [],
             filterResults : [],
             sortBy : '',
-            orderBy : 'asc'
+            orderBy : '',
+            order: 'smth',
         }
     },
     components: {
@@ -234,7 +235,8 @@ export default {
                                 
             }
         }
-    }
+    },
+
 }
 
 </script>

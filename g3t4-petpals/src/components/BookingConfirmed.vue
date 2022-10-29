@@ -73,16 +73,70 @@
 export default {
     data() {
         return {
+            total : 0,
+            count : 0,
         }
 
     },
     props: ['name', 'desc', 'rates', 'location', 'img', 'yrsOfExp', 'ratings','service', 'type','otherid'],
     methods: {
-        addReview(){
+        addReview(review,rating){
             //only can leave 1 review
             // change status after leaving review?
             // need /5 
-        }
+
+            // review appears in other person's profile
+            // set users/${this.otherid}/reviews/${user.uid}/${this.service} {'rating' : rating, 'review' : review}
+            // set users/${user.uid}/bookings/${this.otherid}/${this.service}/status 'cancelled'
+            // set users/${this.otherid}/bookings/${user.uid}/${this.service}/status 'cancelled'
+
+            // calculateRatings()
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    set(ref(db, `users/${this.otherid}/reviews/${user.uid}/${this.service}`), {
+                        'rating' : rating, 
+                        'review' : review
+                    }) 
+                    set(ref(db, `users/${user.uid}/bookings/${this.otherid}/${this.service}/status`), 'cancelled') 
+                    set(ref(db, `users/${this.otherid}/bookings/${user.uid}/${this.service}/status`), 'cancelled') 
+
+                    this.calculateRatings()                    
+                } else {
+                    console.log('user is signed out')
+                }
+            });
+
+        },
+
+        calculateRatings(){
+            // in data we have this.total and this.count
+
+            // onvalue users/${user.uid}/reviews/
+            // for each otherid in there
+            // for each service in each otherid 
+            // this.total += rating and this.count += 1
+
+            // ratings will be this.total/this.count rounded to 1 dp
+            // set users/${user.uid}/ratings = ratings
+            onAuthStateChanged(auth, (user) => {
+                onValue(ref(db, `users/${user.id}/reviews`), (snapshot) => {
+                    for (let oid in snapshot.val()){
+                        for (let serv in snapshot.val()[oid]){
+                            this.count ++
+                            this.total += snapshot.val()[oid].rating
+                        }
+                    }
+                    const rating = ((this.total / this.count)*2).toFixed()/2
+                    
+                    set(ref(db, `users/${user.uid}/ratings`), ratings) 
+                    window.location.href = `/bookings`;                        
+                });
+            
+            });
+
+
+            
+        },
     }
 
 }
