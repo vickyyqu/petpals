@@ -35,6 +35,11 @@
     100% { opacity: 1; }
   }
 
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+  }
+
 </style>
 
 <template>
@@ -67,7 +72,7 @@
                 <h2 class="headline fade-in-text" v-html="msg1"></h2>
                 <p>Entrust your pet with us and allow our experienced service providers to elevate your pet-owning experience. Join PetPals today and access these services offered by our providers!</p>
                 <h3 style="color:#f8f1ef">New to PetPals?</h3>
-                <div class="dropdown">
+                <div class="dropdown mt-4">
                     <button class="btn dropbtn btn-light">Register Here</button>
                     <div id="myDropdown" class="dropdown-content">
                         <router-link to="/registerowner">I am a pet owner.</router-link>
@@ -78,21 +83,50 @@
 
             <div class="col-md-4 content-login">
                 <div class="box">
-                    <div class="login">
+                    <div v-if="forgot" class="login">
+                        <h3>Reset Password</h3>
+                        <div class="my-3">
+                            <label for="email" class="form-label"> Enter your email:</label>
+                            <input type="email" class="form-control" v-model = 'email' id="email">
+                            <div v-if="emailSent">
+                                <small style="font-style:italic; color:brown" class="text-center py-4">Email sent!</small>
+                            </div>
+                            <small v-else style="font-style:italic" class="pt-2">*An email will be sent to your inbox to reset your password.</small>
+                        </div>
+
+
+                        <div class="login-btn mt-2" v-if="emailSent">
+                            <button class="btn login-btn btn-dark" @click="forgot=false">Back to login</button>
+                        </div>
+                        <div class="login-btn mt-2" v-else>
+                            <button class="btn login-btn btn-dark" @click="resetPassword()">Confirm</button>
+                        </div>
+
+                    </div>
+
+                    <div v-else class="login">
                         <h3>Login</h3>
                         <div class="my-3">
                             <label for="email" class="form-label"> Enter your email:</label>
-                            <input type="email" class="form-control" id="email">
+                            <input type="email" class="form-control" v-model = 'email' id="email">
                         </div>
-                        <div class="mb-3">
-                        <label for="pwd" class="form-label">Enter your password:</label>
-                        <input type="password" class="form-control" id="pwd">
-                        <a href="#">Forgot password?</a>
+
+                        <div class="">
+                            <label for="pwd" class="form-label">Enter your password:</label>
+                            <input type="password" class="form-control" id="pwd">
+                            <button class="btn p-0" style="background-color:transparent; border-color:transparent; font-size:12px; color:#F8AA9D" @click="forgot=true">Forgot password?</button>
+                        </div>
+
+                        <div v-if="loginError" class="text-center mt-2">
+                            <small style="font-style:italic; color:brown">{{errorMsg}}</small>
                         </div>
 
                         <div class="login-btn">
-                            <button class="btn login-btn btn-dark">Login</button>
+                            <button class="btn login-btn btn-dark mt-3" v-on:click="userLogin()">Login</button>
                         </div>
+
+                       
+
                     </div>
                 </div>
 
@@ -112,8 +146,8 @@
         <div class="row" id="services">
             <h1 class="pt-5">Our Services</h1>
 
-            <h3 class="mt-3" style="font-style:normal;font-family: 'Figtree'">Choose from as many services as you like.</h3>
-            <h3 class="mt-3" style="font-style:normal;font-family: 'Figtree'">Match with the perfect pet service provider.</h3>
+            <h3 class="mt-3" style="font-style:normal;font-family:'Figtree'">Choose from as many services as you like.</h3>
+            <h3 class="mt-3" style="font-style:normal;font-family:'Figtree'">Match with the perfect pet service provider.</h3>
             
             <div class="row p-5 m-3">
                 <services v-for="(each) of services" v-bind:tag="tags[each]" v-bind:png="png[each]" v-bind:service="each"></services>
@@ -231,21 +265,15 @@
 
         <petpalsFooter></petpalsFooter>
     </div>
-    <FadeInOut entry="left" exit="left" :duration="500">
-        <h1>Fade in and out transition</h1>
-    </FadeInOut>
     
 </template>
-
+ 
 
 <script>
     import services from '@/components/services.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
-    import Vue3Transitions from 'vue3-transitions'
-    import { defineComponent, ref } from 'vue'
-    import { FadeInOut } from 'vue3-transitions'
-    import anime from "animejs/lib/anime.es.js"
-
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail  } from "firebase/auth";
+    
     export default {
         data() {
             return {
@@ -253,55 +281,65 @@
                 services: ['Pet Walking','Pet Grooming','Pet Hotels','Pet Sitters','Pet Trainers','Pet Transport'],
                 tags: {'Pet Walking': 'Take your pet out on scheduled walks with our Pet Walkers.', 'Pet Grooming': 'Be returned a clean and fresh pet with our experienced Pet Groomers.', 'Pet Hotels': 'Leave your pet with our trusted Pet Hotel Providers while on holiday.', 'Pet Sitters': 'Leave your pet with our trusted Pet Sitters while running errands.', 'Pet Trainers': 'Train your pet with our qualified Pet Trainers.', 'Pet Transport': 'Transport your pet safely with our Pet Movers.'},
                 png: {'Pet Walking': 'src/img/png/walker.png', 'Pet Grooming': 'src/img/png/groomer.png', 'Pet Hotels': 'src/img/png/hotel.png', 'Pet Sitters': 'src/img/png/sitter.png', 'Pet Trainers': 'src/img/png/trainer.png', 'Pet Transport': 'src/img/png/catincar.png'},
-                msg1: "Bringing the best pet service providers to you"
+                msg1: "Bringing the best pet service providers to you",
+                loginError: false,
+                errorMsg: '',
+                forgot: false,
+                emailSent: false,
+                email: '',
+                pwd: '',
             
             }
         },
 
         methods: {
+            userLogin(){
+                const auth = getAuth();
+                signInWithEmailAndPassword(auth, this.email, this.pwd)
+                .then((userCredential) => {
+                    // const user = userCredential.user;
+                    // console.log(user)
+                    window.location.href = `/search`;
+                    
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    let msg = error.message.slice(22,(error.message.length)-2)
+                    if (msg == 'wrong-password'){
+                        this.errorMsg = 'Password is invalid. Please try again.'
+                    }else if (msg == 'user-not-found'){
+                        this.errorMsg = 'No account registered. Please register for one first.'
+                    } else if (msg == 'invalid-email'){
+                        this.errorMsg = 'Email is invalid. Please enter a valid email address.'
+                    }
+                    this.loginError = true
+                });
+            },
+
+            resetPassword(){
+                const auth = getAuth();
+                sendPasswordResetEmail(auth, this.email)
+                .then(() => {
+                    this.emailSent=true
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                });
+                
+            },
+
             Nav(){
                 if (this.counter == 1){
                     this.counter = 0;
                 } else {
                     this.counter++;
                 }
-            },
-            textWrapper1(){
-                // var textWrapper1 = document.querySelector('.abt');
-                this.msg1 = this.msg1.replace(/\S/g, "<span class='letter'>$&</span>");
-              
-                anime.timeline({loop: true})
-                .add({
-                    targets: '.headline .letter',
-                    translateX: [40,0],
-                    translateZ: 0,
-                    opacity: [0,1],
-                    easing: "easeOutExpo",
-                    duration: 1200,
-                    delay: (el, i) => 500 + 30 * i
-                }).add({
-                    targets: '.headline .letter',
-                    translateX: [0,-30],
-                    opacity: [1,0],
-                    easing: "easeInExpo",
-                    duration: 1100,
-                    delay: (el, i) => 100 + 30 * i
-                });
             }
-        },
-        beforeMount() {
-            this.textWrapper1()
         },
         components: {
             services,
-            petpalsFooter,
-            FadeInOut
-        },
-        setup() {
-            const triggerFade = ref(false)
-            return {
-            triggerFade
-            }
+            petpalsFooter
         }
     }
 </script>

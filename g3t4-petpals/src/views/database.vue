@@ -49,8 +49,8 @@
     // const myphoto = 'https://talkjs.com/images/avatar-2.jpg'
 
     import navbar from '@/components/navbar.vue'
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
@@ -65,10 +65,62 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-
+ 
     // Import the functions needed to read from realtime database
-    import { getDatabase, ref, onValue, set, update, get, push} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+    import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged , signOut  } from "firebase/auth";
 
+    // gets the currently logged in user
+    const auth = getAuth();
+    // onAuthStateChanged(auth, (user) => {
+    // if (user) {
+    //     const uid = user.uid;
+    //     console.log(user.email)
+    //     // ...
+    // } else {
+    //     // User is signed out
+    //     // ...
+    // }
+    // });
+
+    // user log out 
+    // const auth = getAuth();
+    // signOut(auth).then(() => {
+    // // Sign-out successful.
+    // }).catch((error) => {
+    // // An error happened.
+    // });
+
+    // user log in 
+    // const auth = getAuth();
+    // signInWithEmailAndPassword(auth, 'alice123@gmail.com', '1234')
+    // .then((userCredential) => {
+    //     // Signed in 
+    //     const user = userCredential.user;
+    //     console.log(user.email)
+    //     // ...
+    // })
+    // .catch((error) => {
+    //     // const errorCode = error.code;
+    //     const errorMessage = error.message.slice(22,(error.message.length)-2)
+
+    // });
+
+    // registers a user
+    // const auth = getAuth();
+    // createUserWithEmailAndPassword(auth,'alice123@gmail.com', 'alice123')
+    // .then((userCredential) => {
+    //     // Signed in 
+    //     const user = userCredential.user;
+    //     console.log(user.email)
+    //     console.log('user created!')
+    //     // ...
+    // })
+    // .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     // ..
+    // });
 
     // connect to the realtime database
     const db = getDatabase(app);
@@ -76,6 +128,8 @@
     // get user info
     const myinfo = ref(db, `users/${myid}`)
 
+    // const CryptoJS = require("crypto-js");
+    import CryptoJS from "crypto-js"
 
     export default {
         
@@ -146,7 +200,10 @@
 
             // retrieve all services
             getServices(){
-
+                //example
+                query(ref(db, 'user-posts/' + myUserId), orderByChild('starCount'))
+                orderByKey()
+                orderByValue()
             },
             
             // remove service
@@ -304,6 +361,24 @@
         //         var status = document.getElementById('status')
         //         status.innerText = 'create user unsuccessful'
         //     });
+
+        // (A) LOAD ENCRYPT LIBRARY
+        // const CryptoJS = require("crypto-js");
+        
+
+        // // (B) SECRET KEY
+        // var key = "secret";
+        // var pwd = 'mypassword'
+
+        // // (C) ENCRYPT
+        // var cipher = CryptoJS.AES.encrypt(pwd, key);
+        // cipher = cipher.toString();
+        // console.log('my encrypted password: ' + cipher);
+
+        // // (D) DECRYPT
+        // var decipher = CryptoJS.AES.decrypt(cipher, key);
+        // decipher = decipher.toString(CryptoJS.enc.Utf8);
+        // console.log('my password: ' + decipher);
   
         }
     }

@@ -5,6 +5,7 @@
         position: fixed;
         margin:0;
         z-index: 1000;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
         
     }
 
@@ -56,7 +57,7 @@
                             </li>
 
                             <li class="nav-item active px-2">
-                                <router-link to="/" style="color:rgb(195, 82, 82)" target="blank">Log Out</router-link>
+                                <router-link to="/" style="color:rgb(195, 82, 82)" v-on:click = 'logOut()'>Log Out</router-link>
                             </li>
 
                         </ul>
@@ -66,6 +67,22 @@
         </div>
     </div>
 </template>
+
 <script>
-   
+    import { getAuth, signOut} from "firebase/auth";
+
+
+    export default {
+        methods : {
+            logOut(){
+                const auth = getAuth();
+                signOut(auth).then(() => {
+                    window.location.href = `/`;
+                }).catch((error) => {
+                    console.log('o no')
+                });
+            }
+        }
+    }
+
 </script>

@@ -11,6 +11,8 @@ import database from "../views/database.vue"
 
 import {createRouter, createWebHistory} from "vue-router"
 
+import testing from "../views/testing.vue"
+
 export const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -58,8 +60,12 @@ export const router = createRouter({
             path: "/profilelisting",
             name: "profilelisting",
             component: profilelisting
-        }
-
+        },
+        {
+            path: "/testing",
+            name: "testing",
+            component: testing
+        },
 
     ]
 })
