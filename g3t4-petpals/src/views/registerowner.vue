@@ -34,8 +34,6 @@
                             <input type="email" v-model = 'email' class="form-control w-100" id="inputEmail" style="background-color:white;" placeholder="" required>
                         </div>
                         <div class="col-md-6">
-                            <!-- <label for="inputUsername">Username</label>
-                            <input type="text" class="form-control w-100" id="inputUsername" placeholder="" required> -->
                             <label for="inputNumber">Phone Number</label>
                             <input type="text" v-model = 'mobile' class="form-control w-100" id="inputNumber" placeholder="" aria-describedby="inputGroupPrepend2" min="0" max="99999999" maxlength="8" minlength="8" required>
                         
@@ -63,11 +61,6 @@
                             <p class="form-text">This is how we can uniquely identify you!</p>
                             <input type="text" v-model='username' class="form-control w-100" id="inputUsername" placeholder="" required>
                         </div>
-                        <div class="col-md-6">
-                            <label for="inputNickname">Nickname</label>
-                            <p id="nicknameHelp" class="form-text text-muted">This is your name to other users!</p>
-                            <input type="text" class="form-control w-100" id="inputNickname" placeholder="" required>
-                        </div>
                     </div>
                     <div class="row mt-2"> <!-- profile picture -->
                         <div class="col">
@@ -91,10 +84,6 @@
                     </div>
 
                    
-                    <!-- <div class="row mx-2 mt-2"> number of pets 
-                        <label for="inputPetNo">Please indicate how many pets you have!</label>
-                        <input type="number" class="form-control" id="inputPetNo" placeholder="1" min="1" max="10" v-model="numPets">
-                    </div> -->
                     <div class="row"> <!-- submit -->
                         <div class="col-4"></div>
                         <div class="col-4">
@@ -105,12 +94,6 @@
                     </form>
                     </div>
                     <div class="col-3"></div>
-                    <!-- <div class="col">
-                         <template v-for="n in numPets">
-                            <petprofile></petprofile>
-
-                            </template>
-                    </div> -->
                 </div>
             </div>
             </div>
@@ -127,6 +110,23 @@
 <script>
     import navbar from '@/components/navbar.vue'
     import petprofile from '@/components/petprofile.vue'
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "firebase/auth";
+    import { initializeApp } from "firebase/app";
+    import { getDatabase, ref, set } from "firebase/database";
+
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+        authDomain: "petpals-623e3.firebaseapp.com",
+        projectId: "petpals-623e3",
+        storageBucket: "petpals-623e3.appspot.com",
+        messagingSenderId: "949038254831",
+        appId: "1:949038254831:web:82d399649bb06e8389e91a",
+        databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
 
     export default {
@@ -147,6 +147,62 @@
         components: {
             navbar, 
             petprofile
+
+        },
+
+methods : {
+    getPic(event){
+        const files = event.target.files
+        if (!files.length) return 
+
+        const reader = new FileReader()
+        reader.readAsDataURL(files[0])
+        reader.onload = () => (this.pic = reader.result)
+
+        // console.log(this.pic)
+    },
+
+    registerUser(){
+        const auth = getAuth();
+        if (this.psw == this.psw_repeat && this.psw != '' && this.email != '' && this.postal != '' && this.address != '' && this.username != '' && this.mobile != ''){
+            createUserWithEmailAndPassword(auth,this.email, this.psw)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log('user created!')
+                updateProfile(auth.currentUser, {
+                    displayName: this.username , photoURL: this.pic
+                })
+
+                set(ref(db, `users/${user.uid}`), {
+                    username: this.username,
+                    profilepic : this.pic,
+                    mobile: this.mobile,
+                    type: 'Pet Owner',
+                    address: this.address,
+                    postalcode : this.postal,
+                    ratings : 0, //by default
+                })
+                
+                signInWithEmailAndPassword(auth, this.email, this.psw)
+                .then((user) => {
+                    window.location.href = `/search`;
+                })
+                .catch((error) => {
+                    // const errorCode = error.code;
+                    const errorMessage = error.message.slice(22,(error.message.length)-2)
+                    console.log(errorMessage)
+                })
+
+
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });     
+            
+        }
+
+    }
         }
     }
 
