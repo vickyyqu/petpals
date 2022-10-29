@@ -48,8 +48,8 @@
     </div>
 
     <div class="buttons m-2 d-flex justify-content-end">
-        <button class="btn btn-select p-2 mx-2" >Message Provider</button>
-        <button class="btn btn-cancel p-2">Confirm Booking</button>
+        <button class="btn btn-select p-2 mx-2" @click='addChat'>Message Provider</button>
+        <button class="btn btn-cancel p-2" @click="cfmBooking">Confirm Booking</button>
     </div>
 
 
@@ -68,15 +68,49 @@
 </style>
 
 <script>
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+    authDomain: "petpals-623e3.firebaseapp.com",
+    projectId: "petpals-623e3",
+    storageBucket: "petpals-623e3.appspot.com",
+    messagingSenderId: "949038254831",
+    appId: "1:949038254831:web:82d399649bb06e8389e91a",
+    databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth();
+
 export default {
     data() {
         return {
         }
 
     },
-    props: ['name', 'desc', 'rates', 'location', 'img', 'yrsOfExp', 'ratings'],
+    props: ['name', 'desc', 'rates', 'location', 'img', 'yrsOfExp', 'ratings','service', 'type', 'otherid'],
     methods: {
-    }
+        cfmBooking(){
+
+        },
+
+        addChat(){
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    set(ref(db, `users/${user.uid}/chat`), this.otherid)
+                } else {
+                    console.log('user is signed out')
+                }
+            });
+
+        },
+    },
+                
 
 }
 

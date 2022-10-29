@@ -110,11 +110,8 @@ input[type=text] {
                     </div>
                 </div>
     
-                <!-- <div class="row pb-5">
-                    <profileCard v-for="n in 10"></profileCard>
-                </div> -->
                 <div id = 'profileCards' class="row pb-5">
-                    <profileCard v-for="result in filterResults" v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service'></profileCard>
+                    <profileCard v-for="result in filterResults" v-bind:oid = 'result.oid' v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service'></profileCard>
                 </div>
 
             </div>
@@ -154,18 +151,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// gets the currently logged in user
-const auth = getAuth(); 
-var currUser = ''
-
-onAuthStateChanged(auth, (user) => {
-if (user) {
-    currUser = user.uid 
-} else {
-    console.log('user is signed out')
-}
-});
-
 export default {
     data() {
         return {
@@ -202,25 +187,25 @@ export default {
 
                 onValue(ref(db, `services/${service}`), (snapshot) => {
                     for (let uid in snapshot.val()){
-                        if (uid != currUser){
-                            var item = {}
-                            var price = snapshot.val()[uid]
+                        
+                        var item = {}
+                        var price = snapshot.val()[uid]
+                        
+                        onValue(ref(db,`users/${uid}`), (snapst) => {
+                            item.rates = price
+                            item.desc = snapst.val().desc
+                            item.yrsOfExp = snapst.val().yrsOfExp
+                            item.name = snapst.val().username
+                            item.img = snapst.val().profilepic 
+                            item.ratings = snapst.val().ratings
+                            item.location = snapst.val().address
+                            item.service = service
+                            item.service = service
+                            item.oid = uid
                             
-                            onValue(ref(db,`users/${uid}`), (snapst) => {
-                                item.rates = price
-                                item.desc = snapst.val().description
-                                item.yrsOfExp = snapst.val().yrsOfExp
-                                item.name = snapst.val().username
-                                item.img = snapst.val().profilepic 
-                                item.ratings = snapst.val().ratings
-                                item.location = snapst.val().address
-                                item.service = service
-                                item.service = service
-                                
-                            });
+                        });
 
-                            this.filterResults.push(item) // sorted by service by default
-                        }
+                        this.filterResults.push(item) // sorted by service by default
 
                     }
                 });
