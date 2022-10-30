@@ -104,10 +104,7 @@
   
 <script>
     import navbar from '../components/navbar.vue'
-    import TabNav from '../components/TabNav.vue';
-    import Tab from '../components/Tab.vue';
     import { VueperSlides, VueperSlide } from 'vueperslides'
-    import Post from "../components/Post.vue";
     import Modal from '../components/Modal.vue'
     import { ref } from "vue";
     import petpalsFooter from "../components/petpalsFooter.vue"
@@ -133,7 +130,7 @@
     export default {
         name: "profile",
         components: {
-            navbar, TabNav, Tab, VueperSlides, VueperSlide, Post, Modal, petpalsFooter
+            navbar, VueperSlides, VueperSlide, Modal, petpalsFooter
         },
         data() {
             return {

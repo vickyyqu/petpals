@@ -100,7 +100,7 @@
 
                 <h4 class="mt-3">More Details:</h4>
 
-                <div class="row w-75 mx-auto">
+                <div class="row w-75 mx-auto d-flex align-items-end">
 
                     <div class="col-md-6 mt-3">
                         <label for="yearsofexp">Years of Experience:</label>
@@ -108,7 +108,7 @@
                     </div>
 
                     <div class="col-md-6 mt-3">
-                        <label for="rate">Your Rate in SGD (Per Hour):</label>
+                        <label for="rate">Your Hourly Rate (SGD):</label>
                         <input type="number" class="form-control" min="0" max="1000" v-model="rate">
                     </div>
 

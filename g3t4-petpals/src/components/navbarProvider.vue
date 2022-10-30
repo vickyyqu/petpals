@@ -41,11 +41,11 @@
                         <ul class="navbar-nav">
 
                             <li class="nav-item px-2">
-                                <router-link to="/search">Search</router-link>
+                                <router-link to="/profilelisting">Add a Listing</router-link>
                             </li>
 
                             <li class="nav-item px-2">
-                                <router-link to="/bookingsOwner">Requests & Bookings</router-link>
+                                <router-link to="/bookingsProviders">Requests & Bookings</router-link>
                             </li>
 
                             <li class="nav-item px-2">

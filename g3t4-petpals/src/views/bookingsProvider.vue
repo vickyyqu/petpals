@@ -5,42 +5,43 @@
     color: #dfd1cd;
 }
 
-.requests-made {
-    border-right: 2px solid #dfd1cd;
-}
+.requests-made, .confirmed-bookings {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 #cec2c233;
+}   
+
 </style>
 
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid sides">
         <navbar></navbar>
 
-        <div class="row">
-            <div class="col-1 sides">
-            </div>
+        <div class="row my-5" style="padding-top:30px">
 
-            <div class="col-lg-5 requests-made mt-5 p-5">
-                <h3 class="my-5">Pending Requests</h3>
-                <p class="my-5 text-center nil">No requests yet...</p>
+            <div class="col-lg-6 pt-3 px-3">
+                <div class="requests-made py-5">
+                    <h3 class="my-2 text-center">Requests Received</h3>
+                    <p class="my-5 text-center nil">No requests yet...</p>
 
-                <RequestPending v-for='item in pendings' :name= 'item.other' :desc = 'item.desc' :rates = 'item.price' :location = 'item.address' :yrsOfExp = 'item.yrsOfExp' :img = 'item.photo' :ratings = 'item.ratings'></RequestPending>
-
-                <h3 class="my-5" >Confirmed Requests</h3>
-                <p class="my-5 text-center nil">No requests yet...</p>
-
-                <RequestConfirmed v-for='item in requests' :name ='item.other' :desc ='item.desc' :rates ='item.price' :location ='item.address' :yrsOfExp ='item.yrsOfExp' :img ='item.photo' :ratings ='item.ratings'></RequestConfirmed>
- 
+                    <RequestPending v-for='item in pendings' :name= 'item.other' :desc = 'item.desc' :rates = 'item.price' :location = 'item.address' :yrsOfExp = 'item.yrsOfExp' :img = 'item.photo' :ratings = 'item.ratings'></RequestPending>
+                </div>
+            
             </div> 
  
-            <div class="col-lg-5 confirmed-bookings mt-5 p-5">
-                <h3 class="my-5">Confirmed Bookings</h3>
-                <p class="my-5 text-center nil">No bookings yet...</p>
-                <BookingConfirmed v-for='item in bookings' :name = 'item.other' :desc = 'item.desc' :rates = 'item.price' :location = 'item.address' :yrsOfExp = 'item.yrsOfExp' :img = 'item.photo' :ratings = 'item.ratings'></BookingConfirmed>
-            </div>
+            <div class="col-lg-6 pt-3 px-3">
+                <div class="requests-made py-5">
 
-            <div class="col-1 sides">
+                    <h3 class="my-2 text-center">Confirmed Bookings</h3>
+                    <p class="my-5 text-center nil">No bookings yet...</p>
+
+                    <BookingConfirmed v-for='item in bookings' :name = 'item.other' :desc = 'item.desc' :rates = 'item.price' :location = 'item.address' :yrsOfExp = 'item.yrsOfExp' :img = 'item.photo' :ratings = 'item.ratings'></BookingConfirmed> 
+
+                </div>
             </div>
 
         </div>
+
     </div>
 
     <petpalsFooter></petpalsFooter>
@@ -81,6 +82,7 @@
                 pendings: [],
                 requests: [],
                 bookings: [],
+                petOwner: true
             }
         },
         components: {
@@ -96,6 +98,20 @@
             console.log(this.requests)
             // this.bookings = this.getBookings('booked')
             // bid status service other ratings yrsOfExp desc photo price address
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    onValue(ref(db, `users/${user.uid}/type`), (snapsht) => {
+                        if (snapsht.val() == 'Pet Owner'){
+                            this.petOwner = true
+                        }else{
+                            this.petOwner = false
+                        }   
+                    }); 
+                }
+            });
+
+            console.log(this.petOwner)
         },
         methods : {
             getBookings(stat){
@@ -135,11 +151,11 @@
                                     }else{
                                         onValue(ref(db, `services/${obj.service}/${user.uid}`), (snapsht) => {
                                             obj['price'] = snapsht.val()
+                                            
                                         });    
                                     }
                                     
-
-                                    lst.push(obj)                         
+                                    lst.push(obj)               
                                 }
 
 
