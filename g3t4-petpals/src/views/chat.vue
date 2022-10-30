@@ -27,7 +27,6 @@
     import petpalsFooter from '@/components/petpalsFooter.vue'
     import Talk from 'talkjs';
     import { initializeApp } from "firebase/app";
-    import { getAnalytics } from "firebase/analytics";
     import { getAuth, onAuthStateChanged } from "firebase/auth";
     import { getDatabase, ref, get} from "firebase/database";
 
@@ -64,7 +63,9 @@
             },
 
             async mounted() {
+                await Talk.ready 
                 const auth = getAuth();
+                // const currUser = auth.currentUser
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
                         const me = new Talk.User({
@@ -79,14 +80,16 @@
                             me: me,
                         });
 
-                        if (this.newConvo){
-                            get(ref(db,`users/${otherid}`))
-                            .then((snapshot) => {
-                                if (snapshot.exists()) {
+                        get(ref(db,`users/${user.uid}/chat`))
+                        .then((snapshot) => {
+                            if (snapshot.exists()) {
+                                var otherid = snapshot.val()
+                                get(ref(db,`users/${otherid}`))
+                                .then((snapsht) => {
                                     const other = new Talk.User({
-                                        id: this.otherid,
-                                        name: snapshot.val().username,  
-                                        photoUrl: snapshot.val().profilepic,
+                                        id: otherid,
+                                        name: snapsht.val().username,  
+                                        photoUrl: snapsht.val().profilepic,
                                         role: "default"
                                     })
 
@@ -94,7 +97,6 @@
                                         Talk.oneOnOneId(me, other)
                                     );
                                 
-
                                     conversation.setParticipant(me);
                                     conversation.setParticipant(other);
 
@@ -102,69 +104,16 @@
                                     inbox.select(conversation);
 
                                     inbox.mount(this.$refs.talkjs);
-                            }})
-                        }else{
-                            var inbox = talkSession.createInbox();
-                            inbox.mount(this.$refs.talkjs);
-                        }
+                                    
+                                })
+                            }
+                        })
+
                     } else {
                         console.log('user is signed out')
                     }
                 });
 
-
-
-
-
-
-                // getting user information 
-                // get(ref(db, `users/${myid}`))
-                // .then((snapshot) => {
-                //     if (snapshot.exists()) {
-                //         const me = new Talk.User({
-                //             id: myid,
-                //             name: snapshot.val().nickname,  
-                //             photoUrl: snapshot.val().profilepic,
-                //             role: "default"
-                //             })
-
-                //             const talkSession = new Talk.Session({
-                //                 appId: 'tLVsZwjE',
-                //                 me: me,
-                //             });
-
-                //             get(ref(db,`users/${otherid}`))
-                //             .then((snapsht) => {
-                //                 if (snapsht.exists()) {
-                //                     const other = new Talk.User({
-                //                         id: otherid,
-                //                         name: snapsht.val().nickname,  
-                //                         photoUrl: snapsht.val().profilepic,
-                //                         role: "default"
-                //                     })
-
-                //                     const conversation = talkSession.getOrCreateConversation(
-                //                         Talk.oneOnOneId(me, other)
-                //                     );
-                              
-
-                //                     conversation.setParticipant(me);
-                //                     conversation.setParticipant(other);
-
-                //                     var inbox = talkSession.createInbox();
-                //                     inbox.select(conversation);
-
-                //                     inbox.mount(this.$refs.talkjs);
-                //                 }})
-
-
-                //     } else {
-                //         console.log("No data available");
-                //     }
-                // })
-                // .catch((error) => {
-                //     console.error(error);
-                // });
             }
         }
 </script>

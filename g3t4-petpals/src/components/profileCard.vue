@@ -57,7 +57,7 @@
 
 
         </div>
-        <button class="btn mx-5 my-3 btn-select" @click="sent = false">Send Request</button>
+        <button class="btn mx-5 my-3 btn-select" @click="sendRequest();">Send Request</button>
     </div>
 
     <div v-else class="col-xl-3 col-md-6 pt-3">
@@ -102,7 +102,10 @@
             </div>
         </div>
 
-        <button class="btn mx-5 my-3 btn-cancel" @click="sent = true">Cancel Request</button>
+        <!-- instead of letting them cancel request here, it will jus show request sent 
+        they will have to cancel requests in bookings page -->
+        <!-- <button class="btn mx-5 my-3 btn-cancel" @click="cancelRequest">Cancel Request</button> -->
+        <small style="font-style:italic; color:brown">Request sent!</small>
     </div>
 
  
@@ -111,21 +114,102 @@
 
 <script>
 
-// dont need title? 
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue, set, update, get, push, query, orderByChild} from "firebase/database";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+    authDomain: "petpals-623e3.firebaseapp.com",
+    projectId: "petpals-623e3",
+    storageBucket: "petpals-623e3.appspot.com",
+    messagingSenderId: "949038254831",
+    appId: "1:949038254831:web:82d399649bb06e8389e91a",
+    databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth(); 
+
 
 export default {
     data() {
         return {
-            sent: true
+            sent: true,
         }
     },
-    props: ['title', 'desc', 'rates', 'location', 'img', 'ratings', 'yrsOfExp', 'name', 'service'],
+    props: ['title', 'desc', 'rates', 'location', 'img', 'ratings', 'yrsOfExp', 'name', 'service', 'oid'],
     methods: {
+
+        // only pet owners can do these
         sendRequest() {
             this.sent = false
-            alert("Request Sent!")
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    get(ref(db, `users/${user.uid}/bookings/${this.oid}/${this.service}`))
+                    .then((snapshot) => {
+                        if (snapshot.exists() && snapshot.val().status == 'cancelled') {
+                            set(ref(db,`users/${user.uid}/bookings/${this.oid}/${this.service}/status`), 'pending')
+                            set(ref(db,`users/${this.oid}/bookings/${user.uid}/${this.service}/status`), 'pending')
+                        } else {
+                            set(ref(db,`users/${user.uid}/bookings/${this.oid}/${this.service}`), {
+                                'price' : this.rates,
+                                'status' : 'pending'
+                            })
+                            set(ref(db,`users/${this.oid}/bookings/${user.uid}/${this.service}`), {
+                                'price' : this.rates,
+                                'status' : 'pending'
+                            })
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+                } else {
+                    console.log('user is signed out')
+                }
+            });
+
+
         },
 
+        //remove this?
+        cancelRequest(){
+            this.sent = true
+            const currUser = auth.currentUser
+
+            set(ref(db,`users/${currUser.uid}/bookings/${this.oid}/${this.service}`), {
+                'price' : this.rates,
+                'status' : 'cancelled'
+            })
+            set(ref(db,`users/${this.oid}/bookings/${currUser.uid}/${this.service}`), {
+                'price' : this.rates,
+                'status' : 'cancelled'
+            })
+        },
+
+        getSent(){
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    onValue(ref(db, `users/${user.uid}`), (snapshot) => {
+                        if (snapshot.val()['bookings'] == null || snapshot.val()['bookings'][this.oid] == null || snapshot.val()['bookings'][this.oid][this.service] == null || snapshot.val().bookings[this.oid][this.service].status == 'cancelled' ){
+                            // no previous bookings or no previous bookings with this user
+                            // or no previous bookings with this user and service 
+                            // or previous booking was cancelled
+                            this.sent = true
+                        }else{
+                            this.sent = false
+                        }
+                    });
+                } else {
+                    console.log('user is signed out')
+                }
+            });
+        }
+    },
+    mounted() {
+        this.getSent()
     }
   
 }  
