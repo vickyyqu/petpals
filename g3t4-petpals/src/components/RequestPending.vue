@@ -52,30 +52,28 @@
 
             <div class="card-body">
                 <h6 v-if='type == "Pet Owner"' class="card-title">Bio:</h6>
+                <h6 v-else class="card-title">Description:</h6>
                 <small class="card-text">{{desc}}</small>
             </div>
 
-            <div class="card-footer">
+            <div v-if='type != "Pet Owner"' class="card-footer">
                 <div class="text-end">
                     <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}} </small>
                     <small class="profile-details"><i class="bi bi-geo"></i> {{location}} </small>
-                    <small v-if='type == "Pet Owner"' class="profile-details"><i class="bi bi-house-heart"></i>{{yrsOfExp}}</small>
-                    
-                
+                    <small class="profile-details"><i class="bi bi-house-heart"></i>{{yrsOfExp}}</small>
                 </div>
             </div>
         </div>
 
 
-
-        <div v-if="petOwner" class="buttons m-2">
-            <div v-if="delete" class="d-flex justify-content-end"><button class="btn btn-cancel p-2" @click="cancelRequest">Cancel Request</button></div>
-    
-            <div v-else class="d-flex justify-content-end mb-0"><p style="color:brown;font-style:italic;" class="p-1">Request Cancelled</p></div>
+        <div v-if='type == "Pet Owner"' class="buttons m-2">
+            <div v-if="delete" class="d-flex justify-content-end"><button class="btn btn-cancel p-2" @click="acceptedRequest=true">Accept Request</button></div>
         </div>
 
         <div v-else class="buttons m-2">
-            <div v-if="delete" class="d-flex justify-content-end"><button class="btn btn-cancel p-2" @click="acceptedRequest=true">Accept Request</button></div>
+            <div v-if="delete" class="d-flex justify-content-end"><button class="btn btn-cancel p-2" @click="cancelRequest">Cancel Request</button></div>
+    
+            <div v-else class="d-flex justify-content-end mb-0"><p style="color:brown;font-style:italic;" class="p-1">Request Cancelled</p></div>
         </div>
 
     </div>
@@ -124,6 +122,7 @@ export default {
                     window.location.href = `/bookings`;
                 } else {
                     console.log('user is signed out')
+                    // specify which type go to which page  
                 }
             });
         },
@@ -137,6 +136,7 @@ export default {
                     window.location.href = `/bookings`;
                 } else {
                     console.log('user is signed out')
+                    // specify which type go to which page  
                 }
             });
         }

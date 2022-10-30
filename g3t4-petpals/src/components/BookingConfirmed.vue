@@ -34,14 +34,15 @@
             
         </div>
         <div class="card-body">
-            <h6 v-if='type == "Pet Owner"' class="card-title">Description:</h6>
+            <h6 v-if='type == "Pet Owner"' class="card-title">Bio:</h6>
+            <h6 v-else class="card-title">Description:</h6>
             <small class="card-text">{{desc}}</small>
         </div>
         <div class="card-footer">
             <div class="text-end">
                 <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}} </small>
                 <small class="profile-details"><i class="bi bi-geo"></i> {{location}} </small>
-                <small v-if='type == "Pet Owner"' class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Years of experience </small>
+                <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Years of experience </small>
                 
             
             </div>
@@ -129,7 +130,8 @@ export default {
                     const rating = ((this.total / this.count)*2).toFixed()/2
                     
                     set(ref(db, `users/${user.uid}/ratings`), ratings) 
-                    window.location.href = `/bookings`;                        
+                    window.location.href = `/bookings`;   
+                    // specify which type go to which page                     
                 });
             
             });

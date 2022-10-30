@@ -23,7 +23,7 @@
                 <div class="requests-made py-5">
                     <h3 class="my-2 text-center">Requests Received</h3>
                     <p class="my-5 text-center nil">No requests yet...</p>
-                    
+
                     <RequestPending v-for='item in pendings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></RequestPending>
                 </div>
             
