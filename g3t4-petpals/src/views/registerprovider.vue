@@ -234,7 +234,7 @@ methods : {
 
                 signInWithEmailAndPassword(auth, this.email, this.psw)
                 .then((user) => {
-                    window.location.href = `/search`;
+                    window.location.href = `/bookingsProvider`;
 
                 })
                 .catch((error) => {

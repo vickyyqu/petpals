@@ -45,7 +45,7 @@
                             </li>
 
                             <li class="nav-item px-2">
-                                <router-link to="/bookingsProviders">Requests & Bookings</router-link>
+                                <router-link to="/bookingsProvider">Requests & Bookings</router-link>
                             </li>
 
                             <li class="nav-item px-2">

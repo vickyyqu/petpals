@@ -271,7 +271,23 @@
 <script>
     import services from '@/components/services.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
-    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail  } from "firebase/auth";
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged  } from "firebase/auth";
+    import { initializeApp } from "firebase/app";
+    import { getDatabase, ref, onValue } from "firebase/database";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+        authDomain: "petpals-623e3.firebaseapp.com",
+        projectId: "petpals-623e3",
+        storageBucket: "petpals-623e3.appspot.com",
+        messagingSenderId: "949038254831",
+        appId: "1:949038254831:web:82d399649bb06e8389e91a",
+        databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth();
     
     export default {
         data() {
@@ -296,10 +312,15 @@
                 const auth = getAuth();
                 signInWithEmailAndPassword(auth, this.email, this.pwd)
                 .then((userCredential) => {
-                    // const user = userCredential.user;
-                    // console.log(user)
-                    window.location.href = `/search`;
-                    
+                    const user = auth.currentUser
+                    onValue(ref(db, `users/${user.uid}/type`), (snapshot) => {
+                        if (snapshot.val() == 'Pet Owner'){
+                            window.location.href = `/search`;
+                        }else{
+                            window.location.href = `/bookingsProvider`;
+                        }   
+                    }); 
+  
                 })
                 .catch((error) => {
                     const errorCode = error.code;
