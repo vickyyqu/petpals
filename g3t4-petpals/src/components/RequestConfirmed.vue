@@ -1,4 +1,6 @@
 <template>
+
+    <!-- ONLY in pet owners booking page -->
     <div class="m-4">
     <div class="card mb-3">
         <div class="d-flex align-items-center mt-3 mx-3" >
@@ -31,8 +33,7 @@
             
         </div>
         <div class="card-body">
-            <h6 v-if='type == "Pet Owner"' class="card-title">Bio:</h6>
-            <h6 v-else class="card-title">Description:</h6>
+            <h6 class="card-title">Description:</h6>
             <small class="card-text">{{desc}}</small>
         </div>
         <div class="card-footer">
