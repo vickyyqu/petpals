@@ -5,45 +5,42 @@
     color: #dfd1cd;
 }
 
-.requests-made {
-    border-right: 2px solid #dfd1cd;
-}
+.requests-made, .confirmed-bookings {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 #cec2c233;
+}   
+
 </style>
 
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid sides">
         <navbar></navbar>
 
-        <div class="row">
-            <div class="col-1 sides">
-            </div>
+        <div class="row my-5" style="padding-top:30px">
 
-            <div class="col-lg-5 requests-made mt-5 p-5">
-                <h3 class="my-5">Pending Requests</h3>
-                <p class="my-5 text-center nil">No requests yet...</p>
-                <!-- <button class="btn btn-go mt-3" v-on:click="getBookings('pending')">get pendings</button> -->
+            <div class="col-lg-6 pt-3 px-3">
+                <div class="requests-made py-5">
+                    <h3 class="my-2 text-center">Requests Received</h3>
+                    <p class="my-5 text-center nil">No requests yet...</p>
 
-                <!-- <span v-if='type == "Pet Owner"'> hi</span>
-                <span v-else>hm</span> -->
+                    <RequestPending v-for='item in pendings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></RequestPending>
+                </div>
+            
+            </div> 
  
-                <RequestPending v-for='item in pendings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></RequestPending>
+            <div class="col-lg-6 pt-3 px-3">
+                <div class="requests-made py-5">
 
-                <h3 class="my-5" >Confirmed Requests</h3>
-                <p class="my-5 text-center nil">No requests yet...</p>
+                    <h3 class="my-2 text-center">Confirmed Bookings</h3>
+                    <p class="my-5 text-center nil">No bookings yet...</p>
 
-                <RequestConfirmed v-for='item in requests' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name ='item.name' :desc ='item.desc' :rates ='item.rates' :location ='item.location' :yrsOfExp ='item.yrsOfExp' :img ='item.img' :ratings ='item.ratings'></RequestConfirmed>
-   
-            </div>  
- 
-            <div class="col-lg-5 confirmed-bookings mt-5 p-5">
-                <h3 class="my-5">Confirmed Bookings</h3>
-                <p class="my-5 text-center nil">No bookings yet...</p>
-                <BookingConfirmed v-for='item in bookings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed>
-            </div>
+                    <BookingConfirmed v-for='item in bookings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed>
 
-            <div class="col-1 sides">
+                </div>
             </div>
         </div>
+
     </div>
 
     <petpalsFooter></petpalsFooter>
@@ -85,6 +82,7 @@
                 pendings: [],
                 requests: [],
                 bookings: [],
+                petOwner: true,
                 services: ['Pet Walker', 'Pet Groomer', 'Pet Hotel', 'Pet Sitter', 'Pet Trainer', 'Pet Mover'],
             }
         },
