@@ -23,8 +23,8 @@
                 <div class="requests-made py-5">
                     <h3 class="my-2 text-center">Requests Received</h3>
                     <p class="my-5 text-center nil">No requests yet...</p>
-
-                    <RequestPending v-for='item in pendings' :name= 'item.other' :desc = 'item.desc' :rates = 'item.price' :location = 'item.address' :yrsOfExp = 'item.yrsOfExp' :img = 'item.photo' :ratings = 'item.ratings'></RequestPending>
+                    
+                    <RequestPending v-for='item in pendings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></RequestPending>
                 </div>
             
             </div> 
@@ -35,11 +35,10 @@
                     <h3 class="my-2 text-center">Confirmed Bookings</h3>
                     <p class="my-5 text-center nil">No bookings yet...</p>
 
-                    <BookingConfirmed v-for='item in bookings' :name = 'item.other' :desc = 'item.desc' :rates = 'item.price' :location = 'item.address' :yrsOfExp = 'item.yrsOfExp' :img = 'item.photo' :ratings = 'item.ratings'></BookingConfirmed> 
+                    <BookingConfirmed v-for='item in bookings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed>
 
                 </div>
             </div>
-
         </div>
 
     </div>
@@ -79,10 +78,12 @@
         data() {
             return {
                 count: 0,
+                type: 'Pet Service Provider',
                 pendings: [],
                 requests: [],
                 bookings: [],
-                petOwner: true
+                petOwner: true,
+                services: ['Pet Walker', 'Pet Groomer', 'Pet Hotel', 'Pet Sitter', 'Pet Trainer', 'Pet Mover'],
             }
         },
         components: {
@@ -92,80 +93,161 @@
             RequestConfirmed,
             BookingConfirmed
         },
+        
         mounted(){
-            // this.pendings = this.getBookings('pending')
-            this.requests = this.getBookings('confirmed')
-            console.log(this.requests)
-            // this.bookings = this.getBookings('booked')
-            // bid status service other ratings yrsOfExp desc photo price address
+            this.getRequests()
+            this.getBookings()
+            this.getPendings()
+            console.log(this.pendings, this.requests, this.bookings)
 
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    onValue(ref(db, `users/${user.uid}/type`), (snapsht) => {
-                        if (snapsht.val() == 'Pet Owner'){
-                            this.petOwner = true
-                        }else{
-                            this.petOwner = false
-                        }   
-                    }); 
-                }
-            });
-
-            console.log(this.petOwner)
+            // :name = 'item.other' :desc = 'item.desc' :rates = 'item.price' 
+            // :location = 'item.address' :yrsOfExp = 'item.yrsOfExp' 
+            // :img = 'item.photo' :ratings = 'item.ratings' :services = 'item.services'
         },
         methods : {
-            getBookings(stat){
-                var lst = []
+            // get Pet Owners
+            getRequests() {
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
-                        onValue(ref(db, `users/${user.uid}/bookings`), (snapshot) => {
-                            for (let key in snapshot.val()){
-                                var obj = {bid: key, status: snapshot.val()[key]}
-                                if (obj.status == stat){
-                                    onValue(ref(db, `bookings/${key}`), (snapsht) => {
-                                        obj['service'] = snapsht.val()['service provided']
-                                        
-                                        if (user.uid == snapsht.val()['pet owner']){
-                                            obj['otherid'] = snapsht.val()['pet service provider']
-                                            obj['type'] = 'Pet Owner'
-                                        }else{
-                                            obj['otherid'] = snapsht.val()['pet owner']
-                                            obj['type'] = 'Pet Service Provider'
-                                        }
-                                    
-                                    onValue(ref(db, `users/${obj.otherid}`), (snapsht) => {
-                                        obj['other'] = snapsht.val().username
-                                        obj['ratings'] = snapsht.val().ratings
-                                        obj['yrsOfExp'] = snapsht.val().yrsOfExp
-                                        obj['desc'] = snapsht.val().desc
-                                        obj['photo'] = snapsht.val().profilepic
-                                        obj['addr'] = snapsht.val().address
-                                        
-                                    });   
-                                });   
+                        onValue(ref(db, `users/${user.uid}/bookings/`), (snapshot) => {
+                            for (let oid in snapshot.val()){
+                                var name = ''
+                                var desc = ''
+                                var loc = ''
+                                var exp = ''
+                                var img = ''
+                                var ratings = ''
 
-                                    if (obj.type == 'Pet Owner'){
-                                        onValue(ref(db, `services/${obj.service}/${obj.otherid}`), (snapsht) => {
-                                            obj['price'] = snapsht.val()
-                                        });  
-                                    }else{
-                                        onValue(ref(db, `services/${obj.service}/${user.uid}`), (snapsht) => {
-                                            obj['price'] = snapsht.val()
+                                onValue(ref(db, `users/${oid}`), (snapsht) => {
+                                    name = snapsht.val().username;
+                                    desc = snapsht.val().desc;
+                                    loc = snapsht.val().address;
+                                    exp = snapsht.val().yrsOfExp;
+                                    img = snapsht.val().profilepic;
+                                    ratings = snapsht.val().ratings
+
+                                for (let service of this.services){
+                                    var obj = {otherid : oid}
+
+                                    onValue(ref(db, `users/${user.uid}/bookings/${oid}/${service}`), (snapsht) => {
+                                        if (snapsht.val() != null && snapsht.val().status == 'confirmed'){
+                                            obj['rates'] = snapsht.val().price
+                                            obj['service'] = service 
+                                            obj['name'] = name
+                                            obj['location'] = loc
+                                            obj['desc'] = desc 
+                                            obj['yrsOfExp'] = exp
+                                            obj['img'] = img
+                                            obj['ratings'] = ratings
+
+                                            if (!this.requests.includes(obj)){
+                                                this.requests.push(obj)
+                                            }
                                             
-                                        });    
-                                    }
-                                    
-                                    lst.push(obj)               
-                                }
-
-
-                                
+                                        }
+                                    });     
+                                }});
                             }
                         });
                     }
-                }); 
+                });
 
-                return lst
+            },
+
+            getBookings() {
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        onValue(ref(db, `users/${user.uid}/bookings/`), (snapshot) => {
+                            for (let oid in snapshot.val()){
+                                var name = ''
+                                var desc = ''
+                                var loc = ''
+                                var exp = ''
+                                var img = ''
+                                var ratings = ''
+
+                                onValue(ref(db, `users/${oid}`), (snapsht) => {
+                                    name = snapsht.val().username;
+                                    desc = snapsht.val().desc;
+                                    loc = snapsht.val().address;
+                                    exp = snapsht.val().yrsOfExp;
+                                    img = snapsht.val().profilepic;
+                                    ratings = snapsht.val().ratings
+
+                                for (let service of this.services){
+                                    var obj = {otherid : oid}
+
+                                    onValue(ref(db, `users/${user.uid}/bookings/${oid}/${service}`), (snapsht) => {
+                                        if (snapsht.val() != null && snapsht.val().status == 'booked'){
+                                            obj['rates'] = snapsht.val().price
+                                            obj['service'] = service 
+                                            obj['name'] = name
+                                            obj['location'] = loc
+                                            obj['desc'] = desc 
+                                            obj['yrsOfExp'] = exp
+                                            obj['img'] = img
+                                            obj['ratings'] = ratings
+
+                                            if (!this.bookings.includes(obj)){
+                                                this.bookings.push(obj)
+                                            }
+                                            
+                                        }
+                                    });     
+                                }});
+                            }
+                        });
+                    }
+                });
+
+            },
+
+            getPendings() {
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        onValue(ref(db, `users/${user.uid}/bookings/`), (snapshot) => {
+                            for (let oid in snapshot.val()){
+                                var name = ''
+                                var desc = ''
+                                var loc = ''
+                                var exp = ''
+                                var img = ''
+                                var ratings = ''
+
+                                onValue(ref(db, `users/${oid}`), (snapsht) => {
+                                    name = snapsht.val().username;
+                                    desc = snapsht.val().desc;
+                                    loc = snapsht.val().address;
+                                    exp = snapsht.val().yrsOfExp;
+                                    img = snapsht.val().profilepic;
+                                    ratings = snapsht.val().ratings
+
+                                for (let service of this.services){
+                                    var obj = {otherid : oid}
+
+                                    onValue(ref(db, `users/${user.uid}/bookings/${oid}/${service}`), (snapsht) => {
+                                        if (snapsht.val() != null && snapsht.val().status == 'pending'){
+                                            obj['rates'] = snapsht.val().price
+                                            obj['service'] = service 
+                                            obj['name'] = name
+                                            obj['location'] = loc
+                                            obj['desc'] = desc 
+                                            obj['yrsOfExp'] = exp
+                                            obj['img'] = img
+                                            obj['ratings'] = ratings
+
+                                            if (!this.pendings.includes(obj)){
+                                                this.pendings.push(obj)
+                                            }
+                                            
+                                        }
+                                    });     
+                                }});
+                            }
+                        });
+                    }
+                });
+
             },
 
         },

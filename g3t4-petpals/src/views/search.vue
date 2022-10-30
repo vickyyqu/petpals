@@ -96,25 +96,22 @@ input[type=text] {
                     </div>
                     <div class="col-lg-2 col-4 mt-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="sortprofiles" id="highToLow">
+                            <input class="form-check-input" v-model='orderBy' v-bind:value = '"desc"' type="radio" name="sortprofiles" id="highToLow">
                             <label class="form-check-label" for="highToLow">
                               From High to Low
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="sortprofiles" id="lowToHigh">
-                            <label class="form-check-label">
+                            <input class="form-check-input" v-model='orderBy' v-bind:value = '"asc"'  type="radio" name="sortprofiles" id="lowToHigh">
+                            <label class="form-check-label" for="lowToHigh">
                                 From Low to High
                             </label>
                         </div>
                     </div>
                 </div>
     
-                <!-- <div class="row pb-5">
-                    <profileCard v-for="n in 10"></profileCard>
-                </div> -->
                 <div id = 'profileCards' class="row pb-5">
-                    <profileCard v-for="result in filterResults" v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service'></profileCard>
+                    <profileCard v-for="result in filterResults" v-bind:oid = 'result.oid' v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service'></profileCard>
                 </div>
 
             </div>
@@ -154,18 +151,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// gets the currently logged in user
-const auth = getAuth(); 
-var currUser = ''
-
-onAuthStateChanged(auth, (user) => {
-if (user) {
-    currUser = user.uid 
-} else {
-    console.log('user is signed out')
-}
-});
-
 export default {
     data() {
         return {
@@ -173,7 +158,8 @@ export default {
             checkedServices : [],
             filterResults : [],
             sortBy : '',
-            orderBy : 'asc'
+            orderBy : '',
+            order: 'smth',
         }
     },
     components: {
@@ -195,35 +181,39 @@ export default {
                 this.checkedServices = this.services.slice(1,this.services.length)
             }
 
-            // console.log(this.checkedServices)
-
             for (let key in this.checkedServices){
                 var service = this.checkedServices[key]
 
                 onValue(ref(db, `services/${service}`), (snapshot) => {
                     for (let uid in snapshot.val()){
-                        if (uid != currUser){
-                            var item = {}
-                            var price = snapshot.val()[uid]
-                            
-                            onValue(ref(db,`users/${uid}`), (snapst) => {
-                                item.rates = price
-                                item.desc = snapst.val().description
-                                item.yrsOfExp = snapst.val().yrsOfExp
-                                item.name = snapst.val().username
-                                item.img = snapst.val().profilepic 
-                                item.ratings = snapst.val().ratings
-                                item.location = snapst.val().address
-                                item.service = service
-                                item.service = service
-                                
-                            });
+                        
+                        var item = {}
+                        var price = snapshot.val()[uid]
+                        
+                        onValue(ref(db,`users/${uid}`), (snapst) => {
+                            item.rates = price
+                            item.desc = snapst.val().desc
+                            item.yrsOfExp = snapst.val().yrsOfExp
+                            item.name = snapst.val().username
+                            item.img = snapst.val().profilepic 
+                            item.ratings = snapst.val().ratings
+                            item.location = snapst.val().address
+                            item.service = service
+                            item.service = service
+                            item.oid = uid
 
-                            this.filterResults.push(item) // sorted by service by default
-                        }
+                            console.log(item,this.filterResults)
+                            
+                            if (!this.filterResults.includes(item)){
+                                this.filterResults.push(item) // sorted by service by default
+                            }
+
+                            console.log(this.filterResults)
+                        });
 
                     }
                 });
+
 
                 if (this.orderBy == 'desc'){
                     if (this.sortBy == 'rates'){
@@ -245,7 +235,8 @@ export default {
                                 
             }
         }
-    }
+    },
+
 }
 
 </script>

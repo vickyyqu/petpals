@@ -5,12 +5,12 @@
 
             <div class="d-flex justify-content-start align-items-center">
                 <img class="rounded-circle"
-                    src="https://assets.codepen.io/460692/internal/avatars/users/default.png"
+                    v-bind:src = 'img'
                     style="max-width:70px">
 
                 <div class="ms-2">
-                    <h6>{{name}} Laura Goh</h6>
-                    <small style="font-style:italic;">PetPals user since 2022</small>
+                    <h6>{{name}}</h6>
+                    <small style="font-style:italic;">{{service}}</small>
     
                     <div class="ratings">
                         <i v-if = 'ratings >= 1' class="bi bi-star-fill"></i>
@@ -34,14 +34,14 @@
             
         </div>
         <div class="card-body">
-            <h6 class="card-title">Description:</h6>
-            <small class="card-text">{{desc}} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non atque unde tempora consectetur est libero modi iure molestias alias similique odit repudiandae minima ab iusto!</small>
+            <h6 v-if='type == "Pet Owner"' class="card-title">Description:</h6>
+            <small class="card-text">{{desc}}</small>
         </div>
         <div class="card-footer">
             <div class="text-end">
-                <small class="profile-details"><i class="bi bi-currency-dollar"></i> {{rates}} 20/h, </small>
-                <small class="profile-details"><i class="bi bi-geo"></i> {{location}} Bukit Batok, </small>
-                <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} 5 Years of Experience</small>
+                <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}} </small>
+                <small class="profile-details"><i class="bi bi-geo"></i> {{location}} </small>
+                <small v-if='type == "Pet Owner"' class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Years of experience </small>
                 
             
             </div>
@@ -73,11 +73,70 @@
 export default {
     data() {
         return {
+            total : 0,
+            count : 0,
         }
 
     },
-    props: ['name', 'desc', 'rates', 'location', 'img', 'yrsOfExp', 'ratings'],
+    props: ['name', 'desc', 'rates', 'location', 'img', 'yrsOfExp', 'ratings','service', 'type','otherid'],
     methods: {
+        addReview(review,rating){
+            //only can leave 1 review
+            // change status after leaving review?
+            // need /5 
+
+            // review appears in other person's profile
+            // set users/${this.otherid}/reviews/${user.uid}/${this.service} {'rating' : rating, 'review' : review}
+            // set users/${user.uid}/bookings/${this.otherid}/${this.service}/status 'cancelled'
+            // set users/${this.otherid}/bookings/${user.uid}/${this.service}/status 'cancelled'
+
+            // calculateRatings()
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    set(ref(db, `users/${this.otherid}/reviews/${user.uid}/${this.service}`), {
+                        'rating' : rating, 
+                        'review' : review
+                    }) 
+                    set(ref(db, `users/${user.uid}/bookings/${this.otherid}/${this.service}/status`), 'cancelled') 
+                    set(ref(db, `users/${this.otherid}/bookings/${user.uid}/${this.service}/status`), 'cancelled') 
+
+                    this.calculateRatings()                    
+                } else {
+                    console.log('user is signed out')
+                }
+            });
+
+        },
+
+        calculateRatings(){
+            // in data we have this.total and this.count
+
+            // onvalue users/${user.uid}/reviews/
+            // for each otherid in there
+            // for each service in each otherid 
+            // this.total += rating and this.count += 1
+
+            // ratings will be this.total/this.count rounded to 1 dp
+            // set users/${user.uid}/ratings = ratings
+            onAuthStateChanged(auth, (user) => {
+                onValue(ref(db, `users/${user.id}/reviews`), (snapshot) => {
+                    for (let oid in snapshot.val()){
+                        for (let serv in snapshot.val()[oid]){
+                            this.count ++
+                            this.total += snapshot.val()[oid].rating
+                        }
+                    }
+                    const rating = ((this.total / this.count)*2).toFixed()/2
+                    
+                    set(ref(db, `users/${user.uid}/ratings`), ratings) 
+                    window.location.href = `/bookings`;                        
+                });
+            
+            });
+
+
+            
+        },
     }
 
 }
