@@ -63,8 +63,10 @@
         </div>
 
         <div class="buttons m-2 d-flex justify-content-end">
-            <button v-if='type == "Pet Owner" && status == "confirmed"' class="btn btn-select px-3 mx-2" @click="addChat">Message Owner</button>
+            <button v-if='type == "Pet Owner" && status == "confirmed"' class="btn btn-select px-3 mx-2" @click="addChat">Message Pet Owner</button>
             <button v-if='type == "Pet Service Provider" && status == "confirmed"' class="btn btn-select px-3 mx-2" @click="addChat">Message Provider</button>
+
+            <button v-if="type == 'Pet Service Provider' && status=='confirmed'" class="btn btn-cancel px-3 ms-1 me-2" @click="cfmBooking">Confirm Booking</button>
 
             <button v-if='type == "Pet Owner" && status ==  "pending"' class="btn btn-cancel px-3 mx-2" @click="acceptRequest">Accept Request</button>
             <button v-if='type == "Pet Owner" && status ==  "pending"' class="btn btn-cancel p-2" @click="cancelRequest">Reject Request</button>

@@ -7,7 +7,6 @@
 
 <template>
     <div class="container-fluid">
-        <navbar></navbar>
 
         <div class="row">
             <div class="col-1 sides">
@@ -151,7 +150,6 @@
 </template>
 
 <script>
-    import navbar from '@/components/navbar.vue'
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "firebase/auth";
     import { initializeApp } from "firebase/app";
     import { getDatabase, ref, set } from "firebase/database";
@@ -174,11 +172,9 @@
         data() {
             return {
                 services: ['Pet Walker', 'Pet Groomer', 'Pet Hotel', 'Pet Sitter', 'Pet Trainer', 'Pet Mover'],
-                checkedServices : [], //services provided gonna move to another page?
 
                 psw: '',
                 psw_repeat: '',
-                numPets: 1, //do we need this?
 
                 email : '',
                 postal : '',
@@ -190,10 +186,6 @@
                 rates : 0, // for now until frontend fixed
                 yrsOfExp : 0,
             }
-        },
-
-        components: {
-            navbar, 
         },
 
 methods : {
@@ -215,7 +207,7 @@ methods : {
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log('user created!')
-                updateProfile(auth.currentUser, {
+                updateProfile(user, {
                     displayName: this.username , photoURL: this.pic
                 })
 
@@ -229,7 +221,6 @@ methods : {
                     address: this.address,
                     postalcode : this.postal,
                     ratings : 0, //by default
-                    // havent add in services provided
                 })
 
                 signInWithEmailAndPassword(auth, this.email, this.psw)

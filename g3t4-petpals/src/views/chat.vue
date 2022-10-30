@@ -68,39 +68,35 @@
                 const auth = getAuth();
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
-                        onValue(ref(db, `users/${user.uid}/type`), (snapshot) => {
-                            if (snapshot.val() == 'Pet Owner'){
+                        onValue(ref(db, `users/${user.uid}`), (snapshot) => {
+                            if (snapshot.val().type == 'Pet Owner'){
                                 this.petOwner = true
                             }else{
                                 this.petOwner = false
                             }   
-                        }); 
 
-                        const me = new Talk.User({
-                            id: user.uid,
-                            name: user.displayName,  
-                            photoUrl: user.photoURL,
-                            role: "default"
-                        })
+                            const me = new Talk.User({
+                                id: user.uid,
+                                name: snapshot.val().username,  
+                                photoUrl: snapshot.val().profilepic,
+                                role: "default"
+                            })
 
-                        const talkSession = new Talk.Session({
-                            appId: 'tLVsZwjE',
-                            me: me,
-                        });
+                            const talkSession = new Talk.Session({
+                                appId: 'tLVsZwjE',
+                                me: me,
+                            });
 
-                        get(ref(db,`users/${user.uid}/chat`))
-                        .then((snapshot) => {
-                            if (snapshot.exists()) {
-                                var otherid = snapshot.val()
-                                get(ref(db,`users/${otherid}`))
-                                .then((snapsht) => {
+                            if (typeof(snapshot.val().chat) != "undefined"){ 
+                                var otherid = snapshot.val().chat
+                                onValue(ref(db, `users/${otherid}`), (snapsht) => {
                                     const other = new Talk.User({
                                         id: otherid,
                                         name: snapsht.val().username,  
                                         photoUrl: snapsht.val().profilepic,
                                         role: "default"
-                                    })
-
+                                    })    
+                                    
                                     const conversation = talkSession.getOrCreateConversation(
                                         Talk.oneOnOneId(me, other)
                                     );
@@ -112,13 +108,17 @@
                                     inbox.select(conversation);
 
                                     inbox.mount(this.$refs.talkjs);
-                                    
+
                                 })
                             }else{
                                 var inbox = talkSession.createInbox();
                                 inbox.mount(this.$refs.talkjs);   
                             }
-                        })
+
+
+                        }); 
+
+
 
                     } else {
                         console.log('user is signed out')

@@ -17,9 +17,9 @@
     <div class="container-fluid sides">
         <navbar></navbar>
 
-        <div class="row my-5" style="padding-top:30px">
+        <div class="row my-5">
 
-            <div class="col-lg-6 order-lg-1 pt-3 px-3">
+            <div class="col-lg-6 pt-3 px-3">
                 <div class="requests-made py-5">
                     <h3 class="my-2 text-center">Requests Made</h3>
                     <p v-if="!haveReq" class="my-5 text-center nil">No requests yet...</p>
@@ -30,7 +30,7 @@
             
             </div> 
  
-            <div class="col-lg-6 order-lg-2 pt-3 px-3">
+            <div class="col-lg-6 pt-3 px-3">
                 <div class="requests-made py-5">
 
                     <h3 class="my-2 text-center">Confirmed Bookings</h3>
@@ -43,8 +43,9 @@
 
         </div>
 
-        <petpalsFooter></petpalsFooter>
     </div>
+
+    <petpalsFooter></petpalsFooter>
 
 </template>
 
@@ -52,9 +53,6 @@
     import navbar from '@/components/navbar.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
     import request from '@/components/request.vue'
-
-    import RequestPending from '@/components/RequestPending.vue'
-    import RequestConfirmed from '@/components/RequestConfirmed.vue'
 
     import BookingConfirmed from '@/components/BookingConfirmed.vue'
 
@@ -95,9 +93,6 @@
             navbar,
             petpalsFooter,
             request,
-
-            RequestPending,
-            RequestConfirmed,
 
             BookingConfirmed
         },

@@ -17,7 +17,7 @@
     <div class="container-fluid sides">
         <navbarProvider></navbarProvider>
 
-        <div class="row my-5" style="padding-top:30px">
+        <div class="row my-5" >
 
             <div class="col-lg-6 pt-3 px-3">
                 <div class="requests-made py-5">
@@ -53,9 +53,6 @@
     import navbarProvider from '@/components/navbarProvider.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
     import request from '@/components/request.vue'
-
-    import RequestPending from '@/components/RequestPending.vue'
-    import RequestConfirmed from '@/components/RequestConfirmed.vue'
 
     import BookingConfirmed from '@/components/BookingConfirmed.vue'
 
@@ -96,9 +93,6 @@
             navbarProvider,
             petpalsFooter,
             request,
-
-            RequestPending,
-            RequestConfirmed,
 
             BookingConfirmed,
         },
