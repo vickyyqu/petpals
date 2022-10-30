@@ -8,6 +8,7 @@
     -o-animation: fadeIn 5s;
     -ms-animation: fadeIn 5s;
     animation-direction: alternate;
+    animation-iteration-count: 1000000;
   }
   
   @keyframes fadeIn {
@@ -35,11 +36,50 @@
     100% { opacity: 1; }
   }
 
-  .modal-content {
-    display: flex;
-    flex-direction: column;
+  .is-typed {
+    width: 80%;
+    margin: auto;
+    padding-bottom: 50px;
+    font-size: 4vh;
+    line-height: 1.5em;
+    letter-spacing: 2px;
+    padding-top: 20%;
+    font-family: 'Alata';
+    font-style: italic;
+    width: 80%;
+    text-align: center;
   }
-
+  .is-typed span.typed {
+    color: #58484e;
+  }
+  .is-typed span.cursor {
+    display: inline-block;
+    width: 3px;
+    background-color:#58484e;
+    animation: blink 1s infinite;
+  }
+  .is-typed span.underscore {
+    display: inline-flex;
+    width: 10px;
+    height: 1px;
+    align-items: flex-end;
+    background-color:#58484e;
+    animation: blink 1s infinite;
+  }
+  .is-typed span.cursor.typing {
+    animation: none;
+  }
+  @keyframes blink {
+    49% {
+      background-color: #58484e;
+    }
+    50% {
+      background-color: transparent;
+    }
+    99% {
+      background-color: transparent;
+    }
+  }
 </style>
 
 <template>
@@ -56,7 +96,7 @@
             <a href="#services">Services</a>
             <a href="#about">About</a>
             <a href="#gallery">Gallery</a>
-            <a href="#">New User?</a>
+            <a href="#">Login</a>
         </div>
 
         
@@ -67,23 +107,11 @@
 
     <!-- Parallax Section -->
     <div class="container-flex">
-        <div class="row parallax-section">
-            <div class="col-md-8 content">
-                <h2 class="headline fade-in-text" v-html="msg1"></h2>
-                <p>Entrust your pet with us and allow our experienced service providers to elevate your pet-owning experience. Join PetPals today and access these services offered by our providers!</p>
-                <h3 style="color:#f8f1ef">New to PetPals?</h3>
-                <div class="dropdown mt-4">
-                    <button class="btn dropbtn btn-light">Register Here</button>
-                    <div id="myDropdown" class="dropdown-content">
-                        <router-link to="/registerowner">I am a pet owner.</router-link>
-                        <router-link to="/registerprovider">I am a pet service provider.</router-link>
-                    </div>
-                </div>
-            </div>
+        <div class="row">
 
-            <div class="col-md-4 content-login">
+            <div class="col-md-4 order-md-2 content-login">
                 <div class="box">
-                    <div v-if="forgot" class="login">
+                    <div v-if="forgot" class="login mt-5" style="padding-bottom:200px;">
                         <h3>Reset Password</h3>
                         <div class="my-3">
                             <label for="email" class="form-label"> Enter your email:</label>
@@ -105,13 +133,13 @@
                     </div>
 
                     <div v-else class="login">
-                        <h3>Login</h3>
-                        <div class="my-3">
+                        <h3 class="pt-5">Login</h3>
+                        <div class="mb-3 mt-4">
                             <label for="email" class="form-label"> Enter your email:</label>
                             <input type="email" class="form-control" v-model = 'email' id="email">
                         </div>
 
-                        <div class="">
+                        <div>
                             <label for="pwd" class="form-label">Enter your password:</label>
                             <input type="password" v-model = 'pwd' class="form-control" id="pwd">
                             <button class="btn p-0" style="background-color:transparent; border-color:transparent; font-size:12px; color:#F8AA9D" @click="forgot=true">Forgot password?</button>
@@ -122,13 +150,34 @@
                         </div>
 
                         <div class="login-btn">
-                            <button class="btn login-btn btn-dark mt-3" v-on:click="userLogin()">Login</button>
+                            <button class="btn login-btn btn-select mt-3" v-on:click="userLogin()">Login</button>
+                        </div>
+                        <hr class="my-5">
+                        <h3 class="fade-in-text text-center mt-5">New to PetPals?</h3>
+                        <div class="dropdown mt-4">
+                            <button class="btn btn-select">Register Here</button>
+                            <div class="dropdown-content">
+                                <router-link to="/registerowner" style="font-size:16px;text-decoration:none" class="text-center pt-2 ">I am a pet owner.</router-link>
+                                <router-link to="/registerprovider" style="font-size:16px;text-decoration:none;" class="text-center pt-2 ">I am a pet service provider.</router-link>
+                            </div>
                         </div>
 
+                       
                     
                     </div>
-                </div>
 
+                    
+                </div>
+                <svg class="curveDownColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" style="fill:white;stroke:white;z-index:-1;"
+                    viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <path d="M0 0 C 50 100 80 100 100 0 Z"></path>
+                    </svg>
+
+            </div>
+
+            <div class="col-md-8 order-md-1 content parallax-section">
+                <vue-writer :array="arr" :eraseSpeed="50" :typeSpeed="100" :delay="3600" />
+                <p>Entrust your pet with us and allow our experienced service providers to elevate your pet-owning experience. Join PetPals today and access these services offered by our providers!</p>
             </div>
 
             
@@ -142,11 +191,11 @@
 
         
         <!-- Services Section -->
-        <div class="row" id="services">
-            <h1 class="pt-5">Our Services</h1>
+        <div class="row pt-5" id="services">
+            <h2 class="pt-5 text-center">Our Services</h2>
 
-            <h3 class="mt-3" style="font-style:normal;font-family:'Figtree'">Choose from as many services as you like.</h3>
-            <h3 class="mt-3" style="font-style:normal;font-family:'Figtree'">Match with the perfect pet service provider.</h3>
+            <h4 class="mt-4 text-center" style="font-style:normal;font-family:'Figtree';line-height:0.7em;color:#856658;">Choose from as many services as you like.</h4>
+            <h4 class="mt-3 text-center" style="font-style:normal;font-family:'Figtree';line-height:0.7em;color:#856658;">Match with the perfect pet service provider.</h4>
             
             <div class="row p-5 m-3">
                 <services v-for="(each) of services" v-bind:tag="tags[each]" v-bind:png="png[each]" v-bind:service="each"></services>
@@ -155,17 +204,17 @@
             <hr>
 
             <div class="row join py-5">
-                <h1 class="pb-3" style="color:#F8AA9D">Join PetPals today</h1>
+                <h2 class="pb-3 text-center" style="color:#F8AA9D">Join PetPals today</h2>
                 
                 <div class="col-2"></div>
 
-                <div class="col-4">
+                <div class="col-md-4">
                     <img src="../img/owner.png" class="img-fluid d-block mx-auto my-5" alt="">
                     <h3 style="color:#F8AA9D">Pet Owner</h3>
                     <p>Sign up today and meet your best suited pet service provider with us!</p>
                 </div>
 
-                <div class="col-4">
+                <div class="col-md-4">
                     <img src="../img/service.png" class="img-fluid d-block mx-auto my-5"  alt="">
                     <h3 style="color:#F8AA9D">Pet Service Provider</h3>
                     <p>Register today as a service provider and secure bookings from pet owners with us!</p>
@@ -188,7 +237,7 @@
             <img src="../img/dog.jpeg" alt="">
 
             <div class="about">
-                <h1 class="abt" id="about">About Us</h1>
+                <h1 class="abt fade-in-text" id="about">About Us</h1>
             </div>
         </div>
 
@@ -222,7 +271,7 @@
 
 
         <div class="m-5 pt-5" id="gallery">
-            <h1 class="mt-5 text-center">Gallery</h1>
+            <h3 class="mt-5 text-center">Gallery</h3>
             <div class="row m-5">
                 <div class="col-sm-4 mb-4 mb-lg-0 ">
                 <img
@@ -272,6 +321,7 @@
     import services from '@/components/services.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
     import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail  } from "firebase/auth";
+    import VueWriter from "vue-writer";
     
     export default {
         data() {
@@ -287,7 +337,7 @@
                 emailSent: false,
                 email: '',
                 pwd: '',
-            
+                arr:  ["BRINGING THE BEST PET SERVICE PROVIDERS TO YOU", "CONNECTING YOU TO PET LOVERS, JUST LIKE YOU"]
             }
         },
 
@@ -340,7 +390,8 @@
         },
         components: {
             services,
-            petpalsFooter
+            petpalsFooter,
+            VueWriter
         }
     }
 </script>
