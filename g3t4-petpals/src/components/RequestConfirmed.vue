@@ -1,10 +1,10 @@
 <template>
-
+    <div class="m-4">
     <div class="card mb-3">
         <div class="d-flex align-items-center mt-3 mx-3" >
 
             <div class="d-flex justify-content-start align-items-center">
-                <img class="mr-3 rounded-circle"
+                <img class="rounded-circle"
                     v-bind:src = 'img'
                     style="max-width:70px">
             </div>
@@ -32,13 +32,14 @@
         </div>
         <div class="card-body">
             <h6 v-if='type == "Pet Owner"' class="card-title">Bio:</h6>
+            <h6 v-else class="card-title">Description:</h6>
             <small class="card-text">{{desc}}</small>
         </div>
         <div class="card-footer">
             <div class="text-end">
                 <small class="profile-details"><i class="bi bi-currency-dollar"></i> {{rates}}</small>
                 <small class="profile-details"><i class="bi bi-geo"></i> {{location}}</small>
-                <small v-if='type == "Pet Owner"' class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Years of experience</small>
+                <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Years of experience</small>
                 
             
             </div>
@@ -48,10 +49,10 @@
     </div>
 
     <div class="buttons m-2 d-flex justify-content-end">
-        <button class="btn btn-select p-2 mx-2" @click='addChat'>Message Provider</button>
+        <button class="btn btn-select px-3 mx-2" @click='addChat'><i class="bi bi-chat-heart"></i></button>
         <button class="btn btn-cancel p-2" @click="cfmBooking">Confirm Booking</button>
     </div>
-
+    </div>
 
 </template>
 
@@ -100,7 +101,7 @@ export default {
                 if (user) {
                     set(ref(db, `users/${user.uid}/bookings/${this.otherid}/${this.service}/status`), 'booked')
                     set(ref(db, `users/${this.otherid}/bookings/${user.uid}/${this.service}/status`), 'booked')
-                    window.location.href = `/bookings`;
+                    window.location.href = `/bookingsOwner`;
                 } else {
                     console.log('user is signed out')
                 }
@@ -112,7 +113,7 @@ export default {
                 if (user) {
                     set(ref(db, `users/${user.uid}/bookings/${this.otherid}/${this.service}/status`), 'cancelled')
                     set(ref(db, `users/${this.otherid}/bookings/${user.uid}/${this.service}/status`), 'cancelled')
-                    window.location.href = `/bookings`;
+                    window.location.href = `/bookingsOwner`;
                 } else {
                     console.log('user is signed out')
                 }

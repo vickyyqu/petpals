@@ -1,10 +1,10 @@
 <template>
-
+    <div class="m-4">
     <div class="card mb-3">
         <div class="d-flex justify-content-between mt-3 mx-3" >
 
             <div class="d-flex justify-content-start align-items-center">
-                <img class="mr-3 rounded-circle"
+                <img class="rounded-circle"
                     v-bind:src = 'img'
                     style="max-width:70px">
 
@@ -35,13 +35,14 @@
         </div>
         <div class="card-body">
             <h6 v-if='type == "Pet Owner"' class="card-title">Bio:</h6>
+            <h6 v-else class="card-title">Description:</h6>
             <small class="card-text">{{desc}}</small>
         </div>
         <div class="card-footer">
             <div class="text-end">
                 <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}} </small>
                 <small class="profile-details"><i class="bi bi-geo"></i> {{location}} </small>
-                <small v-if='type == "Pet Owner"' class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Years of experience </small>
+                <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Years of experience </small>
                 
             
             </div>
@@ -53,7 +54,7 @@
     <div class="buttons m-2 d-flex justify-content-end">
         <button class="btn btn-cancel p-2">Leave Review</button>
     </div>
-
+    </div>
 
 </template>
 
@@ -129,7 +130,8 @@ export default {
                     const rating = ((this.total / this.count)*2).toFixed()/2
                     
                     set(ref(db, `users/${user.uid}/ratings`), ratings) 
-                    window.location.href = `/bookings`;                        
+                    window.location.href = `/bookings`;   
+                    // specify which type go to which page                     
                 });
             
             });

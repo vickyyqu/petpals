@@ -57,11 +57,14 @@
 
 
         </div>
-        <button class="btn mx-5 my-3 btn-select" @click="sendRequest();">Send Request</button>
+
+        <div class="d-flex justify-content-center">
+            <button class="btn my-3 btn-select" @click="sendRequest();">Send Request</button>
+        </div>
     </div>
 
     <div v-else class="col-xl-3 col-md-6 pt-3">
-        <div class="card card-sent" style="background-color: #f8f1ef;">
+        <div class="card card-sent" style="background-color: #fcf6f4;">
             <div class="d-flex align-items-center mt-3 mx-3">
 
                 <div class="d-flex justify-content-start align-items-center">
@@ -90,7 +93,7 @@
 
             </div>
             <div class="card-body">
-                <h6 class="card-title">Bio:</h6>
+                <h6 class="card-title">Description:</h6>
                 <small class="card-text">{{desc}}</small>
             </div>
             <div class="card-footer">
@@ -102,10 +105,9 @@
             </div>
         </div>
 
-        <!-- instead of letting them cancel request here, it will jus show request sent 
-        they will have to cancel requests in bookings page -->
-        <!-- <button class="btn mx-5 my-3 btn-cancel" @click="cancelRequest">Cancel Request</button> -->
-        <small style="font-style:italic; color:brown">Request sent!</small>
+        <div class="d-flex justify-content-center">
+            <small style="font-style:italic; color:brown" class="my-3">Request sent!</small>
+        </div>
     </div>
 
  
