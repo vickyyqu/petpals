@@ -15,11 +15,12 @@
 </style>
 
 <template>
+    <!-- only for pet service providers that accepted the booking -->
     <div v-if="acceptedRequest">
         <RequestConfirmed></RequestConfirmed>
     </div>
 
-
+    <!-- for pet owners and pet service providers -->
     <div v-else class="m-4">
         <div class="card mb-3">
             <div class="d-flex align-items-center mt-3 mx-3" >
@@ -50,12 +51,14 @@
                 </div>
             </div>
 
+            <!-- diff display for pet owners and pet service providers -->
             <div class="card-body">
                 <h6 v-if='type == "Pet Owner"' class="card-title">Bio:</h6>
                 <h6 v-else class="card-title">Description:</h6>
                 <small class="card-text">{{desc}}</small>
             </div>
 
+            <!-- pet owner pov: no booking details for pet owner profile cards -->
             <div v-if='type != "Pet Owner"' class="card-footer">
                 <div class="text-end">
                     <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}} </small>
@@ -65,7 +68,7 @@
             </div>
         </div>
 
-
+        <!-- diff buttons for pet owners and pet service providers -->
         <div v-if='type == "Pet Owner"' class="buttons m-2">
             <div v-if="delete" class="d-flex justify-content-end"><button class="btn btn-cancel p-2" @click="acceptedRequest=true">Accept Request</button></div>
         </div>
