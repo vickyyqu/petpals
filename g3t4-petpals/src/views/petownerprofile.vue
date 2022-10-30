@@ -17,15 +17,17 @@
 
           <div class="row">
             <h2 class="mt-3">
-              Hello <div class="username">{{ username }}</div>
+              Hello
+              <div class="username">{{ username }}</div>
             </h2>
-            <small class="mt-2">Pet Owner           
-            <img
-            src="../img/animallogo/pawicon.png"
-            style="width: auto; height: auto"
-          /></small>
+            <small class="mt-2"
+              >Pet Owner
+              <img
+                src="../img/animallogo/pawicon.png"
+                style="width: auto; height: auto"
+            /></small>
           </div>
-          <br>
+          <br />
           <hr />
 
           <div class="row mt-4">
@@ -40,7 +42,7 @@
             </div>
 
             <div class="number mt-3">
-              <h4 class= "mb-3">Number</h4>
+              <h4 class="mb-3">Number</h4>
               <p>{{ number }}</p>
             </div>
 
@@ -57,10 +59,12 @@
       <!--Right column-->
       <div class="col-8 profile-rightbox">
         <div class="row mt-3">
-          <h3 class="mb-3">            <img
-            src="../img/animallogo/doglogo3.png"
-            style="width: auto; height: auto"
-          />My Pets</h3> 
+          <h3 class="mb-3">
+            <img
+              src="../img/animallogo/doglogo3.png"
+              style="width: auto; height: auto"
+            />My Pets
+          </h3>
           <br />
           <vueper-slides>
             <vueper-slide
@@ -128,16 +132,18 @@
           />&nbsp; 
           </div> -->
 
-          <div class="row mt-5">
-            <h3>My reviews</h3>
-            <div class="row mt-3">
-              <reviewCard v-for="n in 10"></reviewCard>
-            </div>
+
+          
+        <div class="row mt-5">
+          <h3>My reviews</h3>
+          <div class="row mt-3">
+            <reviewCard v-for="n in 10"></reviewCard>
           </div>
         </div>
       </div>
     </div>
-  
+  </div>
+
   <petpalsFooter></petpalsFooter>
 
   <!--Edit Profile page-->
@@ -198,9 +204,6 @@
 <script>
 import navbar from "../components/navbar.vue";
 
-import TabNav from "../components/TabNav.vue";
-import Tab from "../components/Tab.vue";
-
 import reviewCard from "../components/reviewCard.vue";
 
 import { VueperSlides, VueperSlide } from "vueperslides";
@@ -214,8 +217,6 @@ export default {
   name: "profile",
   components: {
     navbar,
-    TabNav,
-    Tab,
     reviewCard,
     VueperSlides,
     VueperSlide,
@@ -257,46 +258,10 @@ export default {
   },
 
   methods: {
-    // Changing tabs
-    setSelected(tab) {
-      this.selected = tab;
-    },
-
     // Edit bio
     changeMessage(message) {
       this.message = message;
     },
-
-    // Reviews list
-    getuser() {
-      //replace this with api
-      const user_titles = ["Review 1", "Review 2", "Review 3", "Review 4"];
-      const user = [];
-      for (let i = 0; i < 4; i++) {
-        user.push({
-          title: user_titles[i],
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqu",
-        });
-      }
-      return user;
-    },
-
-    // Reviews list scrolling
-    handleScroll() {
-      if (
-        window.scrollY + window.innerHeight >=
-        document.body.scrollHeight - 300
-      ) {
-        const new_user = this.getuser();
-        this.user_list = [...this.user_list, ...new_user];
-      }
-    },
-  },
-  mounted() {
-    // Reviews list scrolling
-    this.user_list = this.getuser();
-    window.addEventListener("scroll", this.handleScroll);
   },
 
   setup() {

@@ -17,15 +17,17 @@
 
           <div class="row">
             <h2 class="mt-3">
-              Hello <div class="username">{{ username }}</div>
+              Hello
+              <div class="username">{{ username }}</div>
             </h2>
-            <small class="mt-2">Pet Service Provider
-            <img
-            src="../img/animallogo/pawiconwhite.png"
-            style="width: auto; height: auto"
-          /></small>
+            <small class="mt-2"
+              >Pet Service Provider
+              <img
+                src="../img/animallogo/pawiconwhite.png"
+                style="width: auto; height: auto"
+            /></small>
           </div>
-          <br>
+          <br />
           <hr />
 
           <div class="row mt-4">
@@ -40,7 +42,7 @@
             </div>
 
             <div class="number mt-3">
-              <h4 class= "mb-3">Number</h4>
+              <h4 class="mb-3">Number</h4>
               <p>{{ number }}</p>
             </div>
 
@@ -59,9 +61,10 @@
         <div class="row mt-3">
           <h3 class="mb-3">
             <img
-            src="../img/animallogo/doglogo3.png"
-            style="width: auto; height: auto"
-          />Pet Gallery</h3>
+              src="../img/animallogo/doglogo3.png"
+              style="width: auto; height: auto"
+            />Pet Gallery
+          </h3>
           <br />
           <vueper-slides>
             <vueper-slide
@@ -128,27 +131,26 @@
             style="width: 60px; height: 40px"
           />&nbsp;
         </div> -->
-          
 
         <TabNav
-            :tabs="['My Bookings', 'My Services', 'My Reviews']"
-            :selected="selected"
-            @selected="setSelected"
-          >
-            <Tab :isSelected="selected === 'My Bookings'">
-              <p>Shows a list of the bookings made by this user</p>
-            </Tab>
-            <Tab :isSelected="selected === 'My Services'">
-              <p>Shows a list of the services offered by this user</p>
-            </Tab>
-            <Tab :isSelected="selected === 'My Reviews'">
-              <p>Shows a list of reviews left for this user</p>
-              <Post v-for="(user, i) in user_list" :key="i" :user="user" />
-            </Tab>
-          </TabNav>
-        </div>
+          :tabs="['My Bookings', 'My Services', 'My Reviews']"
+          :selected="selected"
+          @selected="setSelected"
+        >
+          <Tab :isSelected="selected === 'My Bookings'">
+            <p>Shows a list of the bookings made by this user</p>
+          </Tab>
+          <Tab :isSelected="selected === 'My Services'">
+            <p>Shows a list of the services offered by this user</p>
+          </Tab>
+          <Tab :isSelected="selected === 'My Reviews'">
+            <p>Shows a list of reviews left for this user</p>
+            <Post v-for="(user, i) in user_list" :key="i" :user="user" />
+          </Tab>
+        </TabNav>
       </div>
     </div>
+  </div>
   <petpalsFooter></petpalsFooter>
 
   <!--Edit Profile page-->
@@ -156,19 +158,51 @@
     <div class="modal-content">
       <br />
 
-      Username: <input type="text" id="username" v-model="username" style="border-radius: 5px;"/>
+      Username:
+      <input
+        type="text"
+        id="username"
+        v-model="username"
+        style="border-radius: 5px"
+      />
       <br />
 
-      Bio: <textarea rows="4" cols="10" id="bio" v-model="message" style="border-radius: 5px;"></textarea>
+      Bio:
+      <textarea
+        rows="4"
+        cols="10"
+        id="bio"
+        v-model="message"
+        style="border-radius: 5px"
+      ></textarea>
       <br />
 
-      Email: <input type="text" id="email" v-model="email" style="border-radius: 5px;"/>
+      Email:
+      <input
+        type="text"
+        id="email"
+        v-model="email"
+        style="border-radius: 5px"
+      />
       <br />
 
-      Number: <input type="text" id="number" v-model="number" style="border-radius: 5px;"/>
+      Number:
+      <input
+        type="text"
+        id="number"
+        v-model="number"
+        style="border-radius: 5px"
+      />
       <br />
 
-      Address: <textarea rows="4" cols="10" id="address" v-model="address" style="border-radius: 5px;"></textarea>
+      Address:
+      <textarea
+        rows="4"
+        cols="10"
+        id="address"
+        v-model="address"
+        style="border-radius: 5px"
+      ></textarea>
       <br />
     </div>
   </Modal>
@@ -246,37 +280,6 @@ export default {
     changeMessage(message) {
       this.message = message;
     },
-
-    // Reviews list
-    getuser() {
-      //replace this with api
-      const user_titles = ["Review 1", "Review 2", "Review 3", "Review 4"];
-      const user = [];
-      for (let i = 0; i < 4; i++) {
-        user.push({
-          title: user_titles[i],
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqu",
-        });
-      }
-      return user;
-    },
-
-    // Reviews list scrolling
-    handleScroll() {
-      if (
-        window.scrollY + window.innerHeight >=
-        document.body.scrollHeight - 300
-      ) {
-        const new_user = this.getuser();
-        this.user_list = [...this.user_list, ...new_user];
-      }
-    },
-  },
-  mounted() {
-    // Reviews list scrolling
-    this.user_list = this.getuser();
-    window.addEventListener("scroll", this.handleScroll);
   },
 
   setup() {
