@@ -113,7 +113,7 @@
 
                         <div class="">
                             <label for="pwd" class="form-label">Enter your password:</label>
-                            <input type="password" v-model = 'pwd' class="form-control" id="pwd">
+                            <input type="password" v-model = 'pwd' v-on:keyup.enter = 'userLogin()' class="form-control" id="pwd">
                             <button class="btn p-0" style="background-color:transparent; border-color:transparent; font-size:12px; color:#F8AA9D" @click="forgot=true">Forgot password?</button>
                         </div>
 
@@ -145,8 +145,8 @@
         <div class="row" id="services">
             <h1 class="pt-5">Our Services</h1>
 
-            <h3 class="mt-3" style="font-style:normal;font-family:'Figtree'">Choose from as many services as you like.</h3>
-            <h3 class="mt-3" style="font-style:normal;font-family:'Figtree'">Match with the perfect pet service provider.</h3>
+            <h3 class="mt-3" style="font-style:normal; font-family:'Figtree'">Choose from as many services as you like.</h3>
+            <h3 class="mt-3" style="font-style:normal; font-family:'Figtree'">Match with the perfect pet service provider.</h3>
             
             <div class="row p-5 m-3">
                 <services v-for="(each) of services" v-bind:tag="tags[each]" v-bind:png="png[each]" v-bind:service="each"></services>
