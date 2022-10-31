@@ -6,7 +6,7 @@
           <i @click="close" class="far fa-times-circle"></i>
           <!-- Modal Content -->
           <slot></slot>
-          <button @click="close" class="btn btn-go" style="width: 50%; margin-left: 25%; margin-top: 20px;">Done</button>
+          <button @click="close" class="btn btn-light" style="width: 50%; margin-left: 25%; margin-top: 20px;">Done</button>
         </div>
       </transition>
     </div>
@@ -27,33 +27,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.modal-animation-enter-active,
-.modal-animation-leave-active {
-  transition: opacity 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02);
-}
-
-.modal-animation-enter-from,
-.modal-animation-leave-to {
-  opacity: 0;
-}
-
-.modal-animation-inner-enter-active {
-  transition: all 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02) 0.15s;
-}
-
-.modal-animation-inner-leave-active {
-  transition: all 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02);
-}
-
-.modal-animation-inner-enter-from {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-.modal-animation-inner-leave-to {
-  transform: scale(0.8);
-}
-
 .modal {
   display: flex;
   justify-content: center;
