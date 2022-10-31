@@ -111,7 +111,7 @@
 
             <div class="col-md-4 order-md-2 content-login">
                 <div class="box">
-                    <div v-if="forgot" class="login mt-5" style="padding-bottom:200px;">
+                    <div v-if="forgot" class="login mt-5" style="padding-bottom:350px;">
                         <h3>Reset Password</h3>
                         <div class="my-3">
                             <label for="email" class="form-label"> Enter your email:</label>
@@ -132,7 +132,7 @@
 
                     </div>
 
-                    <div v-else class="login">
+                    <div v-else class="login" style="padding-bottom:50px;">
                         <h3 class="pt-5">Login</h3>
                         <div class="mb-3 mt-4">
                             <label for="email" class="form-label"> Enter your email:</label>
@@ -153,21 +153,23 @@
                             <button class="btn login-btn btn-select mt-3" v-on:click="userLogin()">Login</button>
                         </div>
                         <hr class="my-5">
-                        <h3 class="fade-in-text text-center mt-5">New to PetPals?</h3>
-                        <div class="dropdown mt-4">
-                            <button class="btn btn-select">Register Here</button>
-                            <div class="dropdown-content">
-                                <router-link to="/registerowner" style="font-size:16px;text-decoration:none" class="text-center pt-2 ">I am a pet owner.</router-link>
-                                <router-link to="/registerprovider" style="font-size:16px;text-decoration:none;" class="text-center pt-2 ">I am a pet service provider.</router-link>
+
+                        <div class="text-center">
+                            <h3 class="fade-in-text mt-5">New to PetPals?</h3>
+                            <div class="dropdown mt-4">
+                                <button class="btn btn-select">Register Here</button>
+                                <div class="dropdown-content">
+                                    <router-link to="/registerowner" style="font-size:16px;text-decoration:none" class="text-center pt-2 ">I am a pet owner.</router-link>
+                                    <router-link to="/registerprovider" style="font-size:16px;text-decoration:none;" class="text-center pt-2 ">I am a pet service provider.</router-link>
+                                </div>
                             </div>
                         </div>
-
-                       
                     
                     </div>
 
                     
                 </div>
+
                 <svg class="curveDownColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" style="fill:white;stroke:white;z-index:-1;"
                     viewBox="0 0 100 100" preserveAspectRatio="none">
                     <path d="M0 0 C 50 100 80 100 100 0 Z"></path>
