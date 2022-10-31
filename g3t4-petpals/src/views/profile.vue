@@ -2,6 +2,7 @@
     
     <div class="container-fluid profile-page">
         <navbar></navbar>
+        <navbarProvider></navbarProvider>
         <div class="profile-container">
             
             <!--Left column-->
@@ -104,6 +105,7 @@
   
 <script>
     import navbar from '../components/navbar.vue'
+    import navbarProvider from '@/components/navbarProvider.vue'
     import { VueperSlides, VueperSlide } from 'vueperslides'
     import Modal from '../components/Modal.vue'
     import { ref } from "vue";
@@ -130,7 +132,7 @@
     export default {
         name: "profile",
         components: {
-            navbar, VueperSlides, VueperSlide, Modal, petpalsFooter
+            navbar, navbarProvider, VueperSlides, VueperSlide, Modal, petpalsFooter
         },
         data() {
             return {

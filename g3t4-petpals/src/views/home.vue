@@ -141,7 +141,7 @@
 
                         <div>
                             <label for="pwd" class="form-label">Enter your password:</label>
-                            <input type="password" v-model = 'pwd' class="form-control" id="pwd">
+                            <input type="password" v-model = 'pwd' v-on:keyup.enter = 'userLogin()' class="form-control" id="pwd">
                             <button class="btn p-0" style="background-color:transparent; border-color:transparent; font-size:12px; color:#F8AA9D" @click="forgot=true">Forgot password?</button>
                         </div>
 

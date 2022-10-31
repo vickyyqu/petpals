@@ -10,7 +10,9 @@
 
                 <div class="ms-2">
                     <h6>{{name}}</h6>
-                    <small style="font-style:italic;">{{service}}</small>
+                    <small v-if="type=='Pet Owner'" style="font-style:italic;">Looking for {{service}}</small>
+                    <small v-else style="font-style:italic;">{{service}}</small>
+
     
                     <div class="ratings">
                         <i v-if = 'ratings >= 1' class="bi bi-star-fill"></i>
@@ -44,7 +46,7 @@
             <div class="text-end">
                 <small v-if='type == "Pet Service Provider"' class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}} </small>
                 <small class="profile-details"><i class="bi bi-geo"></i> {{location}} </small>
-                <small v-if='type == "Pet Service Provider"' class="profile-details"><i class="bi bi-house-heart"></i>{{yrsOfExp}}</small>
+                <small v-if='type == "Pet Service Provider"' class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Years of experience</small>
             </div>
         </div>
 
