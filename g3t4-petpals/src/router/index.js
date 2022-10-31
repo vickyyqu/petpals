@@ -5,14 +5,14 @@ import profile from "../views/profile.vue"
 import bookingsOwner from "../views/bookingsOwner.vue"
 import bookingsProvider from "../views/bookingsProvider.vue"
 import profilelisting from "../views/profilelisting.vue"
+import petownerprofile from "../views/petownerprofile.vue"
+import petserviceprofile from "../views/petserviceprofile.vue"
 
 import registerowner from "../views/registerowner.vue"
 import registerprovider from "../views/registerprovider.vue"
 import database from "../views/database.vue"
 
 import {createRouter, createWebHistory} from "vue-router"
-
-import testing from "../views/testing.vue"
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -68,10 +68,14 @@ export const router = createRouter({
             component: profilelisting
         },
         {
-            path: "/testing",
-            name: "testing",
-            component: testing
+            path: "/petownerprofile",
+            name: "petownerprofile",
+            component: petownerprofile
         },
-
+        {
+            path: "/petserviceprofile",
+            name: "petserviceprofile",
+            component: petserviceprofile
+        },
     ]
 })

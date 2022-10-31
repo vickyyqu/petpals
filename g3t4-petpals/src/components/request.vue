@@ -86,9 +86,11 @@
 
             <div class="card-footer">
                 <div class="text-end">
+
                     <small v-if='type == "Pet Service Provider"' class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/h, </small>
                     <small class="profile-details"><i class="bi bi-geo"></i> {{location}}, </small>
                     <small v-if='type == "Pet Service Provider"' class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of Experience</small>
+
                 </div>
             </div>
         </div>

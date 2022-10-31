@@ -106,14 +106,14 @@
                                 </div>
                             </div>
                             <div class="col-sm-4"> <!-- rates and exp -->
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="required-services my-2">
                                     <label class="me-2" for="petRate">Your Hourly Rates</label>
                                     <br>
                                     <input class="form-input w-100" type="number" v-model="rates" id="petRate" min="0" max="50" >
             
                                 </div>
-                                </div>
+                                </div> -->
                                 <div class="row">
                                     <div class="required-services my-2">
                                     <label class="me-2" for="yearsofexp">Years of Experience</label>
