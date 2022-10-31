@@ -7,7 +7,7 @@
         <div class="row">
           <div class="d-flex justify-content-end">
             <button @click="toggleModal" class="btn btn-go btn-sm">
-              <i class="bi bi-pencil-square"></i>
+              Edit profile <i class="bi bi-pencil-square"></i>
             </button>
           </div>
 
@@ -33,7 +33,7 @@
           <div class="row mt-4">
             <div class="bio">
               <h4 class="mb-3">Bio</h4>
-              <p>{{ message }}</p>
+              <p style="white-space: pre-line;">{{ message }}</p>
             </div>
 
             <div class="email mt-3">
@@ -48,7 +48,7 @@
 
             <div class="address mt-3">
               <h4 class="mb-3">Address</h4>
-              <p>{{ address }}</p>
+              <p style="white-space: pre-line;">{{ address }}</p>
             </div>
           </div>
         </div>
@@ -161,13 +161,8 @@
       <br />
 
       Bio:
-      <textarea
-        rows="4"
-        cols="10"
-        id="bio"
-        v-model="message"
-        style="border-radius: 5px"
-      ></textarea>
+      <textarea v-model="message">
+      </textarea>
       <br />
 
       Email:

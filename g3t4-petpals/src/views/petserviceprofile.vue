@@ -7,7 +7,7 @@
         <div class="row">
           <div class="d-flex justify-content-end">
             <button @click="toggleModal" class="btn btn-go btn-sm">
-              <i class="bi bi-pencil-square"></i>
+              Edit profile <i class="bi bi-pencil-square"></i>
             </button>
           </div>
 
@@ -33,7 +33,7 @@
           <div class="row mt-4">
             <div class="bio">
               <h4 class="mb-3">Bio</h4>
-              <p>{{ message }}</p>
+              <p style="white-space: pre-line;">{{ message }}</p>
             </div>
 
             <div class="email mt-3">
@@ -48,7 +48,7 @@
 
             <div class="address mt-3">
               <h4 class="mb-3">Address</h4>
-              <p>{{ address }}</p>
+              <p style="white-space: pre-line;">{{ address }}</p>
             </div>
           </div>
         </div>
@@ -133,13 +133,10 @@
         </div> -->
 
         <TabNav
-          :tabs="['My Bookings', 'My Services', 'My Reviews']"
+          :tabs="['My Services', 'My Reviews']"
           :selected="selected"
           @selected="setSelected"
         >
-          <Tab :isSelected="selected === 'My Bookings'">
-            <p>Shows a list of the bookings made by this user</p>
-          </Tab>
           <Tab :isSelected="selected === 'My Services'">
             <p>Shows a list of the services offered by this user</p>
           </Tab>
@@ -263,10 +260,6 @@ export default {
         },
       ],
 
-      // Reviews list
-      user_list: [],
-
-      tabList: ["Tab 1", "Tab 2", "Tab 3", "Tab 4"],
     };
   },
 
