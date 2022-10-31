@@ -15,16 +15,17 @@
 
 <template>
     <div class="container-fluid sides">
-        <navbar></navbar>
+        <navbarProvider></navbarProvider>
 
-        <div class="row my-5" style="padding-top:30px">
+        <div class="row my-5" >
 
             <div class="col-lg-6 pt-3 px-3">
                 <div class="requests-made py-5">
                     <h3 class="my-2 text-center">Requests Received</h3>
-                    <p class="my-5 text-center nil">No requests yet...</p>
+                    <p v-if="!haveReq" class="my-5 text-center nil">No requests yet...</p>
 
-                    <RequestPending v-for='item in pendings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></RequestPending>
+                    <request v-for='item in pendings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :img = 'item.img' :ratings = 'item.ratings'></request>
+                    <request v-for='item in reqs' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :img = 'item.img' :ratings = 'item.ratings'></request>
                 </div>
             
             </div> 
@@ -33,9 +34,9 @@
                 <div class="requests-made py-5">
 
                     <h3 class="my-2 text-center">Confirmed Bookings</h3>
-                    <p class="my-5 text-center nil">No bookings yet...</p>
+                    <p v-if="!haveBookings" class="my-5 text-center nil">No bookings yet...</p>
 
-                    <BookingConfirmed v-for='item in bookings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed>
+                    <BookingConfirmed v-for='item in bookings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed>
 
                 </div>
             </div>
@@ -49,11 +50,12 @@
 </template>
 
 <script>
-    import navbar from '@/components/navbar.vue'
+    import navbarProvider from '@/components/navbarProvider.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
-    import RequestPending from '@/components/RequestPending.vue'
-    import RequestConfirmed from '@/components/RequestConfirmed.vue'
+    import request from '@/components/request.vue'
+
     import BookingConfirmed from '@/components/BookingConfirmed.vue'
+
     import { initializeApp } from "firebase/app";
     import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
     import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -78,32 +80,34 @@
         data() {
             return {
                 count: 0,
-                type: 'Pet Service Provider',
+                type: 'Pet Owner', // other users type
                 pendings: [],
-                requests: [],
+                reqs: [],
                 bookings: [],
-                petOwner: true,
+                haveReq: false,
+                haveBookings: false,
                 services: ['Pet Walker', 'Pet Groomer', 'Pet Hotel', 'Pet Sitter', 'Pet Trainer', 'Pet Mover'],
             }
         },
         components: {
-            navbar,
+            navbarProvider,
             petpalsFooter,
-            RequestPending,
-            RequestConfirmed,
-            BookingConfirmed
+            request,
+
+            BookingConfirmed,
         },
         
         mounted(){
             this.getRequests()
             this.getBookings()
             this.getPendings()
-            console.log(this.pendings, this.requests, this.bookings)
+            console.log(this.pendings, this.reqs, this.bookings)
 
-            // :name = 'item.other' :desc = 'item.desc' :rates = 'item.price' 
-            // :location = 'item.address' :yrsOfExp = 'item.yrsOfExp' 
-            // :img = 'item.photo' :ratings = 'item.ratings' :services = 'item.services'
+            // :name = 'item.other' :rates = 'item.rates' 
+            // :location = 'item.address' :otherid = 'item.otherid' 
+            // :img = 'item.img' :ratings = 'item.ratings' :services = 'item.services'
         },
+
         methods : {
             // get Pet Owners
             getRequests() {
@@ -122,7 +126,6 @@
                                     name = snapsht.val().username;
                                     desc = snapsht.val().desc;
                                     loc = snapsht.val().address;
-                                    exp = snapsht.val().yrsOfExp;
                                     img = snapsht.val().profilepic;
                                     ratings = snapsht.val().ratings
 
@@ -136,12 +139,12 @@
                                             obj['name'] = name
                                             obj['location'] = loc
                                             obj['desc'] = desc 
-                                            obj['yrsOfExp'] = exp
                                             obj['img'] = img
                                             obj['ratings'] = ratings
 
-                                            if (!this.requests.includes(obj)){
-                                                this.requests.push(obj)
+                                            if (!this.reqs.includes(obj)){
+                                                this.reqs.push(obj)
+                                                this.haveReq = true
                                             }
                                             
                                         }
@@ -190,6 +193,7 @@
 
                                             if (!this.bookings.includes(obj)){
                                                 this.bookings.push(obj)
+                                                this.haveBookings = true
                                             }
                                             
                                         }
@@ -238,6 +242,7 @@
 
                                             if (!this.pendings.includes(obj)){
                                                 this.pendings.push(obj)
+                                                this.haveReq = true
                                             }
                                             
                                         }
@@ -249,7 +254,6 @@
                 });
 
             },
-
         },
     }
 </script>
