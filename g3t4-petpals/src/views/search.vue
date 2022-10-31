@@ -8,6 +8,16 @@ input[type=text] {
     height: 38px;
 }
 
+input[type='checkbox']:checked{
+    background-color: #856658;
+    border: #856658;
+}
+
+input[type='radio']:checked{
+    background-color: #856658;
+    border: #856658;
+}
+
 .search-provider {
     font-size: 3em;
 }

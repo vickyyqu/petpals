@@ -47,9 +47,9 @@
             </div>
             <div class="card-footer">
                 <div class="text-end">
-                    <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/hr </small>
-                    <small class="profile-details"><i class="bi bi-geo"></i> {{location}} </small>
-                    <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Years of experience </small>
+                    <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/hr, </small>
+                    <small class="profile-details"><i class="bi bi-geo"></i> {{location}}, </small>
+                    <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of experience </small>
 
 
                 </div>
@@ -98,9 +98,9 @@
             </div>
             <div class="card-footer">
                 <div class="text-end">
-                    <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/hr </small>
-                    <small class="profile-details"><i class="bi bi-geo"></i> {{location}} </small>
-                    <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Years of experience</small>
+                    <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/hr, </small>
+                    <small class="profile-details"><i class="bi bi-geo"></i> {{location}}, </small>
+                    <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of Experience</small>
                 </div>
             </div>
         </div>

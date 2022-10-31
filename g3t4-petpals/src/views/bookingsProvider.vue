@@ -17,7 +17,7 @@
     <div class="container-fluid sides">
         <navbarProvider></navbarProvider>
 
-        <div class="row my-5" >
+        <div class="row" style="padding-top:80px; padding-bottom:50px;">
 
             <div class="col-lg-6 pt-3 px-3">
                 <div class="requests-made py-5">
