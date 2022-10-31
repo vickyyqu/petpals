@@ -1,7 +1,7 @@
 <template>
 
     <div class="container-fluid">
-        <navbar></navbar>
+        <navbarProvider></navbarProvider>
         <div class="row pt-5">
             <div class="col-1 sides"></div>
 
@@ -138,15 +138,20 @@
     
 <script>
 import Modal from '../components/Modal.vue'
-import navbar from '../components/navbar.vue'
+import navbarProvider from '../components/navbarProvider.vue'
 import { ref } from "vue";
 import petpalsFooter from "../components/petpalsFooter.vue"
 
 export default {
     name: "profilelisting",
+
     components: {
-        Modal, navbar, petpalsFooter, petpalsFooter
+        Modal, 
+        navbarProvider, 
+        petpalsFooter, 
+        petpalsFooter
     },
+
     data() {
         return {
             showModal: false,

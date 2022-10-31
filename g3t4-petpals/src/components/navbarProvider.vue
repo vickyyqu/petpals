@@ -3,6 +3,7 @@
     #navbar-header {
         background-color: #f8f1ef;
         position: fixed;
+        top: 0;
         margin:0;
         z-index: 1000;
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
@@ -45,7 +46,7 @@
                             </li>
 
                             <li class="nav-item px-2">
-                                <router-link to="/bookingsProviders">Requests & Bookings</router-link>
+                                <router-link to="/bookingsProvider">Requests & Bookings</router-link>
                             </li>
 
                             <li class="nav-item px-2">
