@@ -7,7 +7,6 @@
 
 <template>
     <div class="container-fluid">
-        <navbar></navbar>
 
         <div class="row">
             <div class="col-1 sides">
@@ -26,7 +25,7 @@
                 <div class="row">
                     <div class="col-3"></div>
                     <div class="col-6">
-                    <form>
+                
                         
                     <div class="row mt-2"> <!-- email and username-->
                         <div class="col-md-6">
@@ -65,7 +64,7 @@
                     <div class="row mt-2"> <!-- profile picture -->
                         <div class="col">
                             <label for="profilePicture">Profile Picture</label>
-                        <input type="file" @change = 'getPic' class="form-control w-100" id="profilePicture" required>
+                        <input type="file" @change = 'getPic' class="form-control-file w-100" id="profilePicture" required>
                         </div>
                         
                     </div>
@@ -84,14 +83,14 @@
                     </div>
 
                    
-                    <div class="row"> <!-- submit -->
+                    <div class="row"> 
                         <div class="col-4"></div>
                         <div class="col-4">
-                            <button class="btn btn-dark" v-on:click="registerUser()">Sign up!</button>
+                            <button class="btn btn-dark" @click="registerUser">Sign up!</button>
                         </div>
                         <div class="col-4"></div>
                     </div>
-                    </form>
+                    
                     </div>
                     <div class="col-3"></div>
                 </div>
@@ -108,8 +107,8 @@
 </template>
 
 <script>
-    import navbar from '@/components/navbar.vue'
     import petprofile from '@/components/petprofile.vue'
+    import petpalsFooter from '@/components/petpalsFooter.vue'
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "firebase/auth";
     import { initializeApp } from "firebase/app";
     import { getDatabase, ref, set } from "firebase/database";
@@ -134,8 +133,7 @@
             return {
                 psw: '',
                 psw_repeat: '',
-                numPets: 1, // do we still need this?
-                petname: 'Your Pet', // do we still need this?
+
                 email : '',
                 postal : '',
                 address : '',
@@ -145,8 +143,8 @@
             }
         },
         components: {
-            navbar, 
-            petprofile
+            petprofile,
+            petpalsFooter
 
         },
 
@@ -159,17 +157,17 @@ methods : {
         reader.readAsDataURL(files[0])
         reader.onload = () => (this.pic = reader.result)
 
-        // console.log(this.pic)
+        console.log(this.pic)
     },
 
     registerUser(){
         const auth = getAuth();
         if (this.psw == this.psw_repeat && this.psw != '' && this.email != '' && this.postal != '' && this.address != '' && this.username != '' && this.mobile != ''){
-            createUserWithEmailAndPassword(auth,this.email, this.psw)
+            createUserWithEmailAndPassword(auth, this.email, this.psw)
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log('user created!')
-                updateProfile(auth.currentUser, {
+                updateProfile(user, {
                     displayName: this.username , photoURL: this.pic
                 })
 
@@ -188,7 +186,6 @@ methods : {
                     window.location.href = `/search`;
                 })
                 .catch((error) => {
-                    // const errorCode = error.code;
                     const errorMessage = error.message.slice(22,(error.message.length)-2)
                     console.log(errorMessage)
                 })
@@ -198,6 +195,7 @@ methods : {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                console.log(error, errorMessage)
             });     
             
         }
