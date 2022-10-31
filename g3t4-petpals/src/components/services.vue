@@ -2,7 +2,7 @@
 </style>
 
 <template>
-    <div @mouseenter="hover[service] = true" @mouseleave="hover[service] = false" class="col-xxl-2 col-md-4 p-3">
+    <div @mouseenter="hover[service] = true" @mouseleave="hover[service] = false" class="col-xxl-2 col-sm-4 p-3">
         <img v-bind:src="png" class="w-100">
 
         <div v-if="hover[service]" class="pt-4">
@@ -10,7 +10,7 @@
         </div>
 
         <div v-else class="pt-4">
-            <h3 class="pb-3">{{service}}</h3>
+            <h4 class="pb-3 text-center" style="color:#856658">{{service}}</h4>
         </div>
         
 
