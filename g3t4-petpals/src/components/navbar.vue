@@ -54,7 +54,7 @@
                             </li>
 
                             <li class="nav-item active px-2">
-                                <router-link to="/profile">Profile</router-link>
+                                <router-link to="/petownerprofile">Profile</router-link>
                             </li>
 
                             <li class="nav-item active px-2">
