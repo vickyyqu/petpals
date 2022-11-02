@@ -13,8 +13,6 @@ import database from "../views/database.vue"
 
 import {createRouter, createWebHistory} from "vue-router"
 
-import testing from "../views/testing.vue"
-
 export const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -74,10 +72,14 @@ export const router = createRouter({
             component: profilelisting
         },
         {
-            path: "/testing",
-            name: "testing",
-            component: testing
+            path: "/petownerprofile",
+            name: "petownerprofile",
+            component: petownerprofile
         },
-
+        {
+            path: "/petserviceprofile",
+            name: "petserviceprofile",
+            component: petserviceprofile
+        },
     ]
 })

@@ -1,4 +1,5 @@
 <template>
+
     <div v-if="review" class="m-4">
         <div class="card mb-3">
             <div class="d-flex justify-content-between mt-3 mx-3">
@@ -23,7 +24,6 @@
                             <i v-if='ratings < 3' class="bi bi-star"></i>
                             <i v-if='ratings < 4' class="bi bi-star"></i>
                         </div>
-
                     </div>
                 </div>
 
