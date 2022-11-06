@@ -75,6 +75,7 @@
                                 this.petOwner = false
                             }   
 
+
                             const me = new Talk.User({
                                 id: user.uid,
                                 name: snapshot.val().username,  
@@ -90,10 +91,16 @@
                             if (typeof(snapshot.val().chat) != "undefined"){ 
                                 var otherid = snapshot.val().chat
                                 onValue(ref(db, `users/${otherid}`), (snapsht) => {
+                                    var photo = snapsht.val().profilepic
+                                    console.log(photo.length,photo)
+                                    if (photo.length > 2048){
+                                        photo = 'https://cdn-icons-png.flaticon.com/512/2102/2102647.png'
+                                    }
+
                                     const other = new Talk.User({
                                         id: otherid,
                                         name: snapsht.val().username,  
-                                        photoUrl: snapsht.val().profilepic,
+                                        photoUrl: photo,
                                         role: "default"
                                     })    
                                     

@@ -32,17 +32,9 @@
                         <small v-else style="font-style:italic;">{{service}}</small>
 
                         <div class="ratings">
-                            <i v-if = 'ratings >= 1' class="bi bi-star-fill"></i>
-                                <i v-if = 'ratings >= 2' class="bi bi-star-fill"></i>
-                                <i v-if = 'ratings >= 3' class="bi bi-star-fill"></i>
-                                <i v-if = 'ratings >= 4' class="bi bi-star-fill"></i>
-                                <i v-if = 'ratings == 5' class="bi bi-star-fill"></i>
-                                <i v-if = '!Number.isInteger(ratings)' class="bi bi-star-half"></i>
-                                <i v-else class="bi bi-star"></i>
-                                <i v-if = 'ratings < 1' class="bi bi-star"></i>
-                                <i v-if = 'ratings < 2' class="bi bi-star"></i>
-                                <i v-if = 'ratings < 3' class="bi bi-star"></i>
-                                <i v-if = 'ratings < 4' class="bi bi-star"></i>
+                            <i v-for="n in parseInt(ratings)" class="bi bi-star-fill"></i>
+                            <i v-if='!Number.isInteger(ratings)' class="bi bi-star-half"></i>
+                            <i v-for='m in parseInt(5-ratings)' class="bi bi-star"></i>
                         </div>
                     </div>
                 </div>
@@ -62,17 +54,9 @@
                     <small v-else style="font-style:italic;">{{service}}</small>
 
                     <div class="ratings">
-                        <i v-if = 'ratings >= 1' class="bi bi-star-fill"></i>
-                            <i v-if = 'ratings >= 2' class="bi bi-star-fill"></i>
-                            <i v-if = 'ratings >= 3' class="bi bi-star-fill"></i>
-                            <i v-if = 'ratings >= 4' class="bi bi-star-fill"></i>
-                            <i v-if = 'ratings == 5' class="bi bi-star-fill"></i>
-                            <i v-if = '!Number.isInteger(ratings)' class="bi bi-star-half"></i>
-                            <i v-else class="bi bi-star"></i>
-                            <i v-if = 'ratings < 1' class="bi bi-star"></i>
-                            <i v-if = 'ratings < 2' class="bi bi-star"></i>
-                            <i v-if = 'ratings < 3' class="bi bi-star"></i>
-                            <i v-if = 'ratings < 4' class="bi bi-star"></i>
+                        <i v-for="n in parseInt(ratings)" class="bi bi-star-fill"></i>
+                        <i v-if='!Number.isInteger(ratings)' class="bi bi-star-half"></i>
+                        <i v-for='m in parseInt(5-ratings)' class="bi bi-star"></i>
                     </div>
                 </div>
 

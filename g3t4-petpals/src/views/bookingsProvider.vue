@@ -53,9 +53,7 @@
     import navbarProvider from '@/components/navbarProvider.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
     import request from '@/components/request.vue'
-
     import BookingConfirmed from '@/components/BookingConfirmed.vue'
-
     import { initializeApp } from "firebase/app";
     import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
     import { getAuth, onAuthStateChanged } from "firebase/auth";

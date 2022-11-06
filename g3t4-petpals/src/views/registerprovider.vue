@@ -24,7 +24,7 @@
                     <div class="col">
                     <form>
                         
-                    <div class="row mx-2 mt-2"> <!-- email -->
+                    <div class="row mx-3 mt-2"> <!-- email -->
                         <label for="inputEmail">Email</label>
                         <input type="email" v-model="email" class="form-control" id="inputEmail" placeholder="" required>
                     </div>
@@ -41,10 +41,17 @@
                         </div>
                         
                     </div>
-                        
-                    <div class="row mx-2 mt-2"> <!-- username-->
-                        <label for="inputUsername">Username</label>
-                        <input type="text" v-model='username' class="form-control" id="inputUsername" placeholder="" required>
+
+                    <div class="row mx-2 mt-2"> <!-- username and photo-->
+                        <div class="col-md-6">
+                            <label for="inputUsername">Username</label>
+                            <input type="text" v-model='username' class="form-control w-100" id="inputUsername" placeholder="" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="profilePicture">Profile Picture</label>
+                            <input type="file" @change = 'getPic' class="form-control w-100" id="profilePicture" required>
+                        </div>
                     </div>
 
                     <div class="row mx-2 mt-2"> <!-- phone num -->
@@ -56,32 +63,6 @@
                                 <input type="number" v-model='mobile' class="form-control" id="inputNumber" placeholder="" aria-describedby="inputGroupPrepend2" min="0" max="99999999" maxlength="8" minlength="8" required>
                             </div>
                     </div>
-                    <div class="row mx-2 mt-2"> <!-- profile picture -->
-                    <label for="profilepicture">Profile Picture</label>
-                        <input type="file" @change = 'getPic' class="form-control-file" id="profilepicture" required>
-                    </div>
-
-                    <div class="row mx-2 mt-2"> <!-- address -->
-                        <label for="inputAddress">Address</label>
-                        <input type="text" v-model='address' class="form-control" id="inputAddress" placeholder="" required>
-                    </div>
-                    <div class="row mx-1 mt-2"> <!-- postal and region -->
-                        <div class="col-md-6">
-                        <label for="inputPostal">Postal Code</label>
-                        <input type="text" v-model='postal' class="form-control" id="inputPostal" required>
-                        </div>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-5">
-                        <label for="inputRegion">Region</label>
-                        <select id="inputRegion" class="form-control" v-model='region' required>
-                            <option selected>North</option>
-                            <option>South</option>
-                            <option>East</option>
-                            <option>West</option>
-                            <option>Central</option>
-                        </select>
-                        </div>
-                    </div>
 
                     </form>
 
@@ -89,44 +70,29 @@
                     
                     <div class="col">
                         <div class="row mx-2 mt-2"><!-- profile desc-->
-                        <label for="inputDesc">Tell us more about yourself!</label> 
-                        <textarea class="form-control" v-model='desc' id="inputDesc" rows="10"></textarea>
+                            <label for="inputDesc">Tell us more about yourself!</label> 
+                            <textarea class="form-control" v-model='desc' id="inputDesc" rows="5"></textarea>
                         </div>
-                        <div class="row mx-2 mt-2">
-                            <!-- <div class="col-sm-8">  services provided 
-                                <div class="required-services my-2">
-                                    <label class="me-2">Services you provide:</label>
-                                    <br>
-                                    <div v-for="service of services" class="form-check-inline" >
-                                        <input class="form-check-input" type="checkbox" v-bind:value = "service" v-model="checkedServices">
-                                        <label class="form-check-label ps-2">
-                                            {{ service }}
-                                        </label> 
-                                    </div>
-                                </div>
-                            </div> -->
-                            <div class="col-sm-4"> <!-- rates and exp -->
-                                <!-- <div class="row">
-                                    <div class="required-services my-2">
-                                    <label class="me-2" for="petRate">Your Hourly Rates</label>
-                                    <br>
-                                    <input class="form-input w-100" type="number" v-model="rates" id="petRate" min="0" max="50" >
-            
-                                </div>
-                                </div> -->
-                                <div class="row">
-                                    <div class="required-services my-2">
-                                    <label class="me-2" for="yearsofexp">Years of Experience</label>
-                                    <br>
-                                    <input class="form-input w-100" v-model='yrsOfExp' type="number" id="yearsofexp" min="0" max="50" >
-                                </div>
-                                </div>
-                                
+
+                        <div class="row mx-3 mt-2"> <!-- address -->
+                            <label for="inputAddress">Address</label>
+                            <input type="text" v-model='address' class="form-control" id="inputAddress" placeholder="" required>
+                        </div>
+                        <div class="row mx-1 mt-2"> <!-- postal and region -->
+                            <div class="col-md-6">
+                                <label for="inputPostal">Postal Code</label>
+                                <input type="text" v-model='postal' class="form-control" id="inputPostal" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="me-2" for="yearsofexp">Years of Experience</label>
+                            <br>
+                            <input class="form-control w-100" v-model='yrsOfExp' type="number" id="yearsofexp" min="0" max="50" >
                             </div>
                         </div>
                     
                     </div>
-                    <div class="row">
+                    <div class="row my-3">
                         <div class="col-md-5"></div>
                         <div class="col-md-2">
                             <button type="submit" v-on:click='registerUser()' class="btn btn-dark w-100">Sign up!</button>
@@ -183,7 +149,6 @@
                 mobile : '',
                 pic : 'https://cdn-icons-png.flaticon.com/512/2102/2102647.png',
                 desc : '',
-                rates : 0, // for now until frontend fixed
                 yrsOfExp : 0,
             }
         },
@@ -216,7 +181,7 @@ methods : {
                     profilepic : this.pic,
                     mobile: this.mobile,
                     type: 'Pet Service Provider',
-                    desc: this.desc, //this is just profile description
+                    desc: this.desc, 
                     yrsOfExp : this.yrsOfExp,
                     address: this.address,
                     postalcode : this.postal,

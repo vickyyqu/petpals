@@ -9,20 +9,13 @@
 
                     <div class="ms-2">
                         <h6>{{ name }}</h6>
-                        <small style="font-style:italic;">{{ service }}</small>
+                        <small v-if='type=="Pet Owner"' style="font-style:italic;">Looking for {{service}}</small>
+                        <small v-else style="font-style:italic;">{{service}}</small>
 
                         <div class="ratings">
-                            <i v-if='ratings >= 1' class="bi bi-star-fill"></i>
-                            <i v-if='ratings >= 2' class="bi bi-star-fill"></i>
-                            <i v-if='ratings >= 3' class="bi bi-star-fill"></i>
-                            <i v-if='ratings >= 4' class="bi bi-star-fill"></i>
-                            <i v-if='ratings == 5' class="bi bi-star-fill"></i>
+                            <i v-for="n in parseInt(ratings)" class="bi bi-star-fill"></i>
                             <i v-if='!Number.isInteger(ratings)' class="bi bi-star-half"></i>
-                            <i v-else class="bi bi-star"></i>
-                            <i v-if='ratings < 1' class="bi bi-star"></i>
-                            <i v-if='ratings < 2' class="bi bi-star"></i>
-                            <i v-if='ratings < 3' class="bi bi-star"></i>
-                            <i v-if='ratings < 4' class="bi bi-star"></i>
+                            <i v-for='m in parseInt(5-ratings)' class="bi bi-star"></i>
                         </div>
                     </div>
                 </div>
@@ -83,20 +76,13 @@
 
                     <div class="ms-2">
                         <h6>{{ name }}</h6>
-                        <small style="font-style:italic;">{{ service }}</small>
+                        <small v-if='type=="Pet Owner"' style="font-style:italic;">Looking for {{service}}</small>
+                        <small v-else style="font-style:italic;">{{service}}</small>
 
                         <div class="ratings">
-                            <i v-if='ratings >= 1' class="bi bi-star-fill"></i>
-                            <i v-if='ratings >= 2' class="bi bi-star-fill"></i>
-                            <i v-if='ratings >= 3' class="bi bi-star-fill"></i>
-                            <i v-if='ratings >= 4' class="bi bi-star-fill"></i>
-                            <i v-if='ratings == 5' class="bi bi-star-fill"></i>
+                            <i v-for="n in parseInt(ratings)" class="bi bi-star-fill"></i>
                             <i v-if='!Number.isInteger(ratings)' class="bi bi-star-half"></i>
-                            <i v-else class="bi bi-star"></i>
-                            <i v-if='ratings < 1' class="bi bi-star"></i>
-                            <i v-if='ratings < 2' class="bi bi-star"></i>
-                            <i v-if='ratings < 3' class="bi bi-star"></i>
-                            <i v-if='ratings < 4' class="bi bi-star"></i>
+                            <i v-for='m in parseInt(5-ratings)' class="bi bi-star"></i>
                         </div>
 
                     </div>
@@ -138,6 +124,24 @@
 </template>
 
 <script>
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+    authDomain: "petpals-623e3.firebaseapp.com",
+    projectId: "petpals-623e3",
+    storageBucket: "petpals-623e3.appspot.com",
+    messagingSenderId: "949038254831",
+    appId: "1:949038254831:web:82d399649bb06e8389e91a",
+    databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth();
 
 export default {
     data() {
@@ -153,19 +157,17 @@ export default {
     },
     props: ['name', 'desc', 'rates', 'location', 'img', 'yrsOfExp', 'ratings', 'service', 'type', 'otherid'],
     methods: {
-        addReview(review, rating) {
+        addReview() {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     set(ref(db, `users/${this.otherid}/reviews/${user.uid}/${this.service}`), {
-                        'rating': rating,
-                        'review': review
+                        'rating': Number(this.rating),
+                        'review': this.userReview
                     })
-                    set(ref(db, `users/${user.uid}/bookings/${this.otherid}/${this.service}/status`), 'cancelled')
-                    set(ref(db, `users/${this.otherid}/bookings/${user.uid}/${this.service}/status`), 'cancelled')
+                    // set(ref(db, `users/${user.uid}/bookings/${this.otherid}/${this.service}/status`), 'cancelled')
+                    // set(ref(db, `users/${this.otherid}/bookings/${user.uid}/${this.service}/status`), 'cancelled')
 
                     this.calculateRatings()
-
-                    // switch back to profile card but review sent
                     this.reviewLeft = true
                     this.review = false
 
@@ -177,25 +179,45 @@ export default {
         },
 
         calculateRatings() {
-            onAuthStateChanged(auth, (user) => {
-                onValue(ref(db, `users/${user.id}/reviews`), (snapshot) => {
-                    for (let oid in snapshot.val()) {
-                        for (let serv in snapshot.val()[oid]) {
-                            this.count++
-                            this.total += snapshot.val()[oid].rating
-                        }
+            onValue(ref(db, `users/${this.otherid}/reviews`), (snapshot) => {
+                for (let oid in snapshot.val()) {
+                    for (let serv in snapshot.val()[oid]) {
+                        console.log(oid,serv)
+                        this.count++
+                        this.total += snapshot.val()[oid][serv].rating
+                        console.log(this.count,this.total)
                     }
-                    const rating = ((this.total / this.count) * 2).toFixed() / 2
+                }
 
-                    set(ref(db, `users/${user.uid}/ratings`), ratings)
-                    if (this.type == 'Pet Owner') {
-                        window.location.href = `/bookingsProvider`;
-                    } else {
-                        window.location.href = `/bookingsOwner`;
-                    }
-                });
+                var ratings = ((this.total / this.count) * 2).toFixed() / 2
 
+                set(ref(db, `users/${this.otherid}/ratings`), ratings)
+                if (this.type == 'Pet Owner') {
+                    window.location.href = `/bookingsProvider`;
+                } else {
+                    window.location.href = `/bookingsOwner`;
+                }
             });
+
+            // onAuthStateChanged(auth, (user) => {
+            //     onValue(ref(db, `users/${user.id}/reviews`), (snapshot) => {
+            //         for (let oid in snapshot.val()) {
+            //             for (let serv in snapshot.val()[oid]) {
+            //                 this.count++
+            //                 this.total += snapshot.val()[oid].rating
+            //             }
+            //         }
+            //         const rating = ((this.total / this.count) * 2).toFixed() / 2
+
+            //         set(ref(db, `users/${user.uid}/ratings`), ratings)
+            //         if (this.type == 'Pet Owner') {
+            //             window.location.href = `/bookingsProvider`;
+            //         } else {
+            //             window.location.href = `/bookingsOwner`;
+            //         }
+            //     });
+
+            // });
 
 
 
@@ -205,6 +227,17 @@ export default {
         limit() {
             return this.userReview.length.toString()
         }
+    },
+
+    mounted(){
+        onAuthStateChanged(auth, (user) => {
+            get(ref(db, `users/${this.otherid}/reviews/${user.uid}/${this.service}`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    this.reviewLeft = true
+                }
+            });
+        });
+        
     }
 
 }
