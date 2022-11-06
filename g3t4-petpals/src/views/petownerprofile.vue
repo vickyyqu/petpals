@@ -2,12 +2,12 @@
   <div class="container-fluid profile-page">
     <navbar></navbar>
     <!--Left column-->
-    <div class="row">
-      <div class="col-4 profile-leftbox">
+    <div class="row p-3">
+      <div class="col-md-4 profile-leftbox">
         <div class="row">
           <div class="d-flex justify-content-end">
-            <button @click="toggleModal" class="btn btn-go btn-sm">
-              <i class="bi bi-pencil-square"></i>
+            <button @click="toggleModal" class="btn btn-select me-2 mt-3">
+            <i class="bi bi-pencil-square"></i>
             </button>
           </div>
 
@@ -16,12 +16,11 @@
           </div>
 
           <div class="row">
-            <h2 class="mt-3">
-              Hello
-              <div class="username">{{ username }}</div>
+            <h2 class="mt-3" style="letter-spacing: 2px;">
+              Hello,
             </h2>
-            <small class="mt-2"
-              >Pet Owner
+            <h3 class="username" style="color: #F8AA9D;">{{ username }}</h3>
+            <small class="mt-4">Pet Owner
               <img
                 src="../img/animallogo/pawicon.png"
                 style="width: auto; height: auto"
@@ -33,7 +32,15 @@
           <div class="row mt-4">
             <div class="bio">
               <h4 class="mb-3">Bio</h4>
-              <p>{{ message }}</p>
+              <p
+                style="
+                  white-space: pre-line;
+                  padding-left: 60px;
+                  padding-right: 60px;
+                "
+              >
+                {{ message }}
+              </p>
             </div>
 
             <div class="email mt-3">
@@ -48,7 +55,7 @@
 
             <div class="address mt-3">
               <h4 class="mb-3">Address</h4>
-              <p>{{ address }}</p>
+              <p style="white-space: pre-line">{{ address }}</p>
             </div>
           </div>
         </div>
@@ -57,7 +64,7 @@
       </div>
 
       <!--Right column-->
-      <div class="col-8 profile-rightbox">
+      <div class="col-md-8 profile-rightbox p-3">
         <div class="row mt-3">
           <h3 class="mb-3">
             <img
@@ -65,7 +72,6 @@
               style="width: auto; height: auto"
             />My Pets
           </h3>
-          <br />
           <vueper-slides>
             <vueper-slide
               v-for="(slide, i) in slides"
@@ -77,66 +83,17 @@
           </vueper-slides>
         </div>
 
-        <!-- <div class="row">
-          <img
-            src="../img/animallogo/doglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/catlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/rabbitlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/guineapiglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/birdlogo2.png"
-            style="width: 60px; height: 40px"
-          /><img
-            src="../img/animallogo/doglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/catlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/rabbitlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/guineapiglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/birdlogo2.png"
-            style="width: 60px; height: 40px"
-          /><img
-            src="../img/animallogo/doglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/catlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/rabbitlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/guineapiglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/birdlogo2.png"
-            style="width: 60px; height: 40px"
-          /><img
-            src="../img/animallogo/doglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/catlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp; 
-          </div> -->
-
-
-          
-        <div class="row mt-5">
-          <h3>My reviews</h3>
-          <div class="row mt-3">
+        <div class="row mt-3">
+          <div
+            style="
+              background-color: #fddcd74d;
+              padding: 14px 50px;
+              margin-left: 1px;
+            "
+          >
+            <h3>My Reviews</h3>
+          </div>
+          <div class="row" style="padding: 15px 20px">
             <reviewCard v-for="n in 10"></reviewCard>
           </div>
         </div>
@@ -148,55 +105,37 @@
 
   <!--Edit Profile page-->
   <Modal @close="toggleModal" :modalActive="modalActive">
-    <div class="modal-content">
-      <br />
+    <div class="modal-content p-3">
+      <h4 class="pb-4">Edit My Details:</h4>
 
-      Username:
-      <input
+      <label>Username:</label>
+      <input class="form-control mb-2"
         type="text"
         id="username"
         v-model="username"
-        style="border-radius: 5px"
       />
-      <br />
 
-      Bio:
-      <textarea
+      <label>Description:</label>
+      <textarea class="form-control mb-2"
         rows="4"
         cols="10"
         id="bio"
         v-model="message"
-        style="border-radius: 5px"
       ></textarea>
-      <br />
 
-      Email:
-      <input
-        type="text"
-        id="email"
-        v-model="email"
-        style="border-radius: 5px"
-      />
-      <br />
-
-      Number:
-      <input
+      <label>Phone Number:</label>
+      <input class="form-control mb-2"
         type="text"
         id="number"
         v-model="number"
-        style="border-radius: 5px"
       />
-      <br />
-
-      Address:
-      <textarea
+      <label>Address:</label>
+      <textarea class="form-control mb-2"
         rows="4"
         cols="10"
         id="address"
         v-model="address"
-        style="border-radius: 5px"
       ></textarea>
-      <br />
     </div>
   </Modal>
 </template>
@@ -223,10 +162,11 @@ export default {
   data() {
     return {
       // Current Username
-      username: "My username",
+      username: "my username",
 
       // Current bio
-      message: "lorem ipsum dolor sit amet, consectetur",
+      message:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, dignissimos doloribus perferendis qui accusamus reprehenderit laudantium. Praesentium natus quo placeat iure dicta et quod sapiente. A sapiente id sed. Pariatur?",
 
       // Current email
       email: "blabla@gmail.com",
@@ -281,18 +221,19 @@ export default {
   align-items: center;
   justify-content: center;
   background-color: #fffbfa;
+  padding-top: 80px;
 }
 
 .profile-leftbox {
-  margin-top: 80px;
   border-radius: 50px;
-  background-color: white;
+  background-color: #fddcd74d;
+  box-shadow: 0 0 10px 0 #cec2c233;
 }
 
 .profile-rightbox {
-  margin-top: 80px;
   border-radius: 50px;
   background-color: white;
+  box-shadow: 0 0 10px 0 #cec2c233;
 }
 
 .row {
@@ -300,17 +241,6 @@ export default {
 }
 .row-image {
   text-align: center;
-}
-
-// Tab
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
 }
 
 img.rounded {
