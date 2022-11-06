@@ -211,7 +211,7 @@
 <script>
 import navbar from "../components/navbar.vue";
 
-import TabNav from "../components/TabNav.vue";
+// import TabNav from "../components/TabNav.vue";
 import Tab from "../components/Tab.vue";
 
 import reviewCard from "../components/reviewCard.vue";
@@ -227,7 +227,7 @@ export default {
   name: "profile",
   components: {
     navbar,
-    TabNav,
+    // TabNav,
     Tab,
     reviewCard,
     VueperSlides,

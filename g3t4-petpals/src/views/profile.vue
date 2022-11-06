@@ -122,7 +122,7 @@
 <script>
 import navbar from "../components/navbar.vue";
 import navbarProvider from '@/components/navbarProvider.vue'
-import TabNav from "../components/TabNav.vue";
+// import TabNav from "../components/TabNav.vue";
 import Tab from "../components/Tab.vue";
 import { VueperSlides, VueperSlide } from "vueperslides";
 import Modal from "../components/Modal.vue";
@@ -151,7 +151,7 @@ export default {
   components: {
     navbar,
     navbarProvider,
-    TabNav,
+    // TabNav,
     Tab,
     VueperSlides,
     VueperSlide,

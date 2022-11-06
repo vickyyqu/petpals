@@ -93,7 +93,7 @@
                         <textarea class="form-control" v-model='desc' id="inputDesc" rows="10"></textarea>
                         </div>
                         <div class="row mx-2 mt-2">
-                            <div class="col-sm-8"> <!-- services provided -->
+                            <!-- <div class="col-sm-8">  services provided 
                                 <div class="required-services my-2">
                                     <label class="me-2">Services you provide:</label>
                                     <br>
@@ -104,7 +104,7 @@
                                         </label> 
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-sm-4"> <!-- rates and exp -->
                                 <!-- <div class="row">
                                     <div class="required-services my-2">
