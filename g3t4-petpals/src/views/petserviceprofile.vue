@@ -1,14 +1,16 @@
 <template>
   <div class="container-fluid profile-page">
     <navbar></navbar>
-    <!--Left column-->
-    <div class="row">
-      <div class="col-4 profile-leftbox">
+    
+    <div class="row p-3">
+
+      <!--Left column-->
+      <div class="col-md-4 profile-leftbox">
         <div class="row">
           <div class="d-flex justify-content-end">
-            <button @click="toggleModal" class="btn btn-go btn-sm">
+            <button @click="toggleModal" class="btn btn-select me-2 mt-3">
               <i class="bi bi-pencil-square"></i>
-            </button>
+              </button>
           </div>
 
           <div class="row-image">
@@ -33,7 +35,11 @@
           <div class="row mt-4">
             <div class="bio">
               <h4 class="mb-3">Bio</h4>
-              <p>{{ message }}</p>
+              <p style="
+                  white-space: pre-line;
+                  padding-left: 60px;
+                  padding-right: 60px;
+                ">{{ message }}</p>
             </div>
 
             <div class="email mt-3">
@@ -55,9 +61,9 @@
 
         <br />
       </div>
-
+      
       <!--Right column-->
-      <div class="col-8 profile-rightbox">
+      <div class="col-md-8 profile-rightbox">
         <div class="row mt-3">
           <h3 class="mb-3">
             <img
@@ -77,77 +83,29 @@
           </vueper-slides>
         </div>
 
-        <!-- <div class="row">
-          <img
-            src="../img/animallogo/doglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/catlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/rabbitlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/guineapiglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/birdlogo2.png"
-            style="width: 60px; height: 40px"
-          /><img
-            src="../img/animallogo/doglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/catlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/rabbitlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/guineapiglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/birdlogo2.png"
-            style="width: 60px; height: 40px"
-          /><img
-            src="../img/animallogo/doglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/catlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/rabbitlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/guineapiglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/birdlogo2.png"
-            style="width: 60px; height: 40px"
-          /><img
-            src="../img/animallogo/doglogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;<img
-            src="../img/animallogo/catlogo2.png"
-            style="width: 60px; height: 40px"
-          />&nbsp;
-        </div> -->
+        <div class="row mt-3">
+              <!-- Tab links -->
+              <div class="tab">
+                        <h3>
+                          <button class="tablinks" @click="openTab(event, 'Services')">My Services</button>
+                          <button class="tablinks" @click="openTab(event, 'Reviews')">My Reviews</button>
+                        </h3>
 
-        <TabNav
-          :tabs="['My Bookings', 'My Services', 'My Reviews']"
-          :selected="selected"
-          @selected="setSelected"
-        >
-          <Tab :isSelected="selected === 'My Bookings'">
-            <p>Shows a list of the bookings made by this user</p>
-          </Tab>
-          <Tab :isSelected="selected === 'My Services'">
-            <p>Shows a list of the services offered by this user</p>
-          </Tab>
-          <Tab :isSelected="selected === 'My Reviews'">
-            <p>Shows a list of reviews left for this user</p>
-            <Post v-for="(user, i) in user_list" :key="i" :user="user" />
-          </Tab>
-        </TabNav>
+                    </div>
+                    
+                <!-- Tab content -->
+                <div id="Services" class="tabcontent">
+                    <h3>Here are the services you provide</h3>
+                    <p>Shows list of services you provide</p>
+                </div>
+                
+                <div id="Reviews" class="tabcontent">
+                  <div class="row">
+                    <reviewCard v-for="n in 10"></reviewCard>
+                  </div>
+                </div>
+                
+            </div>
       </div>
     </div>
   </div>
@@ -155,64 +113,43 @@
 
   <!--Edit Profile page-->
   <Modal @close="toggleModal" :modalActive="modalActive">
-    <div class="modal-content">
-      <br />
+    <div class="modal-content p-3">
+      <h4 class="pb-4">Edit My Details:</h4>
 
-      Username:
-      <input
+      <label>Username:</label>
+      <input class="form-control mb-2"
         type="text"
         id="username"
         v-model="username"
-        style="border-radius: 5px"
       />
-      <br />
 
-      Bio:
-      <textarea
+      <label>Description:</label>
+      <textarea class="form-control mb-2"
         rows="4"
         cols="10"
         id="bio"
         v-model="message"
-        style="border-radius: 5px"
       ></textarea>
-      <br />
 
-      Email:
-      <input
-        type="text"
-        id="email"
-        v-model="email"
-        style="border-radius: 5px"
-      />
-      <br />
-
-      Number:
-      <input
+      <label>Phone Number:</label>
+      <input class="form-control mb-2"
         type="text"
         id="number"
         v-model="number"
-        style="border-radius: 5px"
       />
-      <br />
-
-      Address:
-      <textarea
+      <label>Address:</label>
+      <textarea class="form-control mb-2"
         rows="4"
         cols="10"
         id="address"
         v-model="address"
-        style="border-radius: 5px"
       ></textarea>
-      <br />
     </div>
   </Modal>
 </template>
 
 <script>
 import navbar from "../components/navbar.vue";
-
-import TabNav from "../components/TabNav.vue";
-import Tab from "../components/Tab.vue";
 
 import reviewCard from "../components/reviewCard.vue";
 
@@ -221,14 +158,12 @@ import { VueperSlides, VueperSlide } from "vueperslides";
 import Modal from "../components/Modal.vue";
 import { ref as modalref } from "vue";
 
-import petpalsFooter from "../components/petpalsFooter.vue";
+import petpalsFooter from "@/components/petpalsFooter.vue";
 
 export default {
   name: "profile",
   components: {
     navbar,
-    TabNav,
-    Tab,
     reviewCard,
     VueperSlides,
     VueperSlide,
@@ -241,7 +176,7 @@ export default {
       username: "My username",
 
       // Current bio
-      message: "lorem ipsum dolor sit amet, consectetur",
+      message: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, dignissimos doloribus perferendis qui accusamus reprehenderit laudantium. Praesentium natus quo placeat iure dicta et quod sapiente. A sapiente id sed. Pariatur?",
 
       // Current email
       email: "blabla@gmail.com",
@@ -263,23 +198,37 @@ export default {
         },
       ],
 
-      // Reviews list
-      user_list: [],
-
-      tabList: ["Tab 1", "Tab 2", "Tab 3", "Tab 4"],
     };
   },
 
   methods: {
-    // Changing tabs
-    setSelected(tab) {
-      this.selected = tab;
-    },
 
     // Edit bio
     changeMessage(message) {
       this.message = message;
     },
+
+    // Tab
+    openTab(evt, feature) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(feature).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
   },
 
   setup() {
@@ -303,18 +252,19 @@ export default {
   align-items: center;
   justify-content: center;
   background-color: #fffbfa;
+  padding-top: 80px;
 }
 
 .profile-leftbox {
-  margin-top: 80px;
   border-radius: 50px;
-  background-color: white;
+  background-color: #fddcd74d;
+  box-shadow: 0 0 10px 0 #cec2c233;
 }
 
 .profile-rightbox {
-  margin-top: 80px;
   border-radius: 50px;
   background-color: white;
+  box-shadow: 0 0 10px 0 #cec2c233;
 }
 
 .row {
@@ -322,17 +272,6 @@ export default {
 }
 .row-image {
   text-align: center;
-}
-
-// Tab
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
 }
 
 img.rounded {
@@ -355,5 +294,45 @@ img.rounded {
   p {
     font-size: 18px;
   }
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid white;
+  background-color: #fddcd74d;
+  font-family: 'Alata', Helvetica, Arial, sans-serif;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  text-align: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 50px;
+  transition: 0.3s;
+  color: #9C796A;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #F8AA9D;
+  color: white;
+}
+
+/* Create an active/current tablink class */
+.tab button .active {
+  background-color: #F8AA9D;
+  color: white;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 13px 15px;
+  border: 1px solid white;
+  border-top: none;
 }
 </style>

@@ -1,7 +1,6 @@
 import home from "../views/home.vue"
 import chat from "../views/chat.vue"
 import search from "../views/search.vue"
-import profile from "../views/profile.vue"
 import bookingsOwner from "../views/bookingsOwner.vue"
 import bookingsProvider from "../views/bookingsProvider.vue"
 import profilelisting from "../views/profilelisting.vue"
@@ -43,9 +42,14 @@ export const router = createRouter({
             component: bookingsProvider
         },
         {
-            path: "/profile",
-            name: "profile",
-            component: profile
+            path: "/petserviceprofile",
+            name: "petserviceprofile",
+            component: petserviceprofile
+        },
+        {
+            path: "/petownerprofile",
+            name: "petownerprofile",
+            component: petownerprofile
         },
         {
             path: "/registerowner",
