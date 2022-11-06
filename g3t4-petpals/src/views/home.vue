@@ -132,7 +132,7 @@
 
                     </div>
 
-                    <div v-else class="login" style="padding-bottom:50px;">
+                    <div v-else class="login" style="padding-bottom:80px;">
                         <h3 class="pt-5">Login</h3>
                         <div class="mb-3 mt-4">
                             <label for="email" class="form-label"> Enter your email:</label>
@@ -199,7 +199,7 @@
             <h4 class="mt-4 text-center" style="font-style:normal;font-family:'Figtree';line-height:0.7em;color:#856658;">Choose from as many services as you like.</h4>
             <h4 class="mt-3 text-center" style="font-style:normal;font-family:'Figtree';line-height:0.7em;color:#856658;">Match with the perfect pet service provider.</h4>
             
-            <div class="row p-5 m-3">
+            <div class="row p-5">
                 <services v-for="(each) of services" v-bind:tag="tags[each]" v-bind:png="png[each]" v-bind:service="each"></services>
             </div>
 
@@ -210,13 +210,13 @@
                 
                 <div class="col-2"></div>
 
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <img src="../img/owner.png" class="img-fluid d-block mx-auto my-5" alt="">
                     <h3 style="color:#F8AA9D">Pet Owner</h3>
                     <p>Sign up today and meet your best suited pet service provider with us!</p>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <img src="../img/service.png" class="img-fluid d-block mx-auto my-5"  alt="">
                     <h3 style="color:#F8AA9D">Pet Service Provider</h3>
                     <p>Register today as a service provider and secure bookings from pet owners with us!</p>
