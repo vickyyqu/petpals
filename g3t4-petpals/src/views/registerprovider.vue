@@ -79,7 +79,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label class="me-2" for="yearsofexp">Years of Experience</label>
+                                <label class="me-1" for="yearsofexp">Years of Experience</label>
                             <br>
                             <input class="form-control w-100" v-model='yrsOfExp' type="number" id="yearsofexp" min="0" max="50" >
                             </div>

@@ -123,7 +123,7 @@ img.rounded {
       <div class="col-md-8 profile-rightbox p-3">
         <div class="row mt-3">
           <span>
-            <button class="btn btn-select mt-3 me-2 float-end" @click="toggleModal2"><i class="bi bi-pencil-square"></i></button>
+            <button class="btn btn-select mt-3 me-2 float-end" @click="toggleModal2();"><i class="bi bi-pencil-square"></i></button>
           </span>
           <h3 class="mb-3">
             <img
@@ -132,7 +132,7 @@ img.rounded {
             />My Pets
           </h3>
           
-          <vueper-slides>
+          <vueper-slides  fade :touchable="false">
             <!-- <vueper-slide
               v-for="(slide, i) in slides"
               :key="i"
@@ -140,11 +140,12 @@ img.rounded {
               :content="slide.content"
             >
             </vueper-slide> -->
-            <vueper-slide
+            <vueper-slide 
               v-for="(pet, i) in pets"
               :key="i"
+              :image="pet.photo"
               :title="pet.petname"
-              :content="pet.content"
+              :content= "pet.age"
             >
             </vueper-slide>
           </vueper-slides>
@@ -170,7 +171,7 @@ img.rounded {
   <petpalsFooter></petpalsFooter>
 
   <!--Edit Profile page-->
-  <Modal @close="toggleModal2(); updateService()" :modalActive="modalActive">
+  <Modal @close="toggleModal(); updateService()" :modalActive="modalActive">
     <div class="modal-content p-3">
       <h4 class="pb-4">Edit My Details:</h4>
 
@@ -216,10 +217,24 @@ img.rounded {
       <input class="form-control mb-2"
         type="text"
         id="petName"
-        placeholder="What is the name of your pet?"
+        placeholder='What is the name of your pet?'
         v-model="petName"
         required
       />
+
+      <label>Pet Type:</label>
+      <select class="form-control mb-2 text-muted" id="petType" v-model="petType" 
+      required>
+        <option value="default" disabled>-- What type of pet do you have?--</option>
+        <option value="Dog">Dog</option>
+        <option value="Cat">Cat</option>
+        <option value="Fish">Fish</option>
+        <option value="Bird">Bird</option>
+        <option value="Rabbit">Rabbit</option>
+        <option value="Hamster">Hamster</option>
+        <option value="Guinea Pig">Guinea Pig</option>
+        <option value="Others">Others</option>
+      </select>
 
       <label>Breed:</label>
       <input class="form-control mb-2"
@@ -247,8 +262,10 @@ img.rounded {
         placeholder="Describe your pet!"
         v-model="petDesc"
       ></textarea>
-    </div>
-  </Modal>
+
+  </div>
+  
+</Modal>
 </template>
 
 <script>
@@ -297,7 +314,13 @@ export default {
       photoURL: '',
       reviews: [],
       services: [],
-      pets: [{petname: 'coral',content:'some words'}],
+      pets: [
+        {petname: 'coral',
+        age: 13,
+        breed: 'corgi',
+        type: 'dog',
+        photo: 'https://www.kibrispdr.org/data/84/dog-background-pictures-19.jpg'}
+      ],
       pic: '',
 
       petName: '',
@@ -305,18 +328,8 @@ export default {
       age: 0,
       petDesc: '',
       petPhoto: '',
+      petType:'default',
 
-
-      slides: [
-        {
-          petname: "Petname1",
-          content: "Image of pet1,age,breed,description",
-        },
-        {
-          petname: "Petname2",
-          content: "Image of pet1,age,breed,description",
-        },
-      ],
 
     };
   },
@@ -378,7 +391,10 @@ export default {
             for (let pet in snapshot.val()){
               var obj = {};
               obj['petname'] = pet
-              obj['content'] = ''
+              obj['age'] = snapshot.val()[pet].age
+              obj['type'] = snapshot.val()[pet].type
+              obj['breed'] = snapshot.val()[pet].breed
+              obj['photo'] = snapshot.val()[pet].photo
 
               this.pets.push(obj)
             }
@@ -388,7 +404,7 @@ export default {
     },
 
     addPet(){
-      if (this.petName == '' || this.age == 0){
+      if (this.petName == '' || this.age == 0 || this.petType == 'default'){
         console.log('error')
       }else{
         onAuthStateChanged(auth, (user) => {
@@ -396,16 +412,18 @@ export default {
             set(ref(db, `users/${user.uid}/pets/${this.petName}/age`), this.age)
             set(ref(db, `users/${user.uid}/pets/${this.petName}/breed`), this.breed) 
             set(ref(db, `users/${user.uid}/pets/${this.petName}/desc`), this.petDesc) 
+            set(ref(db, `users/${user.uid}/pets/${this.petName}/type`), this.petType) 
             
             if (this.pic != ''){
               set(ref(db, `users/${user.uid}/pets/${this.petName}/photo`), this.petPhoto) 
               this.pic = ''
             }else{
-              set(ref(db, `users/${user.uid}/pets/${this.petName}/photo`), 'https://cdn-icons-png.flaticon.com/512/884/884183.png') 
+              set(ref(db, `users/${user.uid}/pets/${this.petName}/photo`), 'https://www.kibrispdr.org/data/84/dog-background-pictures-19.jpg') 
             }
 
             this.age = 0
             this.petName = ''
+            this.petType = 'default'
 
             window.location.href = `/petownerprofile`;
           }

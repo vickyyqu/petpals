@@ -138,6 +138,15 @@ img.rounded {
             </div>
 
             <div class="email mt-3">
+              <h4 class="mb-3">Ratings</h4>
+                <div class="ratings">
+                        <i v-for="n in parseInt(ratings)" class="bi bi-star-fill"></i>
+                        <i v-if='!Number.isInteger(ratings)' class="bi bi-star-half"></i>
+                        <i v-for='m in parseInt(5-ratings)' class="bi bi-star"></i>
+                </div>
+            </div>
+
+            <div class="email mt-3">
               <h4 class="mb-3">Email</h4>
               <p>{{ email }}</p>
             </div>
@@ -302,6 +311,7 @@ export default {
       reviews: [],
       services: [],
       pic: '',
+      ratings: 0,
 
       price: 0,
       serviceDesc: '',
@@ -353,6 +363,7 @@ export default {
               this.address = snapshot.val().address
               this.description = snapshot.val().desc
               this.email = user.email
+              this.ratings = snapshot.val().ratings
           }); 
         }
       });

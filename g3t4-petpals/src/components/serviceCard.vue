@@ -47,7 +47,7 @@
             <div class = 'row my-2'>
                 <div class = 'col'>
                     <h5>Description:<span><button class="btn btn-select px-3 mx-2 float-end" @click="updateService" v-on:click="$emit('edit')"><i class="bi bi-pencil-square"></i></button></span></h5>
-                    <p class="card-text"> service description {{desc}}</p>                       
+                    <p class="card-text">{{desc}}</p>                       
                 </div>
             </div>
         </div>

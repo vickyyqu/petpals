@@ -118,7 +118,7 @@
 
                                 onValue(ref(db, `users/${oid}`), (snapsht) => {
                                     name = snapsht.val().username;
-                                    desc = snapsht.val().desc;
+                                    desc = snapsht.val().services;
                                     loc = snapsht.val().address;
                                     exp = snapsht.val().yrsOfExp;
                                     img = snapsht.val().profilepic;
@@ -129,11 +129,12 @@
 
                                     onValue(ref(db, `users/${user.uid}/bookings/${oid}/${service}`), (snapsht) => {
                                         if (snapsht.val() != null && snapsht.val().status == 'confirmed'){
+                                            
                                             obj['rates'] = snapsht.val().price
                                             obj['service'] = service 
                                             obj['name'] = name
                                             obj['location'] = loc
-                                            obj['desc'] = desc 
+                                            obj['desc'] = desc[service].desc 
                                             obj['yrsOfExp'] = exp
                                             obj['img'] = img
                                             obj['ratings'] = ratings
@@ -167,7 +168,7 @@
 
                                 onValue(ref(db, `users/${oid}`), (snapsht) => {
                                     name = snapsht.val().username;
-                                    desc = snapsht.val().desc;
+                                    desc = snapsht.val().services;
                                     loc = snapsht.val().address;
                                     exp = snapsht.val().yrsOfExp;
                                     img = snapsht.val().profilepic;
@@ -182,7 +183,7 @@
                                             obj['service'] = service 
                                             obj['name'] = name
                                             obj['location'] = loc
-                                            obj['desc'] = desc 
+                                            obj['desc'] = desc[service].desc 
                                             obj['yrsOfExp'] = exp
                                             obj['img'] = img
                                             obj['ratings'] = ratings
@@ -216,7 +217,7 @@
 
                                 onValue(ref(db, `users/${oid}`), (snapsht) => {
                                     name = snapsht.val().username;
-                                    desc = snapsht.val().desc;
+                                    desc = snapsht.val().services;
                                     loc = snapsht.val().address;
                                     exp = snapsht.val().yrsOfExp;
                                     img = snapsht.val().profilepic;
@@ -231,7 +232,7 @@
                                             obj['service'] = service 
                                             obj['name'] = name
                                             obj['location'] = loc
-                                            obj['desc'] = desc 
+                                            obj['desc'] = desc[service].desc 
                                             obj['yrsOfExp'] = exp
                                             obj['img'] = img
                                             obj['ratings'] = ratings
