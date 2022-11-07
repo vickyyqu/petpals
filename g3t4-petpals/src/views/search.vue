@@ -186,6 +186,9 @@ export default {
                             item.service = service
                             item.oid = uid
 
+                            //lat and lng for radius search
+                            item.coords = snapst.val().coords // {lat: '', lng: ''}
+
                             // console.log(item,this.filterResults)
                             
                             this.filterResults.push(item) // sorted by service by default
@@ -216,7 +219,9 @@ export default {
                 }
                                 
             }
-        }
+        },
+
+
     },
 
 }
