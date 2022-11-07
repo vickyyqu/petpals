@@ -126,7 +126,7 @@ import profileCard from '@/components/profileCard.vue'
 import petpalsFooter from '@/components/petpalsFooter.vue'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, set, update, get, push, query, orderByChild} from "firebase/database";
+import { getDatabase, ref, onValue, set, get } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",

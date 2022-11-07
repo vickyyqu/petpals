@@ -145,6 +145,9 @@ export default {
             pic : 'https://cdn-icons-png.flaticon.com/512/2102/2102647.png',
             desc : '',
             yrsOfExp : 0,
+
+            lat : '',
+            lng : '',
         }
     },
 
@@ -180,6 +183,7 @@ export default {
                         address: this.address,
                         postalcode : this.postal,
                         ratings : 0, //by default
+                        coords: {'lat': this.lat, 'lng': this.lng},
                     })
 
                     signInWithEmailAndPassword(auth, this.email, this.psw)
