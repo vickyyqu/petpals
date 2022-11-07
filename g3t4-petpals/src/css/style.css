@@ -535,7 +535,7 @@ Parallax
     color: #513e45;
 }
 
-input[type=email], input[type=password] {
+.login input[type=email], .login input[type=password] {
     background-color: rgb(246, 240, 240);
     border-color:#958289;
     /* border-style: none; */

@@ -8,16 +8,16 @@
 <template>
 
     <div class="col-lg-9">
-        <span class="required me-2">Your Location:</span>
-        <div class="input-group input-group-sm mb-3">
+        <span class="required">Your Location/Postal Code:</span>
+        <div class="input-group input-group-sm mb-3 mt-1">
             <input type="text" class="form-control" aria-label="Small"
                 aria-describedby="inputGroup-sizing-sm" v-model="inputAddr" :placeholder="msg">
         </div>
     </div>
 
     <div class="col-lg-3">
-        <span class="required me-2 ">Search Radius:</span>
-        <select class="form-select mb-3" aria-label="Default select example" v-model="searchRad">
+        <span class="required">Search Radius:</span>
+        <select class="form-select mb-3 mt-1" aria-label="Default select example" v-model="searchRad">
             <option id="1" class="select-option" value=1>1km</option>
             <option id="3" class="select-option" value=3>3km</option>
             <option id="5" class="select-option" value=5>5km</option>
@@ -26,11 +26,11 @@
         </select>
     </div>
 
-    <div class="my-2">
+    <div class="mt-3">
         <div id="googleMap" class="rounded-3"></div>
     </div>
 
-    <button class="btn btn-go mt-3" v-on:click="searchClick">Go</button>
+    <button class="btn btn-go my-4" v-on:click="searchClick">Go</button>
 
     <component :is="'script'" type="application/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw&callback=initMap"></component>
 </template>
@@ -111,6 +111,10 @@
                             map: map,
                         })
 
+                        // rad -> input search radius, coord -> [lat, lng]
+                        var out = {rad: this.searchRad, coord: [currlat,currlng]}
+                        this.$emit('searchClick', out)
+
                     } else {
                         this.invalidAddr = true
                         this.inputAddr = ""
@@ -126,8 +130,6 @@
                     this.msg = "Address not found. Try again with your address in full."
 
                 })
-
-                this.$emit('searchClick', this.searchRad)
 
             }
 
