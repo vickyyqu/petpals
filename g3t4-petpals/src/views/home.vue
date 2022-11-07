@@ -317,105 +317,106 @@
     
 </template>
 
-
 <script>
-    import services from '@/components/services.vue'
-    import petpalsFooter from '@/components/petpalsFooter.vue'
-    import VueWriter from "vue-writer";
-    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged  } from "firebase/auth";
-    import { initializeApp } from "firebase/app";
-    import { getDatabase, ref, onValue } from "firebase/database";
+import services from '@/components/services.vue'
+import petpalsFooter from '@/components/petpalsFooter.vue'
+import VueWriter from "vue-writer";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged} from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue } from "firebase/database";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
-        authDomain: "petpals-623e3.firebaseapp.com",
-        projectId: "petpals-623e3",
-        storageBucket: "petpals-623e3.appspot.com",
-        messagingSenderId: "949038254831",
-        appId: "1:949038254831:web:82d399649bb06e8389e91a",
-        databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
-    };
-    
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    
-    export default {
-        data() {
-            return {
-                counter: 0,
-                services: ['Pet Walking','Pet Grooming','Pet Hotels','Pet Sitters','Pet Trainers','Pet Transport'],
-                tags: {'Pet Walking': 'Take your pet out on scheduled walks with our Pet Walkers.', 'Pet Grooming': 'Be returned a clean and fresh pet with our experienced Pet Groomers.', 'Pet Hotels': 'Leave your pet with our trusted Pet Hotel Providers while on holiday.', 'Pet Sitters': 'Leave your pet with our trusted Pet Sitters while running errands.', 'Pet Trainers': 'Train your pet with our qualified Pet Trainers.', 'Pet Transport': 'Transport your pet safely with our Pet Movers.'},
-                png: {'Pet Walking': 'src/img/png/walker.png', 'Pet Grooming': 'src/img/png/groomer.png', 'Pet Hotels': 'src/img/png/hotel.png', 'Pet Sitters': 'src/img/png/sitter.png', 'Pet Trainers': 'src/img/png/trainer.png', 'Pet Transport': 'src/img/png/catincar.png'},
-                msg1: "Bringing the best pet service providers to you",
-                loginError: false,
-                errorMsg: '',
-                forgot: false,
-                emailSent: false,
-                email: '',
-                pwd: '',
-                arr:  ["BRINGING THE BEST PET SERVICE PROVIDERS TO YOU", "CONNECTING YOU TO PET LOVERS, JUST LIKE YOU"]
-            }
-        },
+const firebaseConfig = {
+    apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+    authDomain: "petpals-623e3.firebaseapp.com",
+    projectId: "petpals-623e3",
+    storageBucket: "petpals-623e3.appspot.com",
+    messagingSenderId: "949038254831",
+    appId: "1:949038254831:web:82d399649bb06e8389e91a",
+    databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+};
 
-        methods: {
-            userLogin(){
-                const auth = getAuth();
-                signInWithEmailAndPassword(auth, this.email, this.pwd)
-                .then((userCredential) => {
-                    onAuthStateChanged(auth, (user) => {
-                        if (user) {
-                            onValue(ref(db, `users/${user.uid}/type`), (snapshot) => {
-                                if (snapshot.val() == 'Pet Owner'){
-                                    window.location.href = `/search`;
-                                }else{
-                                    window.location.href = `/bookingsProvider`;
-                                }   
-                            }); 
-                        }
-                    });  
-  
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    console.log(error.message)
-                    let msg = error.message.slice(22,(error.message.length)-2)
-                    if (msg == 'wrong-password'){
-                        this.errorMsg = 'Password is invalid. Please try again.'
-                    }else if (msg == 'user-not-found'){
-                        this.errorMsg = 'No account registered. Please register for one first.'
-                    } else if (msg == 'invalid-email'){
-                        this.errorMsg = 'Email is invalid. Please enter a valid email address.'
-                    }else if (msg == 'missing-password'){
-                        this.errorMsg = 'Please enter your password.'
-                    }
-                    this.loginError = true
-                });
-            },
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-            resetPassword(){
-                const auth = getAuth();
-                sendPasswordResetEmail(auth, this.email)
-                .then(() => {
-                    this.emailSent=true
-                })
-                .catch((error) => {
-                    // this.errorMsg = 'Please enter a valid email address.'
-                });
-                
-            },
 
-            Nav(){
-                if (this.counter == 1){
-                    this.counter = 0;
-                } else {
-                    this.counter++;
-                }
-            }
-        },
-        components: {
-            services,
-            petpalsFooter,
-            VueWriter
+export default {
+    data() {
+        return {
+            counter: 0,
+            services: ['Pet Walking','Pet Grooming','Pet Hotels','Pet Sitters','Pet Trainers','Pet Transport'],
+            tags: {'Pet Walking': 'Take your pet out on scheduled walks with our Pet Walkers.', 'Pet Grooming': 'Be returned a clean and fresh pet with our experienced Pet Groomers.', 'Pet Hotels': 'Leave your pet with our trusted Pet Hotel Providers while on holiday.', 'Pet Sitters': 'Leave your pet with our trusted Pet Sitters while running errands.', 'Pet Trainers': 'Train your pet with our qualified Pet Trainers.', 'Pet Transport': 'Transport your pet safely with our Pet Movers.'},
+            png: {'Pet Walking': 'src/img/png/walker.png', 'Pet Grooming': 'src/img/png/groomer.png', 'Pet Hotels': 'src/img/png/hotel.png', 'Pet Sitters': 'src/img/png/sitter.png', 'Pet Trainers': 'src/img/png/trainer.png', 'Pet Transport': 'src/img/png/catincar.png'},
+            msg1: "Bringing the best pet service providers to you",
+            loginError: false,
+            errorMsg: '',
+            forgot: false,
+            emailSent: false,
+            email: '',
+            pwd: '',
+            arr:  ["BRINGING THE BEST PET SERVICE PROVIDERS TO YOU", "CONNECTING YOU TO PET LOVERS, JUST LIKE YOU"]
         }
+    },
+
+    methods: {
+        userLogin(){
+            const auth = getAuth();
+            signInWithEmailAndPassword(auth, this.email, this.pwd)
+            .then((userCredential) => {
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        onValue(ref(db, `users/${user.uid}/type`), (snapshot) => {
+                            if (snapshot.val() == 'Pet Owner'){
+                                window.location.href = `/search`;
+                            }else{
+                                window.location.href = `/bookingsProvider`;
+                            }   
+                        }); 
+                    }
+                });  
+
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                console.log(error.message)
+                let msg = error.message.slice(22,(error.message.length)-2)
+                if (msg == 'wrong-password'){
+                    this.errorMsg = 'Password is invalid. Please try again.'
+                }else if (msg == 'user-not-found'){
+                    this.errorMsg = 'No account registered. Please register for one first.'
+                } else if (msg == 'invalid-email'){
+                    this.errorMsg = 'Email is invalid. Please enter a valid email address.'
+                }else if (msg == 'missing-password'){
+                    this.errorMsg = 'Please enter your password.'
+                }
+                this.loginError = true
+            });
+        },
+
+        resetPassword(){
+            const auth = getAuth();
+            sendPasswordResetEmail(auth, this.email)
+            .then(() => {
+                this.emailSent=true
+            })
+            .catch((error) => {
+                // this.errorMsg = 'Please enter a valid email address.'
+            });
+            
+        },
+
+        Nav(){
+            if (this.counter == 1){
+                this.counter = 0;
+            } else {
+                this.counter++;
+            }
+        },
+
+    },
+    components: {
+        services,
+        petpalsFooter,
+        VueWriter
     }
+}
 </script>
