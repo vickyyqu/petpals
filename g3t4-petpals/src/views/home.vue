@@ -150,7 +150,7 @@
                         </div>
 
                         <div class="login-btn">
-                            <button class="btn login-btn btn-select mt-3" v-on:click="userLogin()">Login</button>
+                            <button class="btn login-btn btn-select mt-3" @click="userLogin">Login</button>
                         </div>
                         <hr class="my-5">
 
@@ -364,14 +364,17 @@
                 const auth = getAuth();
                 signInWithEmailAndPassword(auth, this.email, this.pwd)
                 .then((userCredential) => {
-                    const user = auth.currentUser
-                    onValue(ref(db, `users/${user.uid}/type`), (snapshot) => {
-                        if (snapshot.val() == 'Pet Owner'){
-                            window.location.href = `/search`;
-                        }else{
-                            window.location.href = `/bookingsProvider`;
-                        }   
-                    }); 
+                    onAuthStateChanged(auth, (user) => {
+                        if (user) {
+                            onValue(ref(db, `users/${user.uid}/type`), (snapshot) => {
+                                if (snapshot.val() == 'Pet Owner'){
+                                    window.location.href = `/search`;
+                                }else{
+                                    window.location.href = `/bookingsProvider`;
+                                }   
+                            }); 
+                        }
+                    });  
   
                 })
                 .catch((error) => {
