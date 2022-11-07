@@ -55,170 +55,170 @@ img.rounded {
 </style>
 
 <template>
-  <div class="container-fluid profile-page">
-    <navbar></navbar>
-    <!--Left column-->
-    <div class="row p-3">
-      <div class="col-md-4 profile-leftbox">
+<div class="container-fluid profile-page">
+  <navbar></navbar>
+  <!--Left column-->
+  <div class="row p-3">
+    <div class="col-md-4 profile-leftbox">
+      <div class="row">
+        <div class="d-flex justify-content-end">
+          <button @click="toggleModal" class="btn btn-select me-2 mt-3">
+            <i class="bi bi-pencil-square"></i>
+          </button>
+        </div>
+
+        <div class="row-image">
+          <img v-bind:src="photoURL" class="rounded rounded-circle" />
+        </div>
+
         <div class="row">
-          <div class="d-flex justify-content-end">
-            <button @click="toggleModal" class="btn btn-select me-2 mt-3">
-              <i class="bi bi-pencil-square"></i>
-            </button>
-          </div>
+          <h2 class="mt-3" style="letter-spacing: 2px;">
+            Hello
+          </h2>
 
-          <div class="row-image">
-            <img v-bind:src="photoURL" class="rounded rounded-circle" />
-          </div>
+          <h3 class="username" style="color: #F8AA9D;">{{ username }}</h3>
 
-          <div class="row">
-            <h2 class="mt-3" style="letter-spacing: 2px;">
-              Hello
-            </h2>
-
-            <h3 class="username" style="color: #F8AA9D;">{{ username }}</h3>
-
-            <small class="mt-4">Pet Owner
-              <img
-                src="../img/animallogo/pawicon.png"
-                style="width: auto; height: auto"
-              />
-            </small>
-          </div>
-
-          <br />
-          <hr />
-
-          <div class="row mt-4">
-            <div class="bio">
-              <h4 class="mb-3">Bio</h4>
-              <p
-                style="
-                  white-space: pre-line;
-                  padding-left: 60px;
-                  padding-right: 60px;
-                "
-              >
-                {{ description }}
-              </p>
-            </div>
-
-            <div class="email mt-3">
-              <h4 class="mb-3">Email</h4>
-              <p>{{ email }}</p>
-            </div>
-
-            <div class="number mt-3">
-              <h4 class="mb-3">Mobile Number</h4>
-              <p>{{ mobile }}</p>
-            </div>
-
-            <div class="address mt-3">
-              <h4 class="mb-3">Address</h4>
-              <p style="white-space: pre-line">{{ address }}</p>
-            </div>
-          </div>
-
+          <small class="mt-4">Pet Owner
+            <img
+              src="../img/animallogo/pawicon.png"
+              style="width: auto; height: auto"
+            />
+          </small>
         </div>
 
         <br />
+        <hr />
+
+        <div class="row mt-4">
+          <div class="bio">
+            <h4 class="mb-3">Bio</h4>
+            <p
+              style="
+                white-space: pre-line;
+                padding-left: 60px;
+                padding-right: 60px;
+              "
+            >
+              {{ description }}
+            </p>
+          </div>
+
+          <div class="email mt-3">
+            <h4 class="mb-3">Email</h4>
+            <p>{{ email }}</p>
+          </div>
+
+          <div class="number mt-3">
+            <h4 class="mb-3">Mobile Number</h4>
+            <p>{{ mobile }}</p>
+          </div>
+
+          <div class="address mt-3">
+            <h4 class="mb-3">Address</h4>
+            <p style="white-space: pre-line">{{ address }}</p>
+          </div>
+        </div>
+
       </div>
 
-      <!--Right column-->
-      <div class="col-md-8 profile-rightbox p-3">
-        <div class="row mt-3">
-          <span>
-            <button class="btn btn-select mt-3 me-2 float-end" @click="toggleModal2();"><i class="bi bi-pencil-square"></i></button>
-          </span>
+      <br />
+    </div>
 
-          <h3 class="mb-3">
-            <img
-              src="../img/animallogo/doglogo3.png"
-              style="width: auto; height: auto"
-            />My Pets
-          </h3>
-          
-          <vueper-slides  fade :touchable="false">
-            <!-- <vueper-slide
-              v-for="(slide, i) in slides"
-              :key="i"
-              :title="slide.title"
-              :content="slide.content"
-            >
-            </vueper-slide> -->
-            <vueper-slide 
-              v-for="(pet, i) in pets"
-              :key="i"
-              :image="pet.photo"
-              :title="pet.petname"
-              :content= "pet.age"
-            >
-            </vueper-slide>
-          </vueper-slides>
-        </div>
+    <!--Right column-->
+    <div class="col-md-8 profile-rightbox p-3">
+      <div class="row mt-3">
+        <span>
+          <button class="btn btn-select mt-3 me-2 float-end" @click="toggleModal2();"><i class="bi bi-pencil-square"></i></button>
+        </span>
 
-        <div class="row mt-3">
-          <div
-            style="background-color: #fddcd74d;
-              padding: 14px 50px;
-              margin-left: 1px;
-            "
+        <h3 class="mb-3">
+          <img
+            src="../img/animallogo/doglogo3.png"
+            style="width: auto; height: auto"
+          />My Pets
+        </h3>
+        
+        <vueper-slides  fade :touchable="false">
+          <!-- <vueper-slide
+            v-for="(slide, i) in slides"
+            :key="i"
+            :title="slide.title"
+            :content="slide.content"
           >
-            <h3>My Reviews</h3>
+          </vueper-slide> -->
+          <vueper-slide 
+            v-for="(pet, i) in pets"
+            :key="i"
+            :image="pet.photo"
+            :title="pet.petname"
+            :content= "pet.age"
+          >
+          </vueper-slide>
+        </vueper-slides>
+      </div>
 
-          </div>
-
-          <div class="row" style="padding: 15px 20px">
-            <reviewCard v-for="rev in reviews" :reviewer="rev.username" :service = 'rev.service' :review="rev.review" :rating="rev.rating"></reviewCard>
-          </div>
+      <div class="row mt-3">
+        <div
+          style="background-color: #fddcd74d;
+            padding: 14px 50px;
+            margin-left: 1px;
+          "
+        >
+          <h3>My Reviews</h3>
 
         </div>
+
+        <div class="row" style="padding: 15px 20px">
+          <reviewCard v-for="rev in reviews" :reviewer="rev.username" :service = 'rev.service' :review="rev.review" :rating="rev.rating"></reviewCard>
+        </div>
+
       </div>
     </div>
   </div>
+</div>
 
-  <petpalsFooter></petpalsFooter>
+<petpalsFooter></petpalsFooter>
 
-  <!--Edit Profile page-->
-  <Modal @close="toggleModal(); updateService()" :modalActive="modalActive">
-    <div class="modal-content p-3">
-      <h4 class="pb-4">Edit My Details:</h4>
+<!--Edit Profile page-->
+<Modal @close="toggleModal(); updateService()" :modalActive="modalActive">
+  <div class="modal-content p-3">
+    <h4 class="pb-4">Edit My Details:</h4>
 
-      <label>Username:</label>
-      <input class="form-control mb-2"
-        type="text"
-        id="username"
-        v-model="username"
-      />
+    <label>Username:</label>
+    <input class="form-control mb-2"
+      type="text"
+      id="username"
+      v-model="username"
+    />
 
-      <label>Profile Picture:</label>
-      <input type="file" @change = 'getPic' class="form-control mb-2" id="profilepicture">
+    <label>Profile Picture:</label>
+    <input type="file" @change = 'getPic' class="form-control mb-2" id="profilepicture">
 
-      <label>Description:</label>
-      <textarea class="form-control mb-2"
-        rows="4"
-        cols="10"
-        id="bio"
-        v-model="description"
-      ></textarea>
+    <label>Description:</label>
+    <textarea class="form-control mb-2"
+      rows="4"
+      cols="10"
+      id="bio"
+      v-model="description"
+    ></textarea>
 
-      <label>Phone Number:</label>
-      <input class="form-control mb-2"
-        type="text"
-        id="number"
-        v-model="mobile"
-      />
-      <label>Address:</label>
-      <textarea class="form-control mb-2"
-        rows="4"
-        cols="10"
-        id="address"
-        v-model="address"
-      ></textarea>
-    </div>
-  </Modal>
+    <label>Phone Number:</label>
+    <input class="form-control mb-2"
+      type="text"
+      id="number"
+      v-model="mobile"
+    />
+    <label>Address:</label>
+    <textarea class="form-control mb-2"
+      rows="4"
+      cols="10"
+      id="address"
+      v-model="address"
+    ></textarea>
+  </div>
+</Modal>
 
-  <Modal @close="toggleModal2(); addPet()" :modalActive="modalActive2">
+<Modal @close="toggleModal2(); addPet()" :modalActive="modalActive2">
     <div class="modal-content p-3">
       <h4 class="pb-4">Add a Pet:</h4>
 
@@ -262,6 +262,9 @@ img.rounded {
         v-model="age" 
         required
       />
+
+      <label>Pet Photo:</label>
+      <input type="file" @change = 'getPic' class="form-control mb-2" id="profilepicture">
 
       <label>Pet Description:</label>
       <textarea class="form-control mb-2"
@@ -329,7 +332,6 @@ export default {
       breed: '',
       age: 0,
       petDesc: '',
-      petPhoto: '',
       petType:'default',
 
 
@@ -426,7 +428,7 @@ export default {
             set(ref(db, `users/${user.uid}/pets/${this.petName}/type`), this.petType) 
             
             if (this.pic != ''){
-              set(ref(db, `users/${user.uid}/pets/${this.petName}/photo`), this.petPhoto) 
+              set(ref(db, `users/${user.uid}/pets/${this.petName}/photo`), this.pic) 
               this.pic = ''
             }else{
               set(ref(db, `users/${user.uid}/pets/${this.petName}/photo`), 'https://www.kibrispdr.org/data/84/dog-background-pictures-19.jpg') 

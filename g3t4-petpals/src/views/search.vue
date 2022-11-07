@@ -190,9 +190,10 @@ export default {
                             item.coords = snapst.val().coords // {lat: '', lng: ''}
 
                             // console.log(item,this.filterResults)
-                            
-                            this.filterResults.push(item) // sorted by service by default
-                            
+                            if (snapshot.val()[uid].price != ''){
+                                this.filterResults.push(item) // sorted by service by default                              
+                            }
+
                             // console.log(this.filterResults)
                         });
 

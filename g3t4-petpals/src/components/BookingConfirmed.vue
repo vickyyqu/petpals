@@ -164,9 +164,7 @@ export default {
                         'rating': Number(this.rating),
                         'review': this.userReview
                     })
-                    // set(ref(db, `users/${user.uid}/bookings/${this.otherid}/${this.service}/status`), 'cancelled')
-                    // set(ref(db, `users/${this.otherid}/bookings/${user.uid}/${this.service}/status`), 'cancelled')
-
+                    
                     this.calculateRatings()
                     this.reviewLeft = true
                     this.review = false

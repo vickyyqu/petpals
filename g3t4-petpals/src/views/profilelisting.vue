@@ -209,7 +209,6 @@ export default {
                             desc: this.description
                         })
                         
-                        this.services.push(this.service)
                         this.service = ''
                         this.description = ''
                         this.rate = 0
@@ -224,7 +223,9 @@ export default {
                 if (user) {
                     onValue(ref(db, `users/${user.uid}/services`), (snapshot) => {
                         for (let serv in snapshot.val()){
-                            this.services[serv] = true
+                            if (snapshot.val()[serv].price != ''){
+                                this.services[serv] = true
+                            }
                         }
                     }); 
                 }
