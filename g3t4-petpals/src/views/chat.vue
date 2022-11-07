@@ -75,11 +75,15 @@
                                 this.petOwner = false
                             }   
 
+                            var profilepic = snapshot.val().profilepic
+                                if (profilepic.length > 2048){
+                                    profilepic = 'https://cdn-icons-png.flaticon.com/512/2102/2102647.png'
+                                }
 
                             const me = new Talk.User({
                                 id: user.uid,
                                 name: snapshot.val().username,  
-                                photoUrl: snapshot.val().profilepic,
+                                photoUrl: profilepic,
                                 role: "default"
                             })
 
@@ -92,7 +96,6 @@
                                 var otherid = snapshot.val().chat
                                 onValue(ref(db, `users/${otherid}`), (snapsht) => {
                                     var photo = snapsht.val().profilepic
-                                    console.log(photo.length,photo)
                                     if (photo.length > 2048){
                                         photo = 'https://cdn-icons-png.flaticon.com/512/2102/2102647.png'
                                     }

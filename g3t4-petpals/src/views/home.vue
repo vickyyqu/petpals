@@ -150,7 +150,7 @@
                         </div>
 
                         <div class="login-btn">
-                            <button class="btn login-btn btn-select mt-3" v-on:click="userLogin()">Login</button>
+                            <button class="btn login-btn btn-select mt-3" @click="userLogin()">Login</button>
                         </div>
                         <hr class="my-5">
 
@@ -339,7 +339,6 @@
     
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-    const auth = getAuth();
     
     export default {
         data() {

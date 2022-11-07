@@ -209,11 +209,12 @@ export default {
                             price: this.rate,
                             desc: this.description
                         })
-                        this.toggleModal()
+                        
                         this.services.push(this.service)
                         this.service = ''
                         this.description = ''
                         this.rate = 0
+                        this.toggleModal()
                     }
                 }); 
             }
@@ -234,7 +235,7 @@ export default {
 
     mounted(){
         this.getServices()
-        console.log(this.services)
+        // console.log(this.services)
     },
 
     setup() {
