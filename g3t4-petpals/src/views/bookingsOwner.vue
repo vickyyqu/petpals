@@ -1,10 +1,5 @@
 <style>
 
-.required {
-    font-style: italic;
-    color: #dfd1cd;
-}
-
 .requests-made, .confirmed-bookings {
     background-color: white;
     border-radius: 20px;

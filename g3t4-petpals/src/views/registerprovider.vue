@@ -1,9 +1,3 @@
-<style>
-.required {
-    font-style: italic;
-    color: #dfd1cd;
-}
-</style>
 
 <template>
     <div class="container-fluid">

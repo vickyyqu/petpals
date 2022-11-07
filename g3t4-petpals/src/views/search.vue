@@ -1,9 +1,4 @@
 <style>
-.required {
-    font-style: italic;
-    color: #dfd1cd;
-}
-
 input[type=text] {
     height: 38px;
 }
@@ -35,6 +30,11 @@ input[type='radio']:checked{
 .bi-search-heart {
     color: #4b3830;
 }
+
+.required {
+    font-style: italic;
+    color: #856658;
+}
 </style>
 
 <template>
@@ -65,30 +65,10 @@ input[type='radio']:checked{
                 </div>
 
                 <div class="row my-3">
-                    <div class="col-lg-9">
-                        <span class="required me-2">Your Location:</span>
-                        <div class="input-group input-group-sm mb-3">
-                            <input type="text" class="form-control" aria-label="Small"
-                                aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                    </div>
+                    
+                    <myMap v-on:searchClick="filterServices()" ></myMap>
     
-                    <div class="col-lg-3">
-                        <span class="required me-2 ">Search Radius:</span>
-                        <select class="form-select mb-3" aria-label="Default select example">
-                            <option id="1" class="select-option">1km</option>
-                            <option id="3" class="select-option">3km</option>
-                            <option id="5" class="select-option">5km</option>
-                            <option id="10" class="select-option">10km</option>
-                            <option id="15" class="select-option">15km</option>
-                        </select>
-                    </div>
-    
-                    <div class="my-2">
-                        <myMap></myMap>
-                    </div>
-    
-                    <button class="btn btn-go mt-3" v-on:click="filterServices()">Go</button>
+                    <!-- <button class="btn btn-go mt-3" v-on:searchClick="filterServices()">Go</button> -->
     
                 </div>
     
@@ -170,6 +150,7 @@ export default {
             sortBy : '',
             orderBy : '',
             order: 'smth',
+            inputAddr: ''
         }
     },
     components: {
