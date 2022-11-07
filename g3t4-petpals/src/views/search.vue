@@ -160,10 +160,6 @@ export default {
         petpalsFooter
     },
 
-    mounted() {
-        this.filterServices()
-    }, 
-
     methods : {
         filterServices(){
             this.filterResults = [] //clear previous filter results
@@ -177,13 +173,10 @@ export default {
 
                 onValue(ref(db, `services/${service}`), (snapshot) => {
                     for (let uid in snapshot.val()){
-                        
-                        var item = {}
-                        var price = snapshot.val()[uid]
-                        
                         onValue(ref(db,`users/${uid}`), (snapst) => {
-                            item.rates = price
-                            item.desc = snapst.val().desc
+                            var item = {}
+                            item.rates = snapshot.val()[uid].price
+                            item.desc = snapshot.val()[uid].desc
                             item.yrsOfExp = snapst.val().yrsOfExp
                             item.name = snapst.val().username
                             item.img = snapst.val().profilepic 
@@ -193,13 +186,11 @@ export default {
                             item.service = service
                             item.oid = uid
 
-                            console.log(item,this.filterResults)
+                            // console.log(item,this.filterResults)
                             
-                            if (!this.filterResults.includes(item)){
-                                this.filterResults.push(item) // sorted by service by default
-                            }
-
-                            console.log(this.filterResults)
+                            this.filterResults.push(item) // sorted by service by default
+                            
+                            // console.log(this.filterResults)
                         });
 
                     }

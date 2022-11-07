@@ -42,7 +42,7 @@
 
             </div>
             <div class="card-body">
-                <h6 class="card-title">Bio:</h6>
+                <h6 class="card-title">Description:</h6>
                 <small class="card-text">{{desc}}</small>
             </div>
             <div class="card-footer">
@@ -143,8 +143,6 @@ export default {
     },
     props: ['title', 'desc', 'rates', 'location', 'img', 'ratings', 'yrsOfExp', 'name', 'service', 'oid'],
     methods: {
-
-        // only pet owners can do these
         sendRequest() {
             this.sent = false
             onAuthStateChanged(auth, (user) => {
@@ -174,21 +172,6 @@ export default {
             });
 
 
-        },
-
-        //remove this?
-        cancelRequest(){
-            this.sent = true
-            const currUser = auth.currentUser
-
-            set(ref(db,`users/${currUser.uid}/bookings/${this.oid}/${this.service}`), {
-                'price' : this.rates,
-                'status' : 'cancelled'
-            })
-            set(ref(db,`users/${this.oid}/bookings/${currUser.uid}/${this.service}`), {
-                'price' : this.rates,
-                'status' : 'cancelled'
-            })
         },
 
         getSent(){

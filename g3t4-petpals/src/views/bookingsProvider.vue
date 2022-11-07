@@ -49,9 +49,7 @@
     import navbarProvider from '@/components/navbarProvider.vue'
     import petpalsFooter from '@/components/petpalsFooter.vue'
     import request from '@/components/request.vue'
-
     import BookingConfirmed from '@/components/BookingConfirmed.vue'
-
     import { initializeApp } from "firebase/app";
     import { getDatabase, ref, onValue, set, update, get, push} from "firebase/database";
     import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -120,7 +118,7 @@
 
                                 onValue(ref(db, `users/${oid}`), (snapsht) => {
                                     name = snapsht.val().username;
-                                    desc = snapsht.val().desc;
+                                    desc = snapsht.val().bio;
                                     loc = snapsht.val().address;
                                     img = snapsht.val().profilepic;
                                     ratings = snapsht.val().ratings
@@ -134,7 +132,7 @@
                                             obj['service'] = service 
                                             obj['name'] = name
                                             obj['location'] = loc
-                                            obj['desc'] = desc 
+                                            obj['desc'] = desc
                                             obj['img'] = img
                                             obj['ratings'] = ratings
 
@@ -167,7 +165,7 @@
 
                                 onValue(ref(db, `users/${oid}`), (snapsht) => {
                                     name = snapsht.val().username;
-                                    desc = snapsht.val().desc;
+                                    desc = snapsht.val().bio;
                                     loc = snapsht.val().address;
                                     exp = snapsht.val().yrsOfExp;
                                     img = snapsht.val().profilepic;
@@ -216,7 +214,7 @@
 
                                 onValue(ref(db, `users/${oid}`), (snapsht) => {
                                     name = snapsht.val().username;
-                                    desc = snapsht.val().desc;
+                                    desc = snapsht.val().bio;
                                     loc = snapsht.val().address;
                                     exp = snapsht.val().yrsOfExp;
                                     img = snapsht.val().profilepic;

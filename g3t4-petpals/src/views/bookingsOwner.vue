@@ -19,8 +19,8 @@
                     <h3 class="my-2 text-center">Requests Made</h3>
                     <p v-if="!haveReq" class="my-5 text-center nil">No requests yet...</p>
 
-                    <request v-for='item in pendings' :otherid = 'item.otherid' :type = 'type' :service = 'item.service'  :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.address' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></request>
-                    <request v-for='item in reqs' :otherid = 'item.otherid' :type = 'type' :service = 'item.service'  :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.address' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></request>
+                    <request v-for='item in pendings' :otherid = 'item.otherid' :type = 'type' :service = 'item.service'  :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></request>
+                    <request v-for='item in reqs' :otherid = 'item.otherid' :type = 'type' :service = 'item.service'  :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></request>
                 </div>
             
             </div> 
@@ -31,7 +31,7 @@
                     <h3 class="my-2 text-center">Confirmed Bookings</h3>
                     <p v-if="!haveBookings" class="my-5 text-center nil">No bookings yet...</p>
 
-                    <BookingConfirmed v-for='item in bookings' :otherid = 'item.otherid' :type = 'type' :service = 'item.service' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.address' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed> 
+                    <BookingConfirmed v-for='item in bookings' :otherid = 'item.otherid' :type = 'type' :service = 'item.service' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed> 
 
                 </div>
             </div>
@@ -118,7 +118,7 @@
 
                                 onValue(ref(db, `users/${oid}`), (snapsht) => {
                                     name = snapsht.val().username;
-                                    desc = snapsht.val().desc;
+                                    desc = snapsht.val().services;
                                     loc = snapsht.val().address;
                                     exp = snapsht.val().yrsOfExp;
                                     img = snapsht.val().profilepic;
@@ -129,11 +129,12 @@
 
                                     onValue(ref(db, `users/${user.uid}/bookings/${oid}/${service}`), (snapsht) => {
                                         if (snapsht.val() != null && snapsht.val().status == 'confirmed'){
+                                            
                                             obj['rates'] = snapsht.val().price
                                             obj['service'] = service 
                                             obj['name'] = name
                                             obj['location'] = loc
-                                            obj['desc'] = desc 
+                                            obj['desc'] = desc[service].desc 
                                             obj['yrsOfExp'] = exp
                                             obj['img'] = img
                                             obj['ratings'] = ratings
@@ -167,7 +168,7 @@
 
                                 onValue(ref(db, `users/${oid}`), (snapsht) => {
                                     name = snapsht.val().username;
-                                    desc = snapsht.val().desc;
+                                    desc = snapsht.val().services;
                                     loc = snapsht.val().address;
                                     exp = snapsht.val().yrsOfExp;
                                     img = snapsht.val().profilepic;
@@ -182,7 +183,7 @@
                                             obj['service'] = service 
                                             obj['name'] = name
                                             obj['location'] = loc
-                                            obj['desc'] = desc 
+                                            obj['desc'] = desc[service].desc 
                                             obj['yrsOfExp'] = exp
                                             obj['img'] = img
                                             obj['ratings'] = ratings
@@ -216,7 +217,7 @@
 
                                 onValue(ref(db, `users/${oid}`), (snapsht) => {
                                     name = snapsht.val().username;
-                                    desc = snapsht.val().desc;
+                                    desc = snapsht.val().services;
                                     loc = snapsht.val().address;
                                     exp = snapsht.val().yrsOfExp;
                                     img = snapsht.val().profilepic;
@@ -231,7 +232,7 @@
                                             obj['service'] = service 
                                             obj['name'] = name
                                             obj['location'] = loc
-                                            obj['desc'] = desc 
+                                            obj['desc'] = desc[service].desc 
                                             obj['yrsOfExp'] = exp
                                             obj['img'] = img
                                             obj['ratings'] = ratings

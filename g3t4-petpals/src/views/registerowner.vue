@@ -50,20 +50,23 @@
                     </div>
 
 
-                    <div class="row mt-2"> <!-- username nickname and nickname -->
+                    <div class="row mt-2"> <!-- username and photo-->
                         <div class="col-md-6">
                             <label for="inputUsername">Username</label>
-                            <p class="form-text">This is how we can uniquely identify you!</p>
                             <input type="text" v-model='username' class="form-control w-100" id="inputUsername" placeholder="" required>
                         </div>
-                    </div>
-                    <div class="row mt-2"> <!-- profile picture -->
-                        <div class="col">
+
+                        <div class="col-md-6">
                             <label for="profilePicture">Profile Picture</label>
-                        <input type="file" @change = 'getPic' class="form-control-file w-100" id="profilePicture" required>
+                            <input type="file" @change = 'getPic' class="form-control w-100" id="profilePicture" required>
                         </div>
-                        
                     </div>
+
+                    <div class="row mt-2"><!-- profile desc-->
+                        <label for="inputDesc">Tell us more about yourself!</label> 
+                        <textarea class="form-control" v-model='desc' id="inputDesc" rows="5"></textarea>
+                    </div>
+
                     <div class="row mt-2"> <!-- address -->
                         <div class="col">
                             <label for="inputAddress">Address</label>
@@ -135,6 +138,7 @@
                 address : '',
                 username : '',
                 mobile : '',
+                desc: '',
                 pic : 'https://cdn-icons-png.flaticon.com/512/2102/2102647.png',
             }
         },
@@ -172,6 +176,7 @@ methods : {
                     profilepic : this.pic,
                     mobile: this.mobile,
                     type: 'Pet Owner',
+                    bio: this.desc,
                     address: this.address,
                     postalcode : this.postal,
                     ratings : 0, //by default
