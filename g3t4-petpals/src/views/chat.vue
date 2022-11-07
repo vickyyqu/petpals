@@ -7,18 +7,18 @@
 
 <template>
     
-    <div class = 'container-fluid chat sides'>
+<div class = 'container-fluid chat sides'>
 
-        <navbar v-if="petOwner"></navbar>
-        <navbarProvider v-else ></navbarProvider>
+    <navbar v-if="petOwner"></navbar>
+    <navbarProvider v-else ></navbarProvider>
 
-        <div ref="talkjs" style="width: 100%; height: 600px; position: absolute;" class = 'my-5 py-5'> 
-            <i class="m-5" style="color: #4b3830; font-family: 'Figtree';">Loading chat...</i>
-        </div>
-
-        <petpalsFooter></petpalsFooter>
-
+    <div ref="talkjs" style="width: 100%; height: 600px; position: absolute;" class = 'my-5 py-5'> 
+        <i class="m-5" style="color: #4b3830; font-family: 'Figtree';">Loading chat...</i>
     </div>
+
+    <petpalsFooter></petpalsFooter>
+
+</div>
 
 </template>
 

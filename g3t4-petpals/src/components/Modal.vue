@@ -22,23 +22,24 @@
 </style>
 
 <template>
-  <transition name="modal-animation">
-    <div v-show="modalActive" class="modal">
-      <transition name="modal-animation-inner">
-        <div v-show="modalActive" class="modal-inner">
-          <i @click="close" class="far fa-times-circle"></i>
-          <!-- Modal Content -->
-          <slot></slot>
-          <button @click="close" class="btn btn-go" style="width: 50%; margin-left: 25%; margin-top: 20px;">Done</button>
-        </div>
-      </transition>
-    </div>
-  </transition>
+<transition name="modal-animation">
+  <div v-show="modalActive" class="modal">
+    <transition name="modal-animation-inner">
+      <div v-show="modalActive" class="modal-inner">
+        <i @click="close" class="far fa-times-circle"></i>
+        <!-- Modal Content -->
+        <slot></slot>
+        <button @click="close" class="btn btn-go" style="width: 50%; margin-left: 25%; margin-top: 20px;">Done</button>
+      </div>
+    </transition>
+  </div>
+</transition>
 </template>
 
 <script>
 export default {
   props: ["modalActive"],
+  
   setup(props, { emit }) {
     const close = () => {
       emit("close");

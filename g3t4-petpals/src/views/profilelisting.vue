@@ -39,7 +39,6 @@ input[type='checkbox']:checked{
 </style>
 
 <template>
-
 <div class="container-fluid">
     <navbarProvider></navbarProvider>
 
