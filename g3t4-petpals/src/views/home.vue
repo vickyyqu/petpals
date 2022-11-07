@@ -1,4 +1,3 @@
-
 <style>
 
 .fade-in-text {
@@ -317,7 +316,7 @@
     </div>
     
 </template>
- 
+
 
 <script>
     import services from '@/components/services.vue'

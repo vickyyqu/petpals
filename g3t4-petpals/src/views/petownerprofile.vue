@@ -63,7 +63,7 @@ img.rounded {
         <div class="row">
           <div class="d-flex justify-content-end">
             <button @click="toggleModal" class="btn btn-select me-2 mt-3">
-            <i class="bi bi-pencil-square"></i>
+              <i class="bi bi-pencil-square"></i>
             </button>
           </div>
 
@@ -75,13 +75,17 @@ img.rounded {
             <h2 class="mt-3" style="letter-spacing: 2px;">
               Hello
             </h2>
+
             <h3 class="username" style="color: #F8AA9D;">{{ username }}</h3>
+
             <small class="mt-4">Pet Owner
               <img
                 src="../img/animallogo/pawicon.png"
                 style="width: auto; height: auto"
-            /></small>
+              />
+            </small>
           </div>
+
           <br />
           <hr />
 
@@ -114,6 +118,7 @@ img.rounded {
               <p style="white-space: pre-line">{{ address }}</p>
             </div>
           </div>
+
         </div>
 
         <br />
@@ -125,6 +130,7 @@ img.rounded {
           <span>
             <button class="btn btn-select mt-3 me-2 float-end" @click="toggleModal2();"><i class="bi bi-pencil-square"></i></button>
           </span>
+
           <h3 class="mb-3">
             <img
               src="../img/animallogo/doglogo3.png"
@@ -159,10 +165,13 @@ img.rounded {
             "
           >
             <h3>My Reviews</h3>
+
           </div>
+
           <div class="row" style="padding: 15px 20px">
             <reviewCard v-for="rev in reviews" :reviewer="rev.username" :service = 'rev.service' :review="rev.review" :rating="rev.rating"></reviewCard>
           </div>
+
         </div>
       </div>
     </div>
@@ -277,7 +286,7 @@ import { ref as modalref } from "vue";
 import petpalsFooter from "../components/petpalsFooter.vue";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
-import { getDatabase, ref, set, get, onValue} from "firebase/database";
+import { getDatabase, ref, set, onValue} from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
@@ -295,15 +304,7 @@ const auth = getAuth();
 
 export default {
   name: "profile",
-  components: {
-    navbar,
-    reviewCard,
-    VueperSlides,
-    VueperSlide,
-    reviewCard,
-    Modal,
-    petpalsFooter,
-  },
+
   data() {
     return {
       username: '',
@@ -315,10 +316,11 @@ export default {
       reviews: [],
       services: [],
       pets: [
-        {petname: 'coral',
-        age: 13,
-        breed: 'corgi',
-        type: 'dog',
+        {petname: 'Pet Name',
+        age: 'age',
+        breed: 'breed',
+        desc: 'description',
+        type: 'type',
         photo: 'https://www.kibrispdr.org/data/84/dog-background-pictures-19.jpg'}
       ],
       pic: '',
@@ -333,6 +335,16 @@ export default {
 
     };
   },
+
+  components: {
+    navbar,
+    reviewCard,
+    VueperSlides,
+    VueperSlide,
+    reviewCard,
+    Modal,
+    petpalsFooter,
+  },  
 
   methods: {
     getProfile(){
@@ -359,11 +371,9 @@ export default {
         reader.readAsDataURL(files[0])
         reader.onload = () => (this.pic = reader.result)
 
-        // console.log(this.pic)
     },
 
     updateProfile(){
-      console.log('bye')
       onAuthStateChanged(auth, (user) => {
         if (user) {
           updateProfile(user, { displayName: this.username })
@@ -395,6 +405,7 @@ export default {
               obj['type'] = snapshot.val()[pet].type
               obj['breed'] = snapshot.val()[pet].breed
               obj['photo'] = snapshot.val()[pet].photo
+              obj['desc'] = snapshot.val()[pet].desc
 
               this.pets.push(obj)
             }
@@ -458,11 +469,12 @@ export default {
     },
 
   },
-mounted() {
-  this.getProfile()
-  this.getReviews()
-  this.getPets()
-},
+  
+  mounted() {
+    this.getProfile()
+    this.getReviews()
+    this.getPets()
+  },
 
   setup() {
     const modalActive = modalref(false);

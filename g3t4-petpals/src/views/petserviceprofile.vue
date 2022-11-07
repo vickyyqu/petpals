@@ -97,7 +97,6 @@ img.rounded {
 <template>
   <div class="container-fluid profile-page">
     <navbarProvider></navbarProvider>
-    
     <div class="row p-3">
 
       <!--Left column-->
@@ -144,6 +143,10 @@ img.rounded {
                         <i v-if='!Number.isInteger(ratings)' class="bi bi-star-half"></i>
                         <i v-for='m in parseInt(5-ratings)' class="bi bi-star"></i>
                 </div>
+            </div>
+
+            <div class="number mt-3">
+              <h4 class="mb-3">Years of Experience: {{yrsOfExp}}</h4>
             </div>
 
             <div class="email mt-3">
@@ -196,71 +199,86 @@ img.rounded {
       </div>
     </div>
   </div>
-  <petpalsFooter></petpalsFooter>
+<petpalsFooter></petpalsFooter>
 
-  <!--Edit Profile page-->
-  <Modal @close="toggleModal(); updateProfile()" :modalActive="modalActive">
-    <div class="modal-content p-3">
-      <h4 class="pb-4">Edit My Details:</h4>
+<!--Edit Profile page-->
+<Modal @close="toggleModal(); updateProfile()" :modalActive="modalActive">
+  <div class="modal-content p-3">
+    <h4 class="pb-4">Edit My Details:</h4>
 
-      <label>Username:</label>
-      <input class="form-control mb-2"
-        type="text"
-        id="username"
-        v-model="username"
-      />
+    <label>Username:</label>
+    <input class="form-control mb-2"
+      type="text"
+      id="username"
+      v-model="username"
+    />
 
-      <label>Profile Picture:</label>
-      <input type="file" @change = 'getPic' class="form-control mb-2" id="profilepicture">
+    <label>Profile Picture:</label>
+    <input type="file" @change = 'getPic' class="form-control mb-2" id="profilepicture">
 
-      <label>Description:</label>
-      <textarea class="form-control mb-2"
-        rows="4"
-        cols="10"
-        id="bio"
-        v-model="description"
-      ></textarea>
+    <label>Years of Experience:</label>
+    <input class="form-control mb-2"
+      type="text"
+      id="number"
+      v-model="yrsOfExp"
+    />
 
-      <label>Phone Number:</label>
-      <input class="form-control mb-2"
-        type="text"
-        id="number"
-        v-model="mobile"
-      />
-      <label>Address:</label>
-      <textarea class="form-control mb-2"
-        rows="4"
-        cols="10"
-        id="address"
-        v-model="address"
-      ></textarea>
-    </div>
-  </Modal>
+    <label>Description:</label>
+    <textarea class="form-control mb-2"
+      rows="4"
+      cols="10"
+      id="bio"
+      v-model="description"
+    ></textarea>
 
-  <!--Edit Services page-->
-  <Modal @close="toggleModal2(); updateService()" :modalActive="modalActive2">
-    <div class="modal-content p-3">
-      <h4 class="pb-4">Edit My Service:</h4>
+    <label>Phone Number:</label>
+    <input class="form-control mb-2"
+      type="text"
+      id="number"
+      v-model="mobile"
+    />
 
-      <label>Price: </label>
-      <input class="form-control mb-2"
-        type="number"
-        min="0"
-        max="1000"
-        id="price"
-        v-model="price"
-      />
+    <label>Address:</label>
+    <textarea class="form-control mb-2"
+      rows="4"
+      cols="10"
+      id="address"
+      v-model="address"
+    ></textarea>
 
-      <label>Service Description:</label>
-      <textarea class="form-control mb-2"
-        rows="4"
-        cols="10"
-        id="bio"
-        placeholder="Describe your service!"
-        v-model="serviceDesc"
-      ></textarea>
-    </div>
-  </Modal>
+    <label>Postal Code:</label>
+    <input class="form-control mb-2"
+      type="text"
+      id="postal"
+      v-model="postal"
+    />
+  </div>
+</Modal>
+
+<!--Edit Services page-->
+<Modal @close="toggleModal2(); updateService()" :modalActive="modalActive2">
+  <div class="modal-content p-3">
+    <h4 class="pb-4">Edit My Service:</h4>
+
+    <label>Price: </label>
+    <input class="form-control mb-2"
+      type="number"
+      min="0"
+      max="1000"
+      id="price"
+      v-model="price"
+    />
+
+    <label>Service Description:</label>
+    <textarea class="form-control mb-2"
+      rows="4"
+      cols="10"
+      id="bio"
+      placeholder="Describe your service!"
+      v-model="serviceDesc"
+    ></textarea>
+  </div>
+</Modal>
 </template>
 
 <script>
@@ -273,7 +291,7 @@ import petpalsFooter from "@/components/petpalsFooter.vue";
 import serviceCard from '../components/serviceCard.vue';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
-import { getDatabase, ref, set, get, onValue} from "firebase/database";
+import { getDatabase, ref, set, onValue} from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
@@ -291,15 +309,7 @@ const auth = getAuth();
 
 export default {
   name: "profile",
-  components: {
-    navbarProvider,
-    reviewCard,
-    serviceCard,
-    VueperSlides,
-    VueperSlide,
-    Modal,
-    petpalsFooter,
-  },
+
   data() {
     return {
       username: '',
@@ -312,12 +322,24 @@ export default {
       services: [],
       pic: '',
       ratings: 0,
+      postal: '',
+      yrsOfExp: 0,
 
       price: 0,
       serviceDesc: '',
       service: '',
 
     };
+  },
+
+  components: {
+    navbarProvider,
+    reviewCard,
+    serviceCard,
+    VueperSlides,
+    VueperSlide,
+    Modal,
+    petpalsFooter,
   },
 
   methods: {
@@ -350,7 +372,6 @@ export default {
         reader.readAsDataURL(files[0])
         reader.onload = () => (this.pic = reader.result)
 
-        // console.log(this.pic)
     },
 
     getProfile(){
@@ -364,6 +385,8 @@ export default {
               this.description = snapshot.val().desc
               this.email = user.email
               this.ratings = snapshot.val().ratings
+              this.postal = snapshot.val().postalcode
+              this.yrsOfExp = snapshot.val().yrsOfExp
           }); 
         }
       });
@@ -377,6 +400,8 @@ export default {
           set(ref(db, `users/${user.uid}/mobile`), this.mobile) 
           set(ref(db, `users/${user.uid}/address`), this.address) 
           set(ref(db, `users/${user.uid}/desc`), this.description) 
+          set(ref(db, `users/${user.uid}/postalcode`), this.postal) 
+          set(ref(db, `users/${user.uid}/yrsOfExp`), this.yrsOfExp) 
 
           if (this.pic != ''){
             set(ref(db, `users/${user.uid}/profilepic`), this.pic) 
