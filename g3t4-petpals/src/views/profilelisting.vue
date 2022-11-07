@@ -49,7 +49,7 @@ input[type='checkbox']:checked{
         <div class="col-1"></div>
 
         <div class="col-8 pt-5 text-center">
-            <h3 class="text-center mt-4 mb-2 pb-3">Add a Pet Service Listing</h3>
+            <h3 class="text-center mt-4 pb-5">Add a Pet Service Listing</h3>
 
             <div class="row">
                 <div class="col-sm-4 form-check d-flex align-items-start justify-content-center">
@@ -108,18 +108,20 @@ input[type='checkbox']:checked{
 
             </div>
 
+            <div class="mx-5">
+    
             <h4 class="mt-3">Service Description:</h4>
-            <textarea class="form-control mt-2 w-75 mx-auto" id="description" rows="4" cols="50"
+            <textarea class="form-control mt-2 mx-auto" id="description" rows="4" cols="50" maxlength=300
                 placeholder="Provide us with an overview of the service you offer." v-model="description" required></textarea>
+            <small class="d-block text-end">{{countDesc}}/300</small>
+
+            </div>
 
             <label for="rate"><h4 class="mt-3">Your Hourly Rate (SGD):</h4></label>
-
-            <div class="row w-75 mx-auto d-flex align-items-end">
-
-                <div class="col-md-6 mt-3 mx-auto">
-                    <input type="number" class="form-control" min="0" max="1000" v-model="rate" required >
+            <div class="row mx-auto d-flex align-items-end">
+                <div class="col-md-6 mt-2 mx-auto">
+                    <input type="number" class="form-control w-75 mx-auto" min="0" max="1000" v-model="rate" required >
                 </div>
-
             </div>
 
             <div class="container py-5" style="text-align: center;"><button v-on:click = 'addService'
@@ -191,7 +193,11 @@ export default {
         petpalsFooter, 
         petpalsFooter
     },
-
+    computed: {
+        countDesc(){
+            return this.description.length
+        }
+    },
     methods : {
         addService(){
             if (this.service == '' || this.description == '' || this.rate == 0){

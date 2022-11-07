@@ -13,13 +13,13 @@
 }
 
 .profile-leftbox {
-  border-radius: 50px;
+  border-radius: 40px;
   background-color: #fddcd74d;
   box-shadow: 0 0 10px 0 #cec2c233;
 }
 
 .profile-rightbox {
-  border-radius: 50px;
+  border-radius: 40px;
   background-color: white;
   box-shadow: 0 0 10px 0 #cec2c233;
 }
@@ -95,9 +95,9 @@ img.rounded {
 </style>
 
 <template>
-<div class="container-fluid profile-page">
+<div class="container-fluid profile-page pb-5">
   <navbarProvider></navbarProvider>
-  <div class="row p-3">
+  <div class="row p-4">
 
     <!--Left column-->
     <div class="col-md-4 profile-leftbox">
@@ -112,57 +112,39 @@ img.rounded {
           <img v-bind:src="photoURL" class="rounded rounded-circle" />
         </div>
 
-        <div class="row">
-          <h2 class="mt-3">
-            Hello
-            <div class="username" style="color: #F8AA9D;">{{ username }}</div>
-          </h2>
-          <small class="mt-2"
-            >Pet Service Provider
-            <img
-              src="../img/animallogo/pawiconwhite.png"
-              style="width: auto; height: auto"
-          /></small>
+        <div class="row text-center">
+          <h3 class="mt-3 mb-1" style="letter-spacing: 3px;color: #dfd1cd;">hello,</h3>
+          <h3 class="username">{{ username }}</h3>
+          <p class="my-4" style="font-style:italic">Pet Service Provider</p>
         </div>
-        <br />
-        <hr />
 
-        <div class="row mt-4">
-          <div class="bio">
-            <h4 class="mb-3">Bio</h4>
-            <p style="white-space: pre-line;
-                padding-left: 60px;
-                padding-right: 60px;
-              ">{{ description }}</p>
-          </div>
+        <hr class="w-75">
 
-          <div class="email mt-3">
-            <h4 class="mb-3">Ratings</h4>
-              <div class="ratings">
+        <div class="row my-4 px-4 text-start">
+
+            <h4>Bio</h4>
+            <p class="mb-3 mt-1">{{ description }}</p>
+
+            <h4>Ratings</h4>
+              <div class="ratings mb-3 mt-1">
                       <i v-for="n in parseInt(ratings)" class="bi bi-star-fill"></i>
                       <i v-if='!Number.isInteger(ratings)' class="bi bi-star-half"></i>
                       <i v-for='m in parseInt(5-ratings)' class="bi bi-star"></i>
               </div>
-          </div>
+      
 
-          <div class="number mt-3">
-            <h4 class="mb-3">Years of Experience: {{yrsOfExp}}</h4>
-          </div>
+            <h4>Years of Experience</h4>
+            <p class="mb-3 mt-1">{{yrsOfExp}} years</p>
+      
+            <h4>Email</h4>
+            <p class="mb-3 mt-1">{{ email }}</p>
 
-          <div class="email mt-3">
-            <h4 class="mb-3">Email</h4>
-            <p>{{ email }}</p>
-          </div>
+            <h4>Mobile Number</h4>
+            <p class="mb-3 mt-1">{{ mobile }}</p>
+      
+            <h4>Address</h4>
+            <p class="mb-3 mt-1">{{ address }}</p>
 
-          <div class="number mt-3">
-            <h4 class="mb-3">Mobile Number</h4>
-            <p>{{ mobile }}</p>
-          </div>
-
-          <div class="address mt-3">
-            <h4 class="mb-3">Address</h4>
-            <p>{{ address }}</p>
-          </div>
         </div>
       </div>
 
@@ -171,7 +153,7 @@ img.rounded {
     
     <!--Right column-->
     <div class="col-md-8 profile-rightbox">
-      <div class="row mt-3">
+      <div class="row mt-5">
             <!-- Tab links -->
             <div class="tab">
                 <h3>
@@ -179,25 +161,64 @@ img.rounded {
                   <button class="tablinks" @click="openTab(event, 'Reviews')">My Reviews</button>
                 </h3>
 
-            </div>
                   
               <!-- Tab content -->
               <div id="Services" class="tabcontent active" style="display:block">
                 <div class = 'd-flex flex-wrap justify-content-around'>
                   <serviceCard v-for="serv of services" :service="Object.keys(serv)[0]" v-on:edit='toggleModal2(); service=Object.keys(serv)[0]; price=serv[Object.keys(serv)[0]].price; serviceDesc=serv[Object.keys(serv)[0]].desc' :price="serv[Object.keys(serv)[0]].price" :desc="serv[Object.keys(serv)[0]].desc"></serviceCard>
                 </div>
+
+                <div v-if="noServices" class="my-5">
+                  <h4>No services to show yet...</h4>
+                </div>
                   
               </div>
               
               <div id="Reviews" class="tabcontent">
-                <div class="row">
+                <div class="row p-3">
                   <reviewCard v-for="rev in reviews" :reviewer="rev.username" :service = 'rev.service' :review="rev.review" :rating="rev.rating"></reviewCard>
+                </div>
+
+                <div v-if="noReviews" class="my-5">
+                  <h4>No reviews to show yet...</h4>
                 </div>
               </div>
               
           </div>
     </div>
+
+    <br />
+    </div>
+  
+  <!--Right column-->
+  <div class="col-md-8 profile-rightbox">
+    <div class="row mt-3">
+          <!-- Tab links -->
+          <div class="tab">
+              <h3>
+                <button class="tablinks" @click="openTab(event, 'Services')">My Services</button>
+                <button class="tablinks" @click="openTab(event, 'Reviews')">My Reviews</button>
+              </h3>
+
+          </div>
+                
+            <!-- Tab content -->
+            <div id="Services" class="tabcontent active" style="display:block">
+              <div class = 'd-flex flex-wrap justify-content-around'>
+                <serviceCard v-for="serv of services" :service="Object.keys(serv)[0]" v-on:edit='toggleModal2(); service=Object.keys(serv)[0]; price=serv[Object.keys(serv)[0]].price; serviceDesc=serv[Object.keys(serv)[0]].desc' :price="serv[Object.keys(serv)[0]].price" :desc="serv[Object.keys(serv)[0]].desc"></serviceCard>
+              </div>
+                
+            </div>
+            
+            <div id="Reviews" class="tabcontent">
+              <div class="row">
+                <reviewCard v-for="rev in reviews" :reviewer="rev.username" :service = 'rev.service' :review="rev.review" :rating="rev.rating"></reviewCard>
+              </div>
+            </div>
+            
+        </div>
   </div>
+</div>
 </div>
 <petpalsFooter></petpalsFooter>
 
@@ -331,6 +352,10 @@ export default {
       serviceDesc: '',
       service: '',
 
+      noServices: true,
+      noReviews: true,
+      invalidAddr: false,
+
     };
   },
 
@@ -395,6 +420,50 @@ export default {
     },
 
     updateProfile(){
+
+      // update lat, lng, region
+      axios.get("https://maps.googleapis.com/maps/api/geocode/json?", {
+        params: {
+          address: this.address,
+          key: "AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw"
+        }
+      })
+        .then(response => {
+          if (response.data.results.length > 0) {
+
+            this.invalidAddr = false
+
+            // save in database
+            var lat = response.data.results[0].geometry.location.lat
+            var lng = response.data.results[0].geometry.location.lng
+
+            console.log(lat)
+            console.log(lng)
+
+            // save in database
+            var region = ""
+
+            console.log(response.data.results[0].address_components)
+            for (let i = 0; i < response.data.results[0].address_components.length; i++) {
+              let each = response.data.results[0].address_components[i]
+              if (each.types.includes('neighborhood')) {
+                region = each.long_name
+              }
+            }
+            console.log(region)
+
+          } else {
+            this.invalidAddr = true
+          }
+
+        })
+        .catch(error => {
+
+          console.log(error.message)
+          this.invalidAddr = true
+
+      })
+
       onAuthStateChanged(auth, (user) => {
         if (user) {
           updateProfile(user, { displayName: this.username })
@@ -440,7 +509,9 @@ export default {
 
               if (snapshot.val()[serv].price != ''){
                 this.services.push(obj)
+                this.noServices = false
               }
+              
             }
           }); 
         }
@@ -487,6 +558,7 @@ export default {
                     obj['review'] = snapst.val()[serv].review
                     obj['rating'] = snapst.val()[serv].rating
                     this.reviews.push(obj)
+                    this.noReviews = false
                   }
                   
                 });

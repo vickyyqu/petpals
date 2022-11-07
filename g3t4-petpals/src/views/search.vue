@@ -35,6 +35,7 @@ input[type='radio']:checked{
     font-style: italic;
     color: #856658;
 }
+
 </style>
 
 <template>
@@ -46,67 +47,70 @@ input[type='radio']:checked{
             <div class="col-1 sides">
             </div>
 
-            <div class="col-10 search-providers px-5">
+            <div class="col-10">
                 <img src="../img/header.jpeg" class="w-100 mt-5 pt-3 rounded-3" alt="">
+                <div class="search-providers px-5">
 
-                <h3 class="search-provider mt-4"><i class="bi bi-search-heart"></i> Search Providers</h3>
+                
+                    <h3 class="search-provider mt-4"><i class="bi bi-search-heart"></i> Search Providers</h3>
 
-                <div class="required-services mt-3">
-                    <span class="required me-2">Required Services:</span>
+                    <div class="required-services mt-3">
+                        <span class="required">Required Services:</span>
 
-                    <br>
+                        <br>
 
-                    <div v-for="service of services" class="form-check-inline py-1" >
-                        <input class="form-check-input" type="checkbox" v-bind:value="service" v-model="checkedServices">
-                        <label class="form-check-label ps-2">
-                            {{ service }}
-                        </label>
-                    </div>
-                </div>
-
-                <div class="row my-3">
-                    
-                    <myMap v-on:searchClick="filterServices()" ></myMap>
-    
-                    <!-- <button class="btn btn-go mt-3" v-on:searchClick="filterServices()">Go</button> -->
-    
-                </div>
-    
-                <div class="row">
-                    <div class="col-lg-8">
-                        <h3 class="my-4">Best Matches Near You:</h3>
-                    </div>
-                    <div class="col-lg-2 col-8">
-                        <span class="required">Sort by:</span>
-                        <select class="form-select" aria-label="Default select example" v-model="sortBy">
-                            <option id="reviews" value = 'ratings'>Ratings</option>
-                            <option id="yearsOfExperience" class="select-option" value = 'yrsOfExp'>Years of experience</option>
-                            <option id="rates" class="select-option" value = 'rates'>Rates</option>
-                        </select>
-                    </div>
-                    <div class="col-lg-2 col-4 mt-3">
-                        <div class="form-check">
-                            <input class="form-check-input" v-model='orderBy' v-bind:value = '"desc"' type="radio" name="sortprofiles" id="highToLow">
-                            <label class="form-check-label" for="highToLow">
-                              From High to Low
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" v-model='orderBy' v-bind:value = '"asc"'  type="radio" name="sortprofiles" id="lowToHigh">
-                            <label class="form-check-label" for="lowToHigh">
-                                From Low to High
+                        <div v-for="service of services" class="form-check-inline py-1" >
+                            <input class="form-check-input" type="checkbox" v-bind:value="service" v-model="checkedServices">
+                            <label class="form-check-label ps-2">
+                                {{ service }}
                             </label>
                         </div>
                     </div>
-                </div>
-    
-                <div id = 'profileCards' class="row pb-5">
-                    <profileCard v-for="result in filterResults" v-bind:oid = 'result.oid' v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service'></profileCard>
+
+                    <div class="row my-3">
+                        
+                        <myMap v-on:searchClick="filterServices"></myMap>
+
+                    </div>
+        
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3 class="my-4">Best Matches Near You:</h3>
+                        </div>
+                        <div class="col-lg-2 col-8">
+                            <span class="required">Sort by:</span>
+                            <select class="form-select" aria-label="Default select example" v-model="sortBy">
+                                <option id="reviews" value = 'ratings'>Ratings</option>
+                                <option id="yearsOfExperience" class="select-option" value = 'yrsOfExp'>Years of experience</option>
+                                <option id="rates" class="select-option" value = 'rates'>Rates</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 col-4 mt-3">
+                            <div class="form-check">
+                                <input class="form-check-input" v-model='orderBy' v-bind:value = '"desc"' type="radio" name="sortprofiles" id="highToLow">
+                                <label class="form-check-label" for="highToLow">
+                                From High to Low
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" v-model='orderBy' v-bind:value = '"asc"'  type="radio" name="sortprofiles" id="lowToHigh">
+                                <label class="form-check-label" for="lowToHigh">
+                                    From Low to High
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div id = 'profileCards' class="row pb-5">
+                        <profileCard v-for="result in filterResults" v-bind:oid = 'result.oid' v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service'></profileCard>
+
+                        <div v-if="noMatch">
+                            <h4 class="text-center m-5 p-4" style="background-color:#f8f1ef;border-radius:20px;">No search results yet...</h4>
+                        </div>
+                    </div>
                 </div>
 
             </div>
-
-            
 
             <div class="col-1 sides">
             </div>
@@ -150,9 +154,11 @@ export default {
             sortBy : '',
             orderBy : '',
             order: 'smth',
-            inputAddr: ''
+            inputAddr: '',
+            noMatch: true,
         }
     },
+    
     components: {
         navbar,
         myMap,
@@ -161,7 +167,12 @@ export default {
     },
 
     methods : {
-        filterServices(){
+        filterServices(out){
+            // out contains property rad -> search radius input + coord -> input location lat and lng
+            console.log(out)
+            var coord2 = [1.3785067, 103.7632074] //random coord to check
+            console.log(this.getSearchRad(out, coord2)) //return true if service provider is within search radius
+
             this.filterResults = [] //clear previous filter results
 
             if (this.checkedServices.includes('All')){
@@ -170,6 +181,7 @@ export default {
 
             for (let key in this.checkedServices){
                 var service = this.checkedServices[key]
+                this.noMatch = false //have matching listings
 
                 onValue(ref(db, `services/${service}`), (snapshot) => {
                     for (let uid in snapshot.val()){
@@ -222,7 +234,19 @@ export default {
             }
         },
 
+        getSearchRad(out, coord2){
+            var coord1 = out.coord
+            var radius = out.rad
+            const km = 111.3
 
+            var dist = Math.sqrt((km*coord1[0] - km*coord2[0])**2 + (km*coord1[1] - km*coord2[1])**2)
+            
+            if (dist <= radius){
+                return true
+            } else {
+                return false
+            }
+        }
     },
 
 }
