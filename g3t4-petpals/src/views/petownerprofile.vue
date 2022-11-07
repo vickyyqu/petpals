@@ -65,9 +65,11 @@ img.rounded {
   <div class="row p-4">
     <div class="col-md-4 profile-leftbox">
       <div class="row">
-        <h2 class="mt-3" style="letter-spacing: 2px;">
-          Hello
-        </h2>
+        <div class="d-flex justify-content-end">
+          <button @click="toggleModal" class="btn btn-select me-2 mt-3">
+            <i class="bi bi-pencil-square"></i>
+          </button>
+        </div>
 
         <div class="row-image">
           <img v-bind:src="photoURL" class="rounded rounded-circle" />
@@ -97,12 +99,6 @@ img.rounded {
           <p class="mb-3 mt-1">{{ address }}</p>
         </div>
 
-        <small class="mt-4">Pet Owner
-          <img
-            src="../img/animallogo/pawicon.png"
-            style="width: auto; height: auto"
-          />
-        </small>
       </div>
     </div>
 
