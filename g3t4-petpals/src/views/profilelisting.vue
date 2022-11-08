@@ -192,6 +192,7 @@ export default {
         petpalsFooter, 
         petpalsFooter
     },
+    
     computed: {
         countDesc(){
             return this.description.length

@@ -145,9 +145,12 @@
                         <small style="font-style:italic; color:brown">{{errorMsg}}</small>
                     </div>
 
+                    <button v-if='verified' class="btn login-btn btn-select mt-3 p-1 mx-auto px-2" @click="sendEmail">Resend email verification</button>
+                    
                     <div class="login-btn">
                         <button class="btn login-btn btn-select mt-3" @click="userLogin">Login</button>
                     </div>
+
                     <hr class="my-5">
 
                     <div class="text-center">
@@ -318,7 +321,7 @@
 import services from '@/components/services.vue'
 import petpalsFooter from '@/components/petpalsFooter.vue'
 import VueWriter from "vue-writer";
-import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged, sendEmailVerification} from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue } from "firebase/database";
 
@@ -350,6 +353,7 @@ export default {
             emailSent: false,
             email: '',
             pwd: '',
+            verified: false,
             arr:  ["BRINGING THE BEST PET SERVICE PROVIDERS TO YOU", "CONNECTING YOU TO PET LOVERS, JUST LIKE YOU"]
         }
     },
@@ -367,13 +371,20 @@ export default {
             .then((userCredential) => {
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
-                        onValue(ref(db, `users/${user.uid}/type`), (snapshot) => {
-                            if (snapshot.val() == 'Pet Owner'){
-                                window.location.href = `/search`;
-                            }else{
-                                window.location.href = `/bookingsProvider`;
-                            }   
-                        }); 
+                        if (user.emailVerified){
+                            onValue(ref(db, `users/${user.uid}/type`), (snapshot) => {
+                                if (snapshot.val() == 'Pet Owner'){
+                                    window.location.href = `/search`;
+                                }else{
+                                    window.location.href = `/bookingsProvider`;
+                                }   
+                            });               
+                        }else{
+                            this.errorMsg = 'Please verify your email first.'
+                            this.loginError = true
+                            this.verified = true
+                        }
+
                     }
                 });  
 
@@ -407,6 +418,19 @@ export default {
             
         },
 
+        sendEmail(){
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    sendEmailVerification(user)
+                    .then(() => {
+                        this.errorMsg = 'email verification sent'
+                        this.verified = false
+                    });
+                }
+            })
+        },
+
         Nav(){
             if (this.counter == 1){
                 this.counter = 0;
@@ -416,6 +440,7 @@ export default {
         },
 
     },
+
 
 }
 </script>

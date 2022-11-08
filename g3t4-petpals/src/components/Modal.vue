@@ -29,7 +29,8 @@
         <i @click="close" class="far fa-times-circle"></i>
         <!-- Modal Content -->
         <slot></slot>
-        <button @click="close" class="btn btn-go" style="width: 50%; margin-left: 25%; margin-top: 20px;">Done</button>
+        <button v-if="type=='register'" @click="close" class="btn btn-go" style="width: 50%; margin-left: 25%; margin-top: 20px;">Back to Login</button>
+        <button v-else @click="close" class="btn btn-go" style="width: 50%; margin-left: 25%; margin-top: 20px;">Done</button>
       </div>
     </transition>
   </div>
@@ -38,7 +39,7 @@
 
 <script>
 export default {
-  props: ["modalActive"],
+  props: ["modalActive",'type'],
   
   setup(props, { emit }) {
     const close = () => {
