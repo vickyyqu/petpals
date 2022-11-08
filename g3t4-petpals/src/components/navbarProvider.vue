@@ -50,11 +50,11 @@
 </template>
 
 <script>
-    import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-    import { initializeApp } from "firebase/app";
-    import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 
-    const firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
     authDomain: "petpals-623e3.firebaseapp.com",
     projectId: "petpals-623e3",
@@ -62,38 +62,38 @@
     messagingSenderId: "949038254831",
     appId: "1:949038254831:web:82d399649bb06e8389e91a",
     databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
-    };
+};
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const auth = getAuth();
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth();
 
 
-    export default {
-        methods : {
-            logOut(){
-                const auth = getAuth();
-                signOut(auth).then(() => {
-                    window.location.href = `/`;
-                }).catch((error) => {
-                    console.log('o no')
-                });
-            },
-            
-        },
-        getProfile() {
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    onValue(ref(db, `users/${user.uid}`), (snapshot) => {
-                        this.username = snapshot.val().username
-                        this.photoURL = snapshot.val().profilepic
-                    });
-                }
+export default {
+    methods: {
+        logOut() {
+            const auth = getAuth();
+            signOut(auth).then(() => {
+                window.location.href = `/`;
+            }).catch((error) => {
+                console.log('o no')
             });
         },
-        mounted() {
-            this.getProfile()
-        }
+
+    },
+    getProfile() {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                onValue(ref(db, `users/${user.uid}`), (snapshot) => {
+                    this.username = snapshot.val().username
+                    this.photoURL = snapshot.val().profilepic
+                });
+            }
+        });
+    },
+    mounted() {
+        this.getProfile()
     }
+}
 
 </script>

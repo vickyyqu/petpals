@@ -58,114 +58,125 @@ img.rounded {
 </style>
 
 <template>
-  <div class="container-fluid profile-page pb-5">
-    <navbar></navbar>
-    <!--Left column-->
-    <div class="row p-4">
-      <div class="col-md-4 profile-leftbox">
-        <div class="row">
-          <div class="d-flex justify-content-end">
-            <button @click="toggleModal" class="btn btn-select me-2 mt-3">
-              <i class="bi bi-pencil-square"></i>
-            </button>
+
+<div class="container-fluid profile-page pb-5">
+  <navbar></navbar>
+  <!--Left column-->
+  <div class="row p-4">
+    <div class="col-md-4 profile-leftbox">
+      <div class="row">
+        <div class="d-flex justify-content-end">
+          <button @click="toggleModal" class="btn btn-select me-2 mt-3">
+            <i class="bi bi-pencil-square"></i>
+          </button>
+        </div>
+
+        <div class="row-image">
+          <img v-bind:src="photoURL" class="rounded rounded-circle" />
+        </div>
+
+        <div class="row text-center">
+          <h3 class="mt-3 mb-1" style="letter-spacing: 3px;color: #dfd1cd;">hello,</h3>
+          <h3 class="username">{{ username }}</h3>
+          <p class="my-4" style="font-style:italic">Pet Owner</p>
+        </div>
+
+        <hr class="w-75">
+
+        <div class="my-4 text-start px-4">
+          <h4>Bio</h4>
+          <p class="mb-3 mt-1">
+            {{ description }}
+          </p>
+
+          <h4>Ratings</h4>
+          <div class="ratings mb-3 mt-1">
+              <i v-for="n in parseInt(ratings)" class="bi bi-star-fill"></i>
+              <i v-if='!Number.isInteger(ratings)' class="bi bi-star-half"></i>
+              <i v-for='m in parseInt(5-ratings)' class="bi bi-star"></i>
           </div>
 
-          <div class="row-image">
-            <img v-bind:src="photoURL" class="rounded rounded-circle" />
-          </div>
+          <h4>Email</h4>
+          <p class="mb-3 mt-1">{{ email }}</p>
 
-          <div class="row text-center">
-            <h3 class="mt-3 mb-1" style="letter-spacing: 3px;color: #dfd1cd;">hello,</h3>
-            <h3 class="username">{{ username }}</h3>
-            <p class="my-4" style="font-style:italic">Pet Owner</p>
-          </div>
+          <h4>Mobile Number</h4>
+          <p class="mb-3 mt-1">{{ mobile }}</p>
 
-          <hr class="w-75">
-
-          <div class="my-4 text-start px-4">
-            <h4>Bio</h4>
-            <p class="mb-3 mt-1">
-              {{ description }}
-            </p>
-
-            <h4>Email</h4>
-            <p class="mb-3 mt-1">{{ email }}</p>
-
-            <h4>Mobile Number</h4>
-            <p class="mb-3 mt-1">{{ mobile }}</p>
-
-            <h4>Address</h4>
-            <p class="mb-3 mt-1">{{ address }}</p>
-          </div>
-
+          <h4>Address</h4>
+          <p class="mb-3 mt-1">{{ address }}</p>
         </div>
 
       </div>
+    </div>
 
-      <!--Right column-->
-      <div class="col-md-8 profile-rightbox">
-        <div class="row">
-          <span>
-            <button class="btn btn-select mt-3 me-2 float-end" @click="toggleModal2();"><i
-                class="bi bi-pencil-square"></i></button>
-          </span>
+    <!--Right column-->
+    <div class="col-md-8 profile-rightbox">
+      <div class="row">
+        <span>
+          <button class="btn btn-select mt-3 me-2 float-end" @click="toggleModal2();"><i
+              class="bi bi-pencil-square"></i></button>
+        </span>
 
-          <h3 class="mb-3">
-            <img src="../img/animallogo/doglogo3.png" style="width: auto; height: auto" />My Pets
-          </h3>
+        <h3 class="mb-3">
+          <img src="../img/animallogo/doglogo3.png" style="width: auto; height: auto" />My Pets
+        </h3>
 
-          <vueper-slides fade :touchable="false">
-            <vueper-slide v-for="(pet, i) in pets" :key="i" :image="pet.photo" :title="pet.petname" :content="pet.age">
-            </vueper-slide>
-          </vueper-slides>
-        </div>
+        <vueper-slides fade :touchable="false">
+          <vueper-slide v-for="(pet, i) in pets" :key="i" :image="pet.photo" :title="pet.petname" :content="pet.age">
+          </vueper-slide>
+        </vueper-slides>
+      </div>
 
-        <div class="row mt-3">
-          <div style="background-color: #fddcd74d;
-              padding: 14px 50px;
-            ">
-            <h3>My Reviews</h3>
-
-          </div>
-
-          <div v-if="noReviews" class="my-5">
-            <h4>No reviews to show yet...</h4>
-          </div>
-
-          <div class="p-3">
-            <reviewCard v-for="rev in reviews" :reviewer="rev.username" :service='rev.service' :review="rev.review"
-              :rating="rev.rating"></reviewCard>
-          </div>
+      <div class="row mt-3">
+        <div style="background-color: #fddcd74d;
+            padding: 14px 50px;
+          ">
+          <h3>My Reviews</h3>
 
         </div>
+
+        <div v-if="noReviews" class="my-5">
+          <h4>No reviews to show yet...</h4>
+        </div>
+
+        <div class="p-3">
+          <reviewCard v-for="rev in reviews" :reviewer="rev.username" :service='rev.service' :review="rev.review"
+            :rating="rev.rating"></reviewCard>
+        </div>
+
       </div>
     </div>
   </div>
+</div>
 
-  <petpalsFooter></petpalsFooter>
+<petpalsFooter></petpalsFooter>
 
-  <!--Edit Profile page-->
-  <Modal @close="toggleModal(); updateProfile()" :modalActive="modalActive">
-    <div class="modal-content p-3">
-      <h4 class="pb-4">Edit My Details:</h4>
+<!--Edit Profile page-->
+<Modal @close="toggleModal(); updateProfile()" :modalActive="modalActive">
+  <div class="modal-content p-3">
+    <h4 class="pb-4">Edit My Details:</h4>
 
-      <label>Username:</label>
-      <input class="form-control mb-2" type="text" id="username" v-model="username" />
+    <label>Username:</label>
+    <input class="form-control mb-2" type="text" id="username" v-model="username" />
 
-      <label>Profile Picture:</label>
-      <input type="file" @change='getPic' class="form-control mb-2" id="profilepicture">
+    <label>Profile Picture:</label>
+    <input type="file" @change='getPic' class="form-control mb-2" id="profilepicture">
 
-      <label>Description:</label>
-      <textarea class="form-control mb-2" rows="4" cols="10" id="bio" v-model="description"></textarea>
+    <label>Description:</label>
+    <textarea class="form-control mb-2" rows="4" cols="10" id="bio" v-model="description"></textarea>
 
-      <label>Phone Number:</label>
-      <input class="form-control mb-2" type="text" id="number" v-model="mobile" />
-      <label>Address:</label>
-      <textarea class="form-control mb-2" rows="4" cols="10" id="address" v-model="address"></textarea>
-    </div>
-  </Modal>
+    <label>Phone Number:</label>
+    <input class="form-control mb-2" type="text" id="number" v-model="mobile" />
+    
+    <label>Address:</label>
+    <textarea class="form-control mb-2" rows="4" cols="10" id="address" v-model="address"></textarea>
 
-  <Modal @close="toggleModal2(); addPet()" :modalActive="modalActive2">
+    <label>Postal Code:</label>
+    <input class="form-control mb-2" type="text" id="postal" v-model="postal"/>
+  </div>
+</Modal>
+
+<Modal @close="toggleModal2(); addPet()" :modalActive="modalActive2">
     <div class="modal-content p-3">
       <h4 class="pb-4">Add a Pet:</h4>
 
@@ -193,13 +204,16 @@ img.rounded {
       <label>Age: </label>
       <input class="form-control mb-2" type="number" min="0" max="150" id="age" v-model="age" required />
 
+      <label>Pet Photo:</label>
+      <input type="file" @change = 'getPic' class="form-control mb-2" id="profilepicture">
+
       <label>Pet Description:</label>
       <textarea class="form-control mb-2" rows="4" cols="10" id="bio" placeholder="Describe your pet!"
         v-model="petDesc"></textarea>
 
     </div>
 
-  </Modal>
+</Modal>
 </template>
 
 <script>
@@ -239,6 +253,8 @@ export default {
       mobile: '',
       address: '',
       photoURL: '',
+      ratings: 0,
+      postal: '',
       reviews: [],
       services: [],
       pets: [
@@ -259,8 +275,7 @@ export default {
       breed: '',
       age: 0,
       petDesc: '',
-      petPhoto: '',
-      petType: 'default',
+      petType:'default',
 
 
     };
@@ -287,6 +302,8 @@ export default {
             this.address = snapshot.val().address
             this.description = snapshot.val().bio
             this.email = user.email
+            this.postal = snapshot.val().postalcode
+            this.ratings = snapshot.val().ratings
 
           });
         }
@@ -304,51 +321,6 @@ export default {
     },
 
     updateProfile() {
-
-      // update lat,lng, region
-      axios.get("https://maps.googleapis.com/maps/api/geocode/json?", {
-        params: {
-          address: this.address,
-          key: "AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw"
-        }
-      })
-        .then(response => {
-
-          if (response.data.results.length > 0) {
-
-            this.invalidAddr = false
-
-            // save in database
-            var lat = response.data.results[0].geometry.location.lat
-            var lng = response.data.results[0].geometry.location.lng
-
-            console.log(lat)
-            console.log(lng)
-
-            // save in database
-            var region = ""
-
-            console.log(response.data.results[0].address_components)
-            for (let i = 0; i < response.data.results[0].address_components.length; i++) {
-              let each = response.data.results[0].address_components[i]
-              if (each.types.includes('neighborhood')) {
-                region = each.long_name
-              }
-            }
-            console.log(region)
-
-          } else {
-            this.invalidAddr = true
-          }
-
-        })
-        .catch(error => {
-
-          console.log(error.message)
-          this.invalidAddr = true
-
-      })
-
       onAuthStateChanged(auth, (user) => {
         if (user) {
           updateProfile(user, { displayName: this.username })
@@ -356,6 +328,7 @@ export default {
           set(ref(db, `users/${user.uid}/mobile`), this.mobile)
           set(ref(db, `users/${user.uid}/address`), this.address)
           set(ref(db, `users/${user.uid}/bio`), this.description)
+          set(ref(db, `users/${user.uid}/postalcode`), this.postal) 
 
           if (this.pic != '') {
             set(ref(db, `users/${user.uid}/profilepic`), this.pic)
@@ -363,7 +336,38 @@ export default {
             this.pic = ''
           }
 
-          window.location.href = `/petownerprofile`;
+          axios.get("https://maps.googleapis.com/maps/api/geocode/json?", {
+              params: {
+                  address : this.postal,
+                  key: "AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw"
+                  }
+          })
+          .then(response => {
+              if (response.data.results.length > 0){
+                  this.invalidAddr = false
+                  var lat = response.data.results[0].geometry.location.lat
+                  var lng = response.data.results[0].geometry.location.lng
+                  set(ref(db, `users/${user.uid}/coords`), {'lat': lat, 'lng': lng}) 
+
+                  for (let i=0; i<response.data.results[0].address_components.length; i++){
+                      let each = response.data.results[0].address_components[i]
+                      if (each.types.includes('neighborhood')){
+                          set(ref(db, `users/${user.uid}/region`), each.long_name) 
+                      }
+                  }
+                  window.location.href = `/petownerprofile`;
+
+              } else {
+                  this.invalidAddr = true
+              }
+              
+          })
+          .catch( error => {
+
+              console.log(error.message)
+              this.invalidAddr = true
+
+          })
         }
       });
 
@@ -396,12 +400,12 @@ export default {
         onAuthStateChanged(auth, (user) => {
           if (user) {
             set(ref(db, `users/${user.uid}/pets/${this.petName}/age`), this.age)
-            set(ref(db, `users/${user.uid}/pets/${this.petName}/breed`), this.breed)
-            set(ref(db, `users/${user.uid}/pets/${this.petName}/desc`), this.petDesc)
-            set(ref(db, `users/${user.uid}/pets/${this.petName}/type`), this.petType)
-
-            if (this.pic != '') {
-              set(ref(db, `users/${user.uid}/pets/${this.petName}/photo`), this.petPhoto)
+            set(ref(db, `users/${user.uid}/pets/${this.petName}/breed`), this.breed) 
+            set(ref(db, `users/${user.uid}/pets/${this.petName}/desc`), this.petDesc) 
+            set(ref(db, `users/${user.uid}/pets/${this.petName}/type`), this.petType) 
+            
+            if (this.pic != ''){
+              set(ref(db, `users/${user.uid}/pets/${this.petName}/photo`), this.pic) 
               this.pic = ''
             } else {
               set(ref(db, `users/${user.uid}/pets/${this.petName}/photo`), 'https://www.kibrispdr.org/data/84/dog-background-pictures-19.jpg')
@@ -433,7 +437,7 @@ export default {
                     obj['review'] = snapst.val()[serv].review
                     obj['rating'] = snapst.val()[serv].rating
                     this.reviews.push(obj)
-                    this.noReviews = true
+                    this.noReviews = false
                   }
 
                 });

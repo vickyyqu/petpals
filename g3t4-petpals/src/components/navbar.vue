@@ -22,6 +22,7 @@ a:hover {
     color: #F8AA9D;
 }
 </style>
+
 <template>
     <div class="row">
         <div class="navbar-header" id="navbar-header">
@@ -69,6 +70,7 @@ a:hover {
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>

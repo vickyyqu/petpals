@@ -99,14 +99,13 @@ export default {
                             var name = ''
                             var desc = ''
                             var loc = ''
-                            var exp = ''
                             var img = ''
                             var ratings = ''
 
                             onValue(ref(db, `users/${oid}`), (snapsht) => {
                                 name = snapsht.val().username;
                                 desc = snapsht.val().bio;
-                                loc = snapsht.val().address;
+                                loc = snapsht.val().region;
                                 img = snapsht.val().profilepic;
                                 ratings = snapsht.val().ratings
 
@@ -146,15 +145,13 @@ export default {
                             var name = ''
                             var desc = ''
                             var loc = ''
-                            var exp = ''
                             var img = ''
                             var ratings = ''
 
                             onValue(ref(db, `users/${oid}`), (snapsht) => {
                                 name = snapsht.val().username;
                                 desc = snapsht.val().bio;
-                                loc = snapsht.val().address;
-                                exp = snapsht.val().yrsOfExp;
+                                loc = snapsht.val().region;
                                 img = snapsht.val().profilepic;
                                 ratings = snapsht.val().ratings
 
@@ -168,7 +165,6 @@ export default {
                                         obj['name'] = name
                                         obj['location'] = loc
                                         obj['desc'] = desc 
-                                        obj['yrsOfExp'] = exp
                                         obj['img'] = img
                                         obj['ratings'] = ratings
 
@@ -195,15 +191,13 @@ export default {
                             var name = ''
                             var desc = ''
                             var loc = ''
-                            var exp = ''
                             var img = ''
                             var ratings = ''
 
                             onValue(ref(db, `users/${oid}`), (snapsht) => {
                                 name = snapsht.val().username;
                                 desc = snapsht.val().bio;
-                                loc = snapsht.val().address;
-                                exp = snapsht.val().yrsOfExp;
+                                loc = snapsht.val().region;
                                 img = snapsht.val().profilepic;
                                 ratings = snapsht.val().ratings
 
@@ -217,7 +211,6 @@ export default {
                                         obj['name'] = name
                                         obj['location'] = loc
                                         obj['desc'] = desc 
-                                        obj['yrsOfExp'] = exp
                                         obj['img'] = img
                                         obj['ratings'] = ratings
 
