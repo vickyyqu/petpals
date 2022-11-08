@@ -113,49 +113,74 @@
                     <div v-if="forgot" class="login mt-5" style="padding-bottom:350px;">
                         <h3>Reset Password</h3>
                         <div class="my-3">
-                            <label for="email" class="form-label"> Enter your email:</label>
-                            <input type="email" class="form-control" v-model = 'email' id="email">
+
+                            <div class="form w-100 mt-4 mb-1">
+                                <input type="text" autocomplete="off" v-model = 'email' id="email" required />
+                                <label for="text" class="label-name p-3">
+                                  <span class="content-name">
+                                    Enter Your Email:
+                                  </span>
+                                </label>
+                            </div>
+
                             <div v-if="emailSent">
                                 <small style="font-style:italic; color:brown" class="text-center py-4">Email sent!</small>
                             </div>
-                            <small v-else style="font-style:italic" class="pt-2">*An email will be sent to your inbox to reset your password.</small>
+                            <small v-else style="font-style:italic">*An email will be sent to your inbox to reset your password.</small>
                         </div>
 
 
-                        <div class="login-btn mt-2" v-if="emailSent">
-                            <button class="btn login-btn btn-dark" @click="forgot=false">Back to login</button>
+                        <div class="login-btn mt-5" v-if="emailSent">
+                            <button class="btn login-btn btn-select" @click="forgot=false">Back to login</button>
                         </div>
-                        <div class="login-btn mt-2" v-else>
-                            <button class="btn login-btn btn-dark" @click="resetPassword()">Confirm</button>
+                        <div class="login-btn mt-5" v-else>
+                            <button class="btn login-btn btn-select" @click="resetPassword()">Confirm</button>
                         </div>
 
                     </div>
 
                     <div v-else class="login" style="padding-bottom:80px;">
-                        <h3 class="pt-5">Login</h3>
-                        <div class="mb-3 mt-4">
-                            <label for="email" class="form-label"> Enter your email:</label>
-                            <input type="email" class="form-control" v-model = 'email' id="email">
-                        </div>
+                        <h3 class="pt-5 mb-4">Login</h3>
 
-                        <div>
-                            <label for="pwd" class="form-label">Enter your password:</label>
-                            <input type="password" v-model = 'pwd' v-on:keyup.enter = 'userLogin()' class="form-control" id="pwd">
+                            <div class="form w-100">
+                                <input type="text" autocomplete="off" v-model = 'email' id="email" required />
+                                <label for="text" class="label-name p-3">
+                                  <span class="content-name">
+                                    Enter Your Email:
+                                  </span>
+                                </label>
+                            </div>
+
+                            <div class="form w-100 mt-4">
+                                <input type="password" v-model = 'pwd' v-on:keyup.enter = 'userLogin()' class="form-control" id="pwd" autocomplete="off" required />
+                                <label for="password" class="label-name p-3">
+                                  <span class="content-name">
+                                    Enter Your Password:
+                                  </span>
+                                </label>
+                                
+                            </div>
+
                             <button class="btn p-0" style="background-color:transparent; border-color:transparent; font-size:12px; color:#F8AA9D" @click="forgot=true">Forgot password?</button>
-                        </div>
 
-                        <div v-if="loginError" class="text-center mt-2">
-                            <small style="font-style:italic; color:brown">{{errorMsg}}</small>
-                        </div>
+                            <div v-if="loginError" class="text-center mt-3">
+                                <small style="font-style:italic; color:brown">{{errorMsg}}</small>
+                            </div>
 
                         <div class="login-btn">
-                            <button class="btn login-btn btn-select mt-3" @click="userLogin">Login</button>
+                            <button class="btn login-btn btn-select mt-4" @click="userLogin">Login</button>
                         </div>
-                        <hr class="my-5">
 
                         <div class="text-center">
-                            <h3 class="fade-in-text mt-5">New to PetPals?</h3>
-                            <div class="dropdown mt-4">
+                            <h4 class="mt-5 mb-3" style="font-style:italic">or</h4>
+                            <h3>New to PetPals?</h3>
+                            <div class="dropdown mt-3">
+
+                                <div class="d-block fade-in-text mx-auto">
+                                    <img src="../img/doggieicon.png" style="width:50px;">
+                                    <img src="../img/catto.png" style="width:50px;">
+                                </div>
+
                                 <button class="btn btn-select">Register Here</button>
                                 <div class="dropdown-content">
                                     <router-link to="/registerowner" style="font-size:16px;text-decoration:none" class="text-center pt-2 ">I am a pet owner.</router-link>
@@ -205,7 +230,7 @@
             <hr>
 
             <div class="row join py-5">
-                <h2 class="pb-3 text-center" style="color:#F8AA9D">Join PetPals today</h2>
+                <h2 class="my-3 text-center" style="color:#F8AA9D">Join PetPals today</h2>
                 
                 <div class="col-2"></div>
 
@@ -383,8 +408,12 @@
                         this.errorMsg = 'Password is invalid. Please try again.'
                     }else if (msg == 'user-not-found'){
                         this.errorMsg = 'No account registered. Please register for one first.'
+                        this.email = ""
+                        this.pwd = "" 
                     } else if (msg == 'invalid-email'){
                         this.errorMsg = 'Email is invalid. Please enter a valid email address.'
+                        this.email = ""
+                        this.pwd = "" 
                     }else if (msg == 'missing-password'){
                         this.errorMsg = 'Please enter your password.'
                     }
