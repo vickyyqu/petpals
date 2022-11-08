@@ -223,6 +223,7 @@ import { VueperSlides, VueperSlide } from "vueperslides";
 import Modal from "../components/Modal.vue";
 import { ref as modalref } from "vue";
 import petpalsFooter from "../components/petpalsFooter.vue";
+
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { getDatabase, ref, set, onValue } from "firebase/database";

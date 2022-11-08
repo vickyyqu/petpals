@@ -35,7 +35,6 @@ input[type='radio']:checked{
     font-style: italic;
     color: #856658;
 }
-
 </style>
 
 <template>
@@ -48,7 +47,22 @@ input[type='radio']:checked{
             </div>
 
             <div class="col-10">
-                <img src="../img/header.jpeg" class="w-100 mt-5 pt-3 rounded-3" alt="">
+            
+
+                  <div id="carouselExampleFade" class="carousel slide carousel-fade mt-5 pt-4" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active" data-interval="2000">
+                        <img class="d-block w-100 rounded-3" src="../img/header.jpeg" alt="First slide">
+                      </div>
+                      <div class="carousel-item" data-interval="2000">
+                        <img class="d-block w-100 rounded-3" src="../img/header2.jpeg"  alt="Second slide">
+                      </div>
+                      <div class="carousel-item" data-interval="2000">
+                        <img class="d-block w-100 rounded-3" src="../img/header3.png"  alt="Third slide">
+                      </div>
+                    </div>
+                  </div>
+                
                 <div class="search-providers px-5">
 
                 
@@ -129,6 +143,8 @@ import navbar from '@/components/navbar.vue'
 import myMap from '@/components/myMap.vue'
 import profileCard from '@/components/profileCard.vue'
 import petpalsFooter from '@/components/petpalsFooter.vue'
+
+import { VueperSlides, VueperSlide } from "vueperslides";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, set, get } from "firebase/database";
@@ -164,7 +180,9 @@ export default {
         navbar,
         myMap,
         profileCard,
-        petpalsFooter
+        petpalsFooter,
+        VueperSlides,
+        VueperSlide,
     },
 
     methods : {
