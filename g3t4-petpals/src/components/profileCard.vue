@@ -43,14 +43,14 @@
         <div class="card-body">
             <h6 class="card-title">Description:</h6>
             <small class="card-text">{{desc}}</small>
+            <br/>
+            <small class="card-text float-end"> &nbsp;{{dist}} km away</small>
         </div>
         <div class="card-footer">
             <div class="text-end">
                 <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/hr </small>
                 <small class="profile-details"><i class="bi bi-geo"></i> {{location}} &nbsp;</small>
                 <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of experience </small>
-
-
             </div>
         </div>
 
@@ -72,7 +72,7 @@
 
             <div class="ms-2">
                 <h6>{{name}}</h6>
-                <small style="font-style:italic;">{{service}}</small>
+                <small style="font-style:italic;">{{service}} </small>
 
                 <div class="ratings">
                     <i v-if = 'ratings >= 1' class="bi bi-star-fill"></i>
@@ -94,6 +94,8 @@
         <div class="card-body">
             <h6 class="card-title">Description:</h6>
             <small class="card-text">{{desc}}</small>
+            <br/>
+            <small class="card-text float-end"> &nbsp;{{dist}} km away</small>
         </div>
         <div class="card-footer">
             <div class="text-end">
@@ -136,7 +138,7 @@ export default {
             sent: true,
         }
     },
-    props: ['title', 'desc', 'rates', 'location', 'img', 'ratings', 'yrsOfExp', 'name', 'service', 'oid'],
+    props: ['title', 'desc', 'rates', 'location', 'img', 'ratings', 'yrsOfExp', 'name', 'service', 'oid', 'dist'],
     
     methods: {
         sendRequest() {

@@ -17,11 +17,13 @@
 <div class="col-lg-3">
     <span class="required">Search Radius:</span>
     <select class="form-select mb-3 mt-1" aria-label="Default select example" v-model="searchRad">
-        <option id="1" class="select-option" value=1>1km</option>
-        <option id="3" class="select-option" value=3>3km</option>
-        <option id="5" class="select-option" value=5>5km</option>
-        <option id="10" class="select-option" value=10>10km</option>
-        <option id="15" class="select-option" value=15>15km</option>
+        <option id="1" class="select-option" value=1>1 km</option>
+        <option id="3" class="select-option" value=3>3 km</option>
+        <option id="5" class="select-option" value=5>5 km</option>
+        <option id="10" class="select-option" value=10>10 km</option>
+        <option id="15" class="select-option" value=15>15 km</option>
+        <option id="25" class="select-option" value=25>25 km</option>
+        <option id="50" class="select-option" value=50>50 km</option>
     </select>
 </div>
 
@@ -35,6 +37,23 @@
 </template>
 
 <script>
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue } from "firebase/database";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
+    authDomain: "petpals-623e3.firebaseapp.com",
+    projectId: "petpals-623e3",
+    storageBucket: "petpals-623e3.appspot.com",
+    messagingSenderId: "949038254831",
+    appId: "1:949038254831:web:82d399649bb06e8389e91a",
+    databaseURL: "https://petpals-623e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth();
 
 export default {
     data(){
@@ -44,12 +63,15 @@ export default {
             inputAddr: "",
             invalidAddr: false,
             msg: "Enter your location",
-            searchRad: 1
+            searchRad: 50,
+            postal: ''
         }
     },
     emits: ['searchClick'],
 
     mounted() {
+
+        this.getAddress()
 
         var currlat = this.lat
         var currlng = this.lng
@@ -58,8 +80,6 @@ export default {
 
             const uluru = { lat: currlat, lng: currlng};
 
-            console.log(currlat)
-            console.log(currlng)
             const map = new google.maps.Map(document.getElementById("googleMap"), {
                 zoom: 15,
                 center: uluru,
@@ -126,11 +146,24 @@ export default {
 
                 console.log(error.message)
                 this.invalidAddr = true
-                this.inputAddr = ""
+                this.inputAddr = this.postal
                 this.msg = "Address not found. Try again with your address in full."
 
             })
 
+        },
+
+        getAddress(){
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    onValue(ref(db, `users/${user.uid}/postalcode`), (snapshot) => {
+                        this.inputAddr = snapshot.val()
+                        this.postal = snapshot.val()
+
+                        this.searchClick()
+                    });
+                }
+            });
         }
     }
 }

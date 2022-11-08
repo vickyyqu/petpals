@@ -163,6 +163,9 @@ img.rounded {
     
     <label>Address:</label>
     <textarea class="form-control mb-2" rows="4" cols="10" id="address" v-model="address"></textarea>
+
+    <label>Postal Code:</label>
+    <input class="form-control mb-2" type="text" id="postal" v-model="postal"/>
   </div>
 </Modal>
 
@@ -242,6 +245,7 @@ export default {
       mobile: '',
       address: '',
       photoURL: '',
+      postal: '',
       reviews: [],
       services: [],
       pets: [
@@ -289,6 +293,7 @@ export default {
             this.address = snapshot.val().address
             this.description = snapshot.val().bio
             this.email = user.email
+            this.postal = snapshot.val().postalcode
 
           });
         }
@@ -306,51 +311,6 @@ export default {
     },
 
     updateProfile() {
-
-      // update lat, lng, region
-      axios.get("https://maps.googleapis.com/maps/api/geocode/json?", {
-        params: {
-          address: this.address,
-          key: "AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw"
-        }
-      })
-        .then(response => {
-
-          if (response.data.results.length > 0) {
-
-            this.invalidAddr = false
-
-            // save in database
-            var lat = response.data.results[0].geometry.location.lat
-            var lng = response.data.results[0].geometry.location.lng
-
-            console.log(lat)
-            console.log(lng)
-
-            // save in database
-            var region = ""
-
-            console.log(response.data.results[0].address_components)
-            for (let i = 0; i < response.data.results[0].address_components.length; i++) {
-              let each = response.data.results[0].address_components[i]
-              if (each.types.includes('neighborhood')) {
-                region = each.long_name
-              }
-            }
-            console.log(region)
-
-          } else {
-            this.invalidAddr = true
-          }
-
-        })
-        .catch(error => {
-
-          console.log(error.message)
-          this.invalidAddr = true
-
-      })
-
       onAuthStateChanged(auth, (user) => {
         if (user) {
           updateProfile(user, { displayName: this.username })
@@ -358,6 +318,7 @@ export default {
           set(ref(db, `users/${user.uid}/mobile`), this.mobile)
           set(ref(db, `users/${user.uid}/address`), this.address)
           set(ref(db, `users/${user.uid}/bio`), this.description)
+          set(ref(db, `users/${user.uid}/postalcode`), this.postal) 
 
           if (this.pic != '') {
             set(ref(db, `users/${user.uid}/profilepic`), this.pic)
@@ -365,7 +326,38 @@ export default {
             this.pic = ''
           }
 
-          window.location.href = `/petownerprofile`;
+          axios.get("https://maps.googleapis.com/maps/api/geocode/json?", {
+              params: {
+                  address : this.postal,
+                  key: "AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw"
+                  }
+          })
+          .then(response => {
+              if (response.data.results.length > 0){
+                  this.invalidAddr = false
+                  var lat = response.data.results[0].geometry.location.lat
+                  var lng = response.data.results[0].geometry.location.lng
+                  set(ref(db, `users/${user.uid}/coords`), {'lat': lat, 'lng': lng}) 
+
+                  for (let i=0; i<response.data.results[0].address_components.length; i++){
+                      let each = response.data.results[0].address_components[i]
+                      if (each.types.includes('neighborhood')){
+                          set(ref(db, `users/${user.uid}/region`), each.long_name) 
+                      }
+                  }
+                  window.location.href = `/petownerprofile`;
+
+              } else {
+                  this.invalidAddr = true
+              }
+              
+          })
+          .catch( error => {
+
+              console.log(error.message)
+              this.invalidAddr = true
+
+          })
         }
       });
 

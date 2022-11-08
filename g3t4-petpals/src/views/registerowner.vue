@@ -128,7 +128,11 @@ export default {
             pic: 'https://cdn-icons-png.flaticon.com/512/2102/2102647.png',
 
             invalidAddr: false,
-            timerId: null
+            timerId: null,
+            lat: '', 
+            lng:'', 
+            region: '',
+
         }
     },
 
@@ -157,6 +161,8 @@ export default {
         registerUser() {
             const auth = getAuth();
             if (this.psw == this.psw_repeat && this.psw != '' && this.email != '' && this.postal != '' && this.address != '' && this.username != '' && this.mobile != '') {
+                this.checkAddr()
+
                 createUserWithEmailAndPassword(auth, this.email, this.psw)
                     .then((userCredential) => {
                         const user = userCredential.user;
@@ -174,6 +180,8 @@ export default {
                             address: this.address,
                             postalcode: this.postal,
                             ratings: 0, //by default
+                            coords: {'lat': this.lat, 'lng': this.lng},
+                            region: this.region
                         })
 
                         signInWithEmailAndPassword(auth, this.email, this.psw)
@@ -212,23 +220,17 @@ export default {
                         this.invalidAddr = false
 
                         // save in database
-                        var lat = response.data.results[0].geometry.location.lat
-                        var lng = response.data.results[0].geometry.location.lng
-
-                        console.log(lat)
-                        console.log(lng)
+                        this.lat = response.data.results[0].geometry.location.lat
+                        this.lng = response.data.results[0].geometry.location.lng
 
                         // save in database
-                        var region = ""
-
                         console.log(response.data.results[0].address_components)
                         for (let i = 0; i < response.data.results[0].address_components.length; i++) {
                             let each = response.data.results[0].address_components[i]
                             if (each.types.includes('neighborhood')) {
-                                region = each.long_name
+                                this.region = each.long_name
                             }
                         }
-                        console.log(region)
 
                     } else {
                         this.invalidAddr = true
@@ -243,6 +245,7 @@ export default {
                 })
 
         },
+
         startTimer() {
             clearTimeout(this.timerId)
             this.timerId = window.setTimeout(this.checkAddr, 1000)

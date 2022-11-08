@@ -189,35 +189,8 @@ img.rounded {
 
     <br />
     </div>
-  
-  <!--Right column-->
-  <div class="col-md-8 profile-rightbox">
-    <div class="row mt-3">
-          <!-- Tab links -->
-          <div class="tab">
-              <h3>
-                <button class="tablinks" @click="openTab(event, 'Services')">My Services</button>
-                <button class="tablinks" @click="openTab(event, 'Reviews')">My Reviews</button>
-              </h3>
 
-          </div>
-                
-            <!-- Tab content -->
-            <div id="Services" class="tabcontent active" style="display:block">
-              <div class = 'd-flex flex-wrap justify-content-around'>
-                <serviceCard v-for="serv of services" :service="Object.keys(serv)[0]" v-on:edit='toggleModal2(); service=Object.keys(serv)[0]; price=serv[Object.keys(serv)[0]].price; serviceDesc=serv[Object.keys(serv)[0]].desc' :price="serv[Object.keys(serv)[0]].price" :desc="serv[Object.keys(serv)[0]].desc"></serviceCard>
-              </div>
-                
-            </div>
-            
-            <div id="Reviews" class="tabcontent">
-              <div class="row">
-                <reviewCard v-for="rev in reviews" :reviewer="rev.username" :service = 'rev.service' :review="rev.review" :rating="rev.rating"></reviewCard>
-              </div>
-            </div>
-            
-        </div>
-  </div>
+
 </div>
 </div>
 <petpalsFooter></petpalsFooter>
@@ -420,50 +393,6 @@ export default {
     },
 
     updateProfile(){
-
-      // update lat, lng, region
-      axios.get("https://maps.googleapis.com/maps/api/geocode/json?", {
-        params: {
-          address: this.address,
-          key: "AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw"
-        }
-      })
-        .then(response => {
-          if (response.data.results.length > 0) {
-
-            this.invalidAddr = false
-
-            // save in database
-            var lat = response.data.results[0].geometry.location.lat
-            var lng = response.data.results[0].geometry.location.lng
-
-            console.log(lat)
-            console.log(lng)
-
-            // save in database
-            var region = ""
-
-            console.log(response.data.results[0].address_components)
-            for (let i = 0; i < response.data.results[0].address_components.length; i++) {
-              let each = response.data.results[0].address_components[i]
-              if (each.types.includes('neighborhood')) {
-                region = each.long_name
-              }
-            }
-            console.log(region)
-
-          } else {
-            this.invalidAddr = true
-          }
-
-        })
-        .catch(error => {
-
-          console.log(error.message)
-          this.invalidAddr = true
-
-      })
-
       onAuthStateChanged(auth, (user) => {
         if (user) {
           updateProfile(user, { displayName: this.username })
@@ -471,15 +400,47 @@ export default {
           set(ref(db, `users/${user.uid}/mobile`), this.mobile) 
           set(ref(db, `users/${user.uid}/address`), this.address) 
           set(ref(db, `users/${user.uid}/desc`), this.description) 
-          set(ref(db, `users/${user.uid}/postalcode`), this.postal) 
           set(ref(db, `users/${user.uid}/yrsOfExp`), this.yrsOfExp) 
+          set(ref(db, `users/${user.uid}/postalcode`), this.postal) 
 
           if (this.pic != ''){
             set(ref(db, `users/${user.uid}/profilepic`), this.pic) 
             updateProfile(user, { photoURL: this.pic })
           }
 
-          window.location.href = `/petserviceprofile`;
+          axios.get("https://maps.googleapis.com/maps/api/geocode/json?", {
+              params: {
+                  address : this.postal,
+                  key: "AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw"
+                  }
+          })
+          .then(response => {
+              if (response.data.results.length > 0){
+                  this.invalidAddr = false
+                  var lat = response.data.results[0].geometry.location.lat
+                  var lng = response.data.results[0].geometry.location.lng
+                  set(ref(db, `users/${user.uid}/coords`), {'lat': lat, 'lng': lng}) 
+
+                  for (let i=0; i<response.data.results[0].address_components.length; i++){
+                      let each = response.data.results[0].address_components[i]
+                      if (each.types.includes('neighborhood')){
+                          set(ref(db, `users/${user.uid}/region`), each.long_name) 
+                      }
+                  }
+                  window.location.href = `/petserviceprofile`;
+
+              } else {
+                  this.invalidAddr = true
+              }
+              
+          })
+          .catch( error => {
+
+              console.log(error.message)
+              this.invalidAddr = true
+
+          })
+
         }
       }); 
 

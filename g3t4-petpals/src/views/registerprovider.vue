@@ -150,6 +150,7 @@ export default {
 
             lat : '',
             lng : '',
+            region: '',
             invalidAddr: false,
             timerId: null,
         }
@@ -178,6 +179,8 @@ export default {
         registerUser() {
             const auth = getAuth();
             if (this.psw == this.psw_repeat && this.psw != '' && this.email != '' && this.postal != '' && this.address != '' && this.username != '' && this.mobile != '') {
+                this.checkAddr() 
+
                 createUserWithEmailAndPassword(auth, this.email, this.psw)
                     .then((userCredential) => {
                         const user = userCredential.user;
@@ -197,6 +200,7 @@ export default {
                             postalcode: this.postal,
                             ratings: 0, //by default
                             coords: {'lat': this.lat, 'lng': this.lng},
+                            region: this.region,
                         })
 
                         signInWithEmailAndPassword(auth, this.email, this.psw)
@@ -209,51 +213,49 @@ export default {
             }
 
         },
-        checkAddr(){
 
-                axios.get("https://maps.googleapis.com/maps/api/geocode/json?", {
+        checkAddr(){
+            axios.get("https://maps.googleapis.com/maps/api/geocode/json?", {
                 params: {
                     address : this.postal,
                     key: "AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw"
                     }
-                })
-                .then(response => {
-                    console.log(response.data.results)
+            })
+            .then(response => {
+                console.log(response.data.results)
 
-                    if (response.data.results.length > 0){
+                if (response.data.results.length > 0){
 
-                        this.invalidAddr = false
+                    this.invalidAddr = false
 
-                        // save in database
-                        var lat = response.data.results[0].geometry.location.lat
-                        var lng = response.data.results[0].geometry.location.lng
+                    // save in database
+                    this.lat = response.data.results[0].geometry.location.lat
+                    this.lng = response.data.results[0].geometry.location.lng
 
-                        console.log(lat)
-                        console.log(lng)
+                    console.log(this.lat)
+                    console.log(this.lng)
 
-                        // save in database
-                        var region = ""
-
-                        console.log(response.data.results[0].address_components)
-                        for (let i=0; i<response.data.results[0].address_components.length; i++){
-                            let each = response.data.results[0].address_components[i]
-                            if (each.types.includes('neighborhood')){
-                                region = each.long_name
-                            }
+                    // save in database
+                    console.log(response.data.results[0].address_components)
+                    for (let i=0; i<response.data.results[0].address_components.length; i++){
+                        let each = response.data.results[0].address_components[i]
+                        if (each.types.includes('neighborhood')){
+                            this.region = each.long_name
                         }
-                        console.log(region)
-
-                    } else {
-                        this.invalidAddr = true
                     }
-                    
-                })
-                .catch( error => {
+                    console.log(this.region)
 
-                    console.log(error.message)
+                } else {
                     this.invalidAddr = true
+                }
+                
+            })
+            .catch( error => {
 
-                })
+                console.log(error.message)
+                this.invalidAddr = true
+
+            })
 
         },
         
@@ -261,7 +263,7 @@ export default {
             clearTimeout(this.timerId)
             this.timerId = window.setTimeout(this.checkAddr, 1000)
         }
-    }
+    },
 }
 
 </script>

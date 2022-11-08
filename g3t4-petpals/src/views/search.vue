@@ -83,6 +83,7 @@ input[type='radio']:checked{
                                 <option id="reviews" value = 'ratings'>Ratings</option>
                                 <option id="yearsOfExperience" class="select-option" value = 'yrsOfExp'>Years of experience</option>
                                 <option id="rates" class="select-option" value = 'rates'>Rates</option>
+                                <option id="dist" class="select-option" value = 'dist'>Distance</option>
                             </select>
                         </div>
                         <div class="col-lg-2 col-4 mt-3">
@@ -102,7 +103,7 @@ input[type='radio']:checked{
                     </div>
         
                     <div id = 'profileCards' class="row pb-5">
-                        <profileCard v-for="result in filterResults" v-bind:oid = 'result.oid' v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service'></profileCard>
+                        <profileCard v-for="result in filterResults" v-bind:dist = 'result.dist' v-bind:oid = 'result.oid' v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service'></profileCard>
 
                         <div v-if="noMatch">
                             <h4 class="text-center m-5 p-4" style="background-color:#f8f1ef;border-radius:20px;">No search results yet...</h4>
@@ -153,7 +154,7 @@ export default {
             filterResults : [],
             sortBy : '',
             orderBy : '',
-            order: 'smth',
+            // order: 'smth',
             inputAddr: '',
             noMatch: true,
         }
@@ -168,11 +169,6 @@ export default {
 
     methods : {
         filterServices(out){
-            // out contains property rad -> search radius input + coord -> input location lat and lng
-            console.log(out)
-            var coord2 = [1.3785067, 103.7632074] //random coord to check
-            console.log(this.getSearchRad(out, coord2)) //return true if service provider is within search radius
-
             this.filterResults = [] //clear previous filter results
 
             if (this.checkedServices.includes('All')){
@@ -193,20 +189,19 @@ export default {
                             item.name = snapst.val().username
                             item.img = snapst.val().profilepic 
                             item.ratings = snapst.val().ratings
-                            item.location = snapst.val().address
+                            item.location = snapst.val().region
                             item.service = service
                             item.service = service
                             item.oid = uid
 
-                            //lat and lng for radius search
-                            item.coords = snapst.val().coords // {lat: '', lng: ''}
+                            var coords = [snapst.val().coords.lat, snapst.val().coords.lng ]
+                            var check = this.getSearchRad(out, coords)
 
-                            // console.log(item,this.filterResults)
-                            if (snapshot.val()[uid].price != ''){
+                            if (check != false && snapshot.val()[uid].price != ''){
+                                item.dist = check.toFixed(1)
                                 this.filterResults.push(item) // sorted by service by default                              
                             }
 
-                            // console.log(this.filterResults)
                         });
 
                     }
@@ -220,6 +215,8 @@ export default {
                         this.filterResults.sort(function(a,b){return b.ratings-a.ratings}) 
                     }else if (this.sortBy == 'yrsOfExp'){
                         this.filterResults.sort(function(a,b){return b.yrsOfExp-a.yrsOfExp}) 
+                    }else if (this.sortBy == 'dist'){
+                        this.filterResults.sort(function(a,b){return b.dist-a.dist}) 
                     }  
                 }else{
                     if (this.sortBy == 'rates'){
@@ -228,7 +225,9 @@ export default {
                         this.filterResults.sort(function(a,b){return a.ratings-b.ratings}) 
                     }else if (this.sortBy == 'yrsOfExp'){
                         this.filterResults.sort(function(a,b){return a.yrsOfExp-b.yrsOfExp}) 
-                    }  
+                    }else if (this.sortBy == 'dist'){
+                        this.filterResults.sort(function(a,b){return a.dist - b.dist}) 
+                    }   
                 }
                                 
             }
@@ -242,7 +241,7 @@ export default {
             var dist = Math.sqrt((km*coord1[0] - km*coord2[0])**2 + (km*coord1[1] - km*coord2[1])**2)
             
             if (dist <= radius){
-                return true
+                return dist
             } else {
                 return false
             }
