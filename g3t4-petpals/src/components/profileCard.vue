@@ -48,7 +48,7 @@
         </div>
         <div class="card-footer">
             <div class="text-end">
-                <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/hr </small>
+                <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small>
                 <small class="profile-details"><i class="bi bi-geo"></i> {{location}} &nbsp;</small>
                 <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of experience </small>
             </div>
@@ -99,7 +99,7 @@
         </div>
         <div class="card-footer">
             <div class="text-end">
-                <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/hr </small>
+                <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small>
                 <small class="profile-details"><i class="bi bi-geo"></i> {{location}} &nbsp;</small>
                 <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of Experience</small>
             </div>

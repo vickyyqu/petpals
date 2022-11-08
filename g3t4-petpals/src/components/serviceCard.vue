@@ -41,13 +41,16 @@
             </div>
             <div class="col-8">
                 <h4 class="card-reviewID">{{service}}</h4>
-                <small class="card-reviewer">Price: ${{price}}{{services[service]}}</small>
+                <small class="card-reviewer">Price: ${{price}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small>
             </div>
         </div>  
         <div class = 'row my-2'>
-            <div class = 'col'>
-                <h5>Description:<span><button class="btn btn-select px-3 mx-2 float-end" v-on:click="$emit('edit')"><i class="bi bi-pencil-square"></i></button></span></h5>
-                <p class="card-text">{{desc}}</p>                       
+            <div class = 'col-9'>
+                <h5>Description:</h5>
+                <p class="card-text text-center">{{desc}}</p>                       
+            </div>
+            <div class = 'col-3'>
+                <span><button class="btn btn-select px-3 mx-1 float-end" v-on:click="$emit('edit')"><i class="bi bi-pencil-square"></i></button></span>
             </div>
         </div>
     </div>
@@ -57,17 +60,5 @@
 <script>
 export default {
     props: ['service','desc','price'],
-    
-    data(){
-        return {
-            services: {'Pet Walker': "/hr",
-                        'Pet Trainer': '/hr',
-                        'Pet Hotel': '/day',
-                        'Pet Sitter': '/day',
-                        'Pet Groomer': '/hr',
-                        'Pet Mover' : '/hr'},
-
-        }
-    },
 }
 </script>

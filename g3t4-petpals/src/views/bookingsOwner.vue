@@ -106,7 +106,7 @@ export default {
                             onValue(ref(db, `users/${oid}`), (snapsht) => {
                                 name = snapsht.val().username;
                                 desc = snapsht.val().services;
-                                loc = snapsht.val().address;
+                                loc = snapsht.val().region;
                                 exp = snapsht.val().yrsOfExp;
                                 img = snapsht.val().profilepic;
                                 ratings = snapsht.val().ratings
@@ -156,7 +156,7 @@ export default {
                             onValue(ref(db, `users/${oid}`), (snapsht) => {
                                 name = snapsht.val().username;
                                 desc = snapsht.val().services;
-                                loc = snapsht.val().address;
+                                loc = snapsht.val().region;
                                 exp = snapsht.val().yrsOfExp;
                                 img = snapsht.val().profilepic;
                                 ratings = snapsht.val().ratings
@@ -205,7 +205,7 @@ export default {
                             onValue(ref(db, `users/${oid}`), (snapsht) => {
                                 name = snapsht.val().username;
                                 desc = snapsht.val().services;
-                                loc = snapsht.val().address;
+                                loc = snapsht.val().region;
                                 exp = snapsht.val().yrsOfExp;
                                 img = snapsht.val().profilepic;
                                 ratings = snapsht.val().ratings

@@ -89,6 +89,13 @@ img.rounded {
             {{ description }}
           </p>
 
+          <h4>Ratings</h4>
+          <div class="ratings mb-3 mt-1">
+              <i v-for="n in parseInt(ratings)" class="bi bi-star-fill"></i>
+              <i v-if='!Number.isInteger(ratings)' class="bi bi-star-half"></i>
+              <i v-for='m in parseInt(5-ratings)' class="bi bi-star"></i>
+          </div>
+
           <h4>Email</h4>
           <p class="mb-3 mt-1">{{ email }}</p>
 
@@ -245,6 +252,7 @@ export default {
       mobile: '',
       address: '',
       photoURL: '',
+      ratings: 0,
       postal: '',
       reviews: [],
       services: [],
@@ -294,6 +302,7 @@ export default {
             this.description = snapshot.val().bio
             this.email = user.email
             this.postal = snapshot.val().postalcode
+            this.ratings = snapshot.val().ratings
 
           });
         }
@@ -427,7 +436,7 @@ export default {
                     obj['review'] = snapst.val()[serv].review
                     obj['rating'] = snapst.val()[serv].rating
                     this.reviews.push(obj)
-                    this.noReviews = true
+                    this.noReviews = false
                   }
 
                 });

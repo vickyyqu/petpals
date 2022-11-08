@@ -529,6 +529,7 @@ export default {
         }
       });
     },
+
   },
 
   mounted(){
