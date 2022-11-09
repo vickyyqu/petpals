@@ -106,32 +106,12 @@
 <!-- Parallax Section -->
 <div class="container-flex">
     <div class="row">
-        
-        <!-- <div class="col-md-4 order-md-2 content-login">
-            <div class="box">
-                <div v-if="forgot" class="login mt-5" style="padding-bottom:350px;">
-                    <h3>Reset Password</h3>
-                    <div class="my-3">
-
-                        <div class="form w-100 mt-4 mb-1">
-                            <input type="text" autocomplete="off" v-model = 'email' id="email" required />
-                            <label for="text" class="label-name p-3">
-                                <span class="content-name">
-                                Enter Your Email:
-                                </span>
-                            </label>
-                        </div>
-
-                        <div v-if="emailSent">
-                            <small style="font-style:italic; color:brown" class="text-center py-4">Email sent!</small>
-                        </div>
-                        <small v-else style="font-style:italic">*An email will be sent to your inbox to reset your password.</small>
-                    </div> -->
 
             <div class="col-md-4 order-md-2 content-login">
                 <div class="box">
                     <div v-if="forgot" class="login mt-5" style="padding-bottom:350px;">
                         <h3>Reset Password</h3>
+                        <p class="py-1" style="font-style:italic;text-align:center;font-size:14px;">An email will be sent to your inbox to reset your password.</p>
                         <div class="my-3">
 
                             <div class="form w-100 mt-4 mb-1">
@@ -152,7 +132,7 @@
                     </div>
 
                 <div v-else class="login" style="padding-bottom:80px;">
-                    <h3 class="pt-5 mb-4">Login</h3>
+                    <h3 class="pt-5 mb-3">Login</h3>
 
                         <div class="form w-100">
                             <input type="text" autocomplete="off" v-model = 'email' id="email" required />
@@ -181,14 +161,6 @@
 
                         <button v-if='verified' class="btn login-btn btn-select mt-3 p-1 mx-auto px-2" @click="sendEmail">Resend email verification</button>
 
-                            <div class="form w-100 mt-4">
-                                <input type="password" v-model = 'pwd' v-on:keyup.enter = 'userLogin()' class="form-control" id="pwd" autocomplete="off" required />
-                                <label for="password" class="label-name p-3">
-                                  <span class="content-name">
-                                    Enter Your Password:
-                                  </span>
-                                </label>
-                            </div>
                         <div class="login-btn">
                             <button class="btn login-btn btn-select mt-4" @click="userLogin">Login</button>
                         </div>
@@ -410,18 +382,14 @@ export default {
             if (this.email == "" && this.pwd == ""){
                 this.loginError = true
                 this.errorMsg = 'Please enter your email and password.'
-                this.adderror('pwd')
-                this.adderror('email')
 
             } else if (this.email == ""){
                 this.loginError = true
                 this.errorMsg = 'Please enter your email address.'
-                this.adderror('email')
 
             } else if (this.pwd == ""){
                 this.loginError = true
                 this.errorMsg = 'Please enter your password.'
-                this.adderror('pwd')
 
             } else {
 
