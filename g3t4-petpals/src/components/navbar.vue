@@ -54,14 +54,19 @@ a:hover {
                             </li>
 
                             <li class="nav-item px-3 my-2">
-                                <router-link to="/chat">Chats</router-link>
+                                <router-link to="/chat" class="d-flex align-items-center">
+                                    Chats
+                                    <!-- if there is an unread chat -->
+                                    <img v-if="unread" src="../img/green-circle-icon.png" style="width:8px;" class="ms-1">
+                                </router-link>
+                                    
                             </li>
 
                         </ul>
 
                         <ul class="navbar-nav my-2">
                             <li class="nav-item active">
-                                <img v-bind:src="photoURL" class="rounded rounded-circle ms-1 me-2" style="width:40px;">
+                                <img v-bind:src="photoURL" class="rounded rounded-circle ms-1 me-3" style="width:40px;">
                                 <router-link to="/petownerprofile">{{ username }}</router-link>
                             </li>
                         </ul>
@@ -98,7 +103,8 @@ export default {
     data() {
         return {
             username: "",
-            photoURL: ""
+            photoURL: "",
+            unread: false
         }
     },
     methods: {
