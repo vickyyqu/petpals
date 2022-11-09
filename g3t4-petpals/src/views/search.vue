@@ -1,9 +1,4 @@
 <style>
-.required {
-    font-style: italic;
-    color: #dfd1cd;
-}
-
 input[type=text] {
     height: 38px;
 }
@@ -35,24 +30,44 @@ input[type='radio']:checked{
 .bi-search-heart {
     color: #4b3830;
 }
+
+.required {
+    font-style: italic;
+    color: #856658;
+}
 </style>
 
 <template>
 
-    <div class="container-fluid">
-        <navbar></navbar>
+<div class="container-fluid">
+    <navbar></navbar>
 
-        <div class="row">
-            <div class="col-1 sides">
-            </div>
+    <div class="row">
+        <div class="col-1 sides">
+        </div>
 
-            <div class="col-10 search-providers px-5">
-                <img src="../img/header.jpeg" class="w-100 mt-5 pt-3 rounded-3" alt="">
+        <div class="col-10">
 
-                <h3 class="search-provider mt-4"><i class="bi bi-search-heart"></i> Search Providers</h3>
+                <div id="carouselExampleFade" class="carousel slide carousel-fade mt-5 pt-4" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-interval="2000">
+                    <img class="d-block w-100 rounded-3" src="../img/header.jpeg" alt="First slide">
+                    </div>
+                    <div class="carousel-item" data-interval="2000">
+                    <img class="d-block w-100 rounded-3" src="../img/header2.jpeg"  alt="Second slide">
+                    </div>
+                    <div class="carousel-item" data-interval="2000">
+                    <img class="d-block w-100 rounded-3" src="../img/header3.png"  alt="Third slide">
+                    </div>
+                </div>
+                </div>
+            
+            <div class="search-providers px-5">
 
-                <div class="required-services mt-3">
-                    <span class="required me-2">Required Services:</span>
+                <h3 class="search-provider my-4 pt-2"><i class="bi bi-search-heart"></i> Search Providers</h3>
+
+                <div class="required-services">
+                    <span class="required">Required Services:</span>
 
                     <br>
 
@@ -65,31 +80,9 @@ input[type='radio']:checked{
                 </div>
 
                 <div class="row my-3">
-                    <div class="col-lg-9">
-                        <span class="required me-2">Your Location:</span>
-                        <div class="input-group input-group-sm mb-3">
-                            <input type="text" class="form-control" aria-label="Small"
-                                aria-describedby="inputGroup-sizing-sm">
-                        </div>
-                    </div>
-    
-                    <div class="col-lg-3">
-                        <span class="required me-2 ">Search Radius:</span>
-                        <select class="form-select mb-3" aria-label="Default select example">
-                            <option id="1" class="select-option">1km</option>
-                            <option id="3" class="select-option">3km</option>
-                            <option id="5" class="select-option">5km</option>
-                            <option id="10" class="select-option">10km</option>
-                            <option id="15" class="select-option">15km</option>
-                        </select>
-                    </div>
-    
-                    <div class="my-2">
-                        <myMap></myMap>
-                    </div>
-    
-                    <button class="btn btn-go mt-3" v-on:click="filterServices()">Go</button>
-    
+                    
+                    <myMap v-on:searchClick="filterServices"></myMap>
+
                 </div>
     
                 <div class="row">
@@ -102,13 +95,14 @@ input[type='radio']:checked{
                             <option id="reviews" value = 'ratings'>Ratings</option>
                             <option id="yearsOfExperience" class="select-option" value = 'yrsOfExp'>Years of experience</option>
                             <option id="rates" class="select-option" value = 'rates'>Rates</option>
+                            <option id="dist" class="select-option" value = 'dist'>Distance</option>
                         </select>
                     </div>
                     <div class="col-lg-2 col-4 mt-3">
                         <div class="form-check">
                             <input class="form-check-input" v-model='orderBy' v-bind:value = '"desc"' type="radio" name="sortprofiles" id="highToLow">
                             <label class="form-check-label" for="highToLow">
-                              From High to Low
+                            From High to Low
                             </label>
                         </div>
                         <div class="form-check">
@@ -121,21 +115,24 @@ input[type='radio']:checked{
                 </div>
     
                 <div id = 'profileCards' class="row pb-5">
-                    <profileCard v-for="result in filterResults" v-bind:oid = 'result.oid' v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service'></profileCard>
+                    <profileCard v-for="result in filterResults" v-bind:dist = 'result.dist' v-bind:oid = 'result.oid' v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service'></profileCard>
+
+                    <div v-if="noMatch">
+                        <p class="text-center m-5 p-4" style="background-color:#f8f1ef;border-radius:50px;">No search results yet...</p>
+                    </div>
                 </div>
-
-            </div>
-
-            
-
-            <div class="col-1 sides">
             </div>
 
         </div>
 
+        <div class="col-1 sides">
+        </div>
+
     </div>
 
-    <petpalsFooter></petpalsFooter>
+</div>
+
+<petpalsFooter></petpalsFooter>
 
 </template>
 
@@ -144,9 +141,10 @@ import navbar from '@/components/navbar.vue'
 import myMap from '@/components/myMap.vue'
 import profileCard from '@/components/profileCard.vue'
 import petpalsFooter from '@/components/petpalsFooter.vue'
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+import { VueperSlides, VueperSlide } from "vueperslides";
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, set, update, get, push, query, orderByChild} from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
@@ -169,22 +167,22 @@ export default {
             filterResults : [],
             sortBy : '',
             orderBy : '',
-            order: 'smth',
+            inputAddr: '',
+            noMatch: true,
         }
     },
+    
     components: {
         navbar,
         myMap,
         profileCard,
-        petpalsFooter
+        petpalsFooter,
+        VueperSlides,
+        VueperSlide,
     },
 
-    mounted() {
-        this.filterServices()
-    }, 
-
     methods : {
-        filterServices(){
+        filterServices(out){
             this.filterResults = [] //clear previous filter results
 
             if (this.checkedServices.includes('All')){
@@ -193,32 +191,31 @@ export default {
 
             for (let key in this.checkedServices){
                 var service = this.checkedServices[key]
+                this.noMatch = false //have matching listings
 
                 onValue(ref(db, `services/${service}`), (snapshot) => {
                     for (let uid in snapshot.val()){
-                        
-                        var item = {}
-                        var price = snapshot.val()[uid]
-                        
                         onValue(ref(db,`users/${uid}`), (snapst) => {
-                            item.rates = price
-                            item.desc = snapst.val().desc
+                            var item = {}
+                            item.rates = snapshot.val()[uid].price
+                            item.desc = snapshot.val()[uid].desc
                             item.yrsOfExp = snapst.val().yrsOfExp
                             item.name = snapst.val().username
                             item.img = snapst.val().profilepic 
                             item.ratings = snapst.val().ratings
-                            item.location = snapst.val().address
+                            item.location = snapst.val().region
                             item.service = service
                             item.service = service
                             item.oid = uid
 
-                            console.log(item,this.filterResults)
-                            
-                            if (!this.filterResults.includes(item)){
-                                this.filterResults.push(item) // sorted by service by default
+                            var coords = [snapst.val().coords.lat, snapst.val().coords.lng ]
+                            var check = this.getSearchRad(out, coords)
+
+                            if (check != false && snapshot.val()[uid].price != ''){
+                                item.dist = check.toFixed(1)
+                                this.filterResults.push(item) // sorted by service by default                              
                             }
 
-                            console.log(this.filterResults)
                         });
 
                     }
@@ -232,6 +229,8 @@ export default {
                         this.filterResults.sort(function(a,b){return b.ratings-a.ratings}) 
                     }else if (this.sortBy == 'yrsOfExp'){
                         this.filterResults.sort(function(a,b){return b.yrsOfExp-a.yrsOfExp}) 
+                    }else if (this.sortBy == 'dist'){
+                        this.filterResults.sort(function(a,b){return b.dist-a.dist}) 
                     }  
                 }else{
                     if (this.sortBy == 'rates'){
@@ -240,9 +239,25 @@ export default {
                         this.filterResults.sort(function(a,b){return a.ratings-b.ratings}) 
                     }else if (this.sortBy == 'yrsOfExp'){
                         this.filterResults.sort(function(a,b){return a.yrsOfExp-b.yrsOfExp}) 
-                    }  
+                    }else if (this.sortBy == 'dist'){
+                        this.filterResults.sort(function(a,b){return a.dist - b.dist}) 
+                    }   
                 }
                                 
+            }
+        },
+
+        getSearchRad(out, coord2){
+            var coord1 = out.coord
+            var radius = out.rad
+            const km = 111.3
+
+            var dist = Math.sqrt((km*coord1[0] - km*coord2[0])**2 + (km*coord1[1] - km*coord2[1])**2)
+            
+            if (dist <= radius){
+                return dist
+            } else {
+                return false
             }
         }
     },
