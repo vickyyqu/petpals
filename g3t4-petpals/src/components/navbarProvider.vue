@@ -39,7 +39,7 @@
 
                         <ul class="navbar-nav my-2">
                             <li class="nav-item active">
-                                <img v-bind:src="photoURL" class="rounded rounded-circle ms-1 me-3" style="width:40px;">
+                                <img v-bind:src="photoURL" class="rounded rounded-circle ms-1 me-3" style="width:40px;height:40px;">
                                 <router-link to="/petserviceprofile">{{ username }}</router-link>
                             </li>
                         </ul>
@@ -89,8 +89,7 @@ export default {
             });
         },
 
-    },
-    getProfile() {
+        getProfile() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 onValue(ref(db, `users/${user.uid}`), (snapshot) => {
@@ -99,6 +98,8 @@ export default {
                 });
             }
         });
+    },
+
     },
     mounted() {
         this.getProfile()

@@ -115,7 +115,7 @@
                         <div class="my-3">
 
                             <div class="form w-100 mt-4 mb-1">
-                                <input type="text" autocomplete="off" v-model = 'email' id="email" required />
+                                <input type="text" autocomplete="off" v-model = 'email' id="email"  required />
                                 <label for="text" class="label-name p-3">
                                   <span class="content-name">
                                     Enter Your Email:
@@ -158,7 +158,6 @@
                                     Enter Your Password:
                                   </span>
                                 </label>
-                                
                             </div>
 
                             <button class="btn p-0" style="background-color:transparent; border-color:transparent; font-size:12px; color:#F8AA9D" @click="forgot=true">Forgot password?</button>
@@ -387,47 +386,67 @@
 
         methods: {
             userLogin(){
-                const auth = getAuth();
-                signInWithEmailAndPassword(auth, this.email, this.pwd)
-                .then((userCredential) => {
-                    onAuthStateChanged(auth, (user) => {
-                        if (user) {
-                            if (user.emailVerified){
-                            onValue(ref(db, `users/${user.uid}/type`), (snapshot) => {
-                                if (snapshot.val() == 'Pet Owner'){
-                                    window.location.href = `/search`;
-                                }else{
-                                    window.location.href = `/bookingsProvider`;
-                                }   
-                            });               
-                            }else{
-                                this.errorMsg = 'Please verify your email first.'
-                                this.loginError = true
-                                this.verified = true
-                            }
-                        }
-                    });  
-  
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    console.log(error.message)
-                    let msg = error.message.slice(22,(error.message.length)-2)
-                    if (msg == 'wrong-password'){
-                        this.errorMsg = 'Password is invalid. Please try again.'
-                    }else if (msg == 'user-not-found'){
-                        this.errorMsg = 'No account registered. Please register for one first.'
-                        this.email = ""
-                        this.pwd = "" 
-                    } else if (msg == 'invalid-email'){
-                        this.errorMsg = 'Email is invalid. Please enter a valid email address.'
-                        this.email = ""
-                        this.pwd = "" 
-                    }else if (msg == 'missing-password'){
-                        this.errorMsg = 'Please enter your password.'
-                    }
+
+                if (this.email == "" && this.pwd == ""){
                     this.loginError = true
-                });
+                    this.errorMsg = 'Please enter your email and password.'
+                    this.adderror('pwd')
+                    this.adderror('email')
+
+                } else if (this.email == ""){
+                    this.loginError = true
+                    this.errorMsg = 'Please enter your email address.'
+                    this.adderror('email')
+
+                } else if (this.pwd == ""){
+                    this.loginError = true
+                    this.errorMsg = 'Please enter your password.'
+                    this.adderror('pwd')
+
+                } else {
+
+                    const auth = getAuth();
+                    signInWithEmailAndPassword(auth, this.email, this.pwd)
+                    .then((userCredential) => {
+                        onAuthStateChanged(auth, (user) => {
+                            if (user) {
+                                if (user.emailVerified){
+                                onValue(ref(db, `users/${user.uid}/type`), (snapshot) => {
+                                    if (snapshot.val() == 'Pet Owner'){
+                                        window.location.href = `/search`;
+                                    }else{
+                                        window.location.href = `/bookingsProvider`;
+                                    }   
+                                });               
+                                }else{
+                                    this.errorMsg = 'Please verify your email first.'
+                                    this.loginError = true
+                                    this.verified = true
+                                }
+                            }
+                        });  
+    
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        console.log(error.message)
+                        let msg = error.message.slice(22,(error.message.length)-2)
+                        if (msg == 'wrong-password'){
+                            this.errorMsg = 'Password is invalid. Please try again.'
+                        }else if (msg == 'user-not-found'){
+                            this.errorMsg = 'No account registered. Please register for one first.'
+                            this.email = ""
+                            this.pwd = "" 
+                        } else if (msg == 'invalid-email'){
+                            this.errorMsg = 'Email is invalid. Please enter a valid email address.'
+                            this.email = ""
+                            this.pwd = "" 
+                        } else {
+                            this.errorMsg = 'Unsuccessful login. Please try again.'
+                        }
+                        this.loginError = true
+                    });
+                }
             },
 
             resetPassword(){
@@ -461,7 +480,7 @@
                         });
                     }
                 })
-            },
+            }
 
         },
         components: {
