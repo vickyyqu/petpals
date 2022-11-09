@@ -47,7 +47,6 @@ input[type='radio']:checked{
             </div>
 
             <div class="col-10">
-            
 
                   <div id="carouselExampleFade" class="carousel slide carousel-fade mt-5 pt-4" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -65,10 +64,9 @@ input[type='radio']:checked{
                 
                 <div class="search-providers px-5">
 
-                
-                    <h3 class="search-provider mt-4"><i class="bi bi-search-heart"></i> Search Providers</h3>
+                    <h3 class="search-provider my-4 pt-2"><i class="bi bi-search-heart"></i> Search Providers</h3>
 
-                    <div class="required-services mt-3">
+                    <div class="required-services">
                         <span class="required">Required Services:</span>
 
                         <br>
@@ -120,7 +118,7 @@ input[type='radio']:checked{
                         <profileCard v-for="result in filterResults" v-bind:dist = 'result.dist' v-bind:oid = 'result.oid' v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service'></profileCard>
 
                         <div v-if="noMatch">
-                            <h4 class="text-center m-5 p-4" style="background-color:#f8f1ef;border-radius:20px;">No search results yet...</h4>
+                            <p class="text-center m-5 p-4" style="background-color:#f8f1ef;border-radius:50px;">No search results yet...</p>
                         </div>
                     </div>
                 </div>

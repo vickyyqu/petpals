@@ -29,30 +29,39 @@
 
                 <div class="col-10 px-5">
 
+                    <div v-if="mainError" class="alert alert-danger p-2 my-4">{{signupError}}</div>
+
                     <div class="row my-4">
+
                         <!-- email and username-->
                         <div class="col-md-6">
+                            
                             <label for="inputEmail">Email</label>
                             <input type="email" v-model='email' class="form-control w-100" placeholder="" required>
+                            <small v-if="emailEmpty" style="color: brown; font-style:italic">{{errors.email}}</small>
                         </div>
                         <div class="col-md-6">
-                            <label for="inputUsername">Username</label>
-                            <input type="text" v-model='username' class="form-control w-100" id="inputUsername"
-                                placeholder="" required>
+                            <label for="inputUsername">Display Name</label>
+                            <input type="text" v-model='username' class="form-control w-100" id="inputUsername" placeholder="" required>
+                            <small v-if="userEmpty" style="color: brown; font-style:italic">{{errors.user}}</small>
 
                         </div>
                     </div>
 
                     <label for="inputPassword">Password</label>
-                    <input type="password" class="form-control mb-4" id="inputPassword"
+                    <input type="password" class="form-control" id="inputPassword"
                         style="background-color:white" placeholder="" v-model="psw" required>
+                        <small v-if="pwdEmpty" style="color: brown; font-style:italic;display:block;">{{errors.pwd}}</small>
 
 
-                    <label for="inputRepeatPassword">Repeat Password</label>
+                    <label for="inputRepeatPassword" class="mt-4">Repeat Password</label>
                     <input type="password" class="form-control w-100" id="inputRepeatPassword"
                         style="background-color:white" placeholder="" v-model="psw_repeat" required>
-                    <div v-if="psw == psw_repeat && psw != ''" class="alert alert-success p-2 my-3">Passwords match!</div>
-                    <div v-if="psw != psw_repeat && psw_repeat != ''" class="alert alert-danger p-2 my-3">Passwords do not match!
+                        <small v-if="repeatEmpty" style="color: brown; font-style:italic">{{errors.repeat}}</small>
+                    <div v-if="psw == psw_repeat && psw != ''" class="alert alert-success p-2 my-3">Passwords match!
+                    </div>
+                    <div v-if="psw != psw_repeat && psw_repeat != ''" class="alert alert-danger p-2 my-3">Passwords
+                        do not match!
                     </div>
 
 
@@ -64,12 +73,12 @@
                             <input type="text" v-model='mobile' class="form-control w-100" id="inputNumber"
                                 placeholder="" aria-describedby="inputGroupPrepend2" min="0" max="99999999"
                                 maxlength="8" minlength="8" required>
+                                <small v-if="numEmpty" style="color: brown; font-style:italic">{{errors.num}}</small>
                         </div>
 
                         <div class="col-md-6">
                             <label for="profilePicture">Profile Picture</label>
-                            <input type="file" @change='getPic' class="form-control w-100" id="profilePicture"
-                                required>
+                            <input type="file" @change='getPic' class="form-control w-100" id="profilePicture">
                         </div>
                     </div>
 
@@ -78,15 +87,18 @@
                     <small class="text-end d-block mb-2">{{ count }}/300</small>
 
                     <label for="inputAddress">Address</label>
-                    <input type="text" v-model='address' class="form-control mb-4" id="inputAddress" placeholder="" required>
+                    <input type="text" v-model='address' class="form-control" id="inputAddress" placeholder=""
+                        required>
+                        <small v-if="addEmpty" style="color: brown; font-style:italic;display:block;">{{errors.add}}</small>
 
-                    <label for="inputPostal">Postal Code</label>
+                    <label for="inputPostal" class="mt-4">Postal Code</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">SG</span>
                         </div>
                         <input type="text" v-model='postal' :onkeyup="startTimer" class="form-control" id="inputPostal" required>
                     </div>
+                    <small v-if="postalEmpty" style="color: brown; font-style:italic;display:block">{{errors.postal}}</small>
                     <div v-if="invalidAddr" class="alert alert-danger p-2 my-3">Invalid address entered.</div>
 
                     <label class="mt-4" for="yearsofexp">Years of Experience</label>
@@ -159,6 +171,19 @@ export default {
             invalidAddr: false,
             timerId: null,
             showModal: false,
+
+            emailEmpty: false,
+            pwdEmpty: false,
+            repeatEmpty: false,
+            userEmpty: false,
+            numEmpty: false,
+            descEmpty: false,
+            addEmpty: false,
+            postalEmpty: false,
+
+            errors: {email: "", pwd: "", repeat: "", user: "", num: "", pic: "", desc: "", add: "", postal: ""},
+            signupError: "",
+            mainError: false
         }
     },
 
@@ -185,8 +210,17 @@ export default {
 
         registerUser() {
             const auth = getAuth();
-            if (this.psw == this.psw_repeat && this.psw != '' && this.email != '' && this.postal != '' && this.address != '' && this.username != '' && this.mobile != '') {
-                this.checkAddr() 
+            this.mainError = false
+
+            if (this.psw == this.psw_repeat && this.psw.length >= 6 && this.email != '' && this.postal != '' && this.address != '' && this.username != '' && this.mobile != '' && !this.invalidAddr) {
+    
+                this.pwdEmpty = false
+                this.repeatEmpty = false
+                this.emailEmpty = false
+                this.numEmpty = false
+                this.pwdEmpty = false
+                this.postalEmpty = false
+                this.userEmpty = false
 
                 createUserWithEmailAndPassword(auth, this.email, this.psw)
                     .then((userCredential) => {
@@ -200,23 +234,79 @@ export default {
                             username: this.username,
                             profilepic: this.pic,
                             mobile: this.mobile,
-                            type: 'Pet Service Provider',
-                            desc: this.desc,
-                            yrsOfExp: this.yrsOfExp,
+                            type: 'Pet Owner',
+                            bio: this.desc,
                             address: this.address,
                             postalcode: this.postal,
                             ratings: 0, //by default
                             coords: {'lat': this.lat, 'lng': this.lng},
-                            region: this.region,
+                            region: this.region
                         })
 
                         sendEmailVerification(user)
                         .then(() => {
                             this.toggleModal()
                         });
+
                     })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        console.log(errorCode)
+
+                        if (errorCode == "auth/email-already-in-use"){
+                            this.signupError = "Registration failed. Email entered is already in use."
+
+                            this.mainError = true
+
+                        } else if (errorCode == "auth/invalid-email") {
+                            this.signupError = "Registration failed. You have entered an invalid email address."
+
+                            this.mainError = true
+                        }
+
+                    });
 
             }
+
+            if (this.psw == ''){
+                this.pwdEmpty = true
+                this.errors.pwd = "Password field empty."
+            } else if (this.psw.length < 6){
+                this.pwdEmpty = true
+                this.errors.pwd = "Password must be at least 6 characters long."
+            }
+
+            if (this.psw_repeat == ''){
+                this.repeatEmpty = true
+                this.errors.repeat = "Repeat password field empty."
+            }
+
+            if (this.email == ''){
+                this.emailEmpty = true
+                this.errors.email = "Email field empty."
+            }
+
+            if (this.mobile == ''){
+                this.numEmpty = true
+                this.errors.num = "Phone number field empty."
+            }
+
+            if (this.address == ''){
+                this.addEmpty = true
+                this.errors.add = "Address field empty."
+            }
+
+            if (this.postal == ''){
+                this.postalEmpty = true
+                this.errors.postal = "Postal code field empty."
+            }
+
+            if (this.username == ''){
+                this.userEmpty = true
+                this.errors.user = "Display name field empty."
+            }
+
+            console.log(this.errors)
 
         },
 
@@ -267,7 +357,7 @@ export default {
         
         startTimer(){
             clearTimeout(this.timerId)
-            this.timerId = window.setTimeout(this.checkAddr, 1000)
+            this.timerId = window.setTimeout(this.checkAddr, 400)
         },
     },
 
