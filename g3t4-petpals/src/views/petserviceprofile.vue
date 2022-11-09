@@ -120,7 +120,7 @@ img.rounded {
 
         <hr class="w-75">
 
-        <div class="row my-4 px-4 text-start">
+        <div class="row my-4 px-4 text-align-center">
 
             <h4>Bio</h4>
             <p class="mb-3 mt-1">{{ description }}</p>
@@ -208,7 +208,7 @@ img.rounded {
     />
 
     <label>Profile Picture:</label>
-    <input type="file" @change = 'getPic' class="form-control mb-2" id="profilepicture">
+    <input type="file" @change = 'getPic' class="form-control mb-2" id="profilepicture" accept=".png, .jpg, .jpeg">
 
     <label>Years of Experience:</label>
     <input class="form-control mb-2"
