@@ -8,6 +8,11 @@
     background-color: #58484e;
     color: #f8f1ef;
 }
+
+.card:hover {
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+    transform: scale(1.08);
+}
 </style>
 
 <template>
@@ -15,12 +20,12 @@
     <div class="card">
         <div class="d-flex align-items-center mt-3 mx-3">
 
-            <div class="d-flex justify-content-start align-items-center">
+            <div class="d-flex">
                 <img class="mr-3 rounded-circle" v-bind:src = 'img' style="max-width:70px">
             </div>
 
             <div class="ms-2">
-                <h6>{{name}}</h6>
+                <h6>{{name}}</h6> 
                 <small style="font-style:italic;">{{service}}</small>
 
                 <div class="ratings">
@@ -36,22 +41,21 @@
                     <i v-if = 'ratings < 3' class="bi bi-star"></i>
                     <i v-if = 'ratings < 4' class="bi bi-star"></i>
                 </div>
-
+                
             </div>
 
         </div>
-        <div class="card-body">
-            <h6 class="card-title">Description:</h6>
-            <small class="card-text">{{desc}}</small>
-            <br/>
-            <small class="card-text float-end"> &nbsp;{{dist}} km away</small>
+        <div class="card-body justify-content-center">
+            <div class="text-align-horizontal">
+                <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-geo"></i> {{location}} &nbsp;</small>
+                <small class="card-text"> &nbsp;{{dist}} km away </small></button> <br>
+                <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small></button> 
+                <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-house-heart"></i>{{yrsOfExp}} Yrs of experience</small></button>
+            </div>
         </div>
         <div class="card-footer">
-            <div class="text-end">
-                <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small>
-                <small class="profile-details"><i class="bi bi-geo"></i> {{location}} &nbsp;</small>
-                <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of experience </small>
-            </div>
+            <h6 class="card-title">Description:</h6>
+            <small class="card-text">{{desc}}</small>  
         </div>
 
 
