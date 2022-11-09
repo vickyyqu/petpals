@@ -54,6 +54,10 @@ a:hover {
                             </li>
 
                             <li class="nav-item px-3 my-2">
+                                <router-link to="/calendar">Calendar</router-link>
+                            </li>
+
+                            <li class="nav-item px-3 my-2">
                                 <router-link to="/chat" class="d-flex align-items-center">
                                     Chats
                                     <!-- if there is an unread chat -->
@@ -116,6 +120,7 @@ export default {
                 console.log('o no')
             });
         },
+
         getProfile() {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
@@ -127,6 +132,7 @@ export default {
             });
         },
     },
+
     mounted() {
         this.getProfile()
     }

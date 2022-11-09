@@ -30,6 +30,10 @@
                             </li>
 
                             <li class="nav-item px-3 my-2">
+                                <router-link to="/calendar">Calendar</router-link>
+                            </li>
+
+                            <li class="nav-item px-3 my-2">
                                 <router-link to="/chat">Chats</router-link>
                                 <!-- if there is an unread chat -->
                                 <img v-if="unread" src="../img/green-circle-icon.png" style="width:8px;" class="ms-1">

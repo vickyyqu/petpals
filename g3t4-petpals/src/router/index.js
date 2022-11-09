@@ -2,6 +2,7 @@ import home from "../views/home.vue"
 import chat from "../views/chat.vue"
 import search from "../views/search.vue"
 import profilelisting from "../views/profilelisting.vue"
+import calendar from "../views/calendar.vue"
 
 import bookingsOwner from "../views/bookingsOwner.vue"
 import bookingsProvider from "../views/bookingsProvider.vue"
@@ -66,6 +67,11 @@ export const router = createRouter({
             path: "/profilelisting",
             name: "profilelisting",
             component: profilelisting
+        },
+        {
+            path: "/calendar",
+            name: "/calendar",
+            component: calendar
         },
     ]
 })
