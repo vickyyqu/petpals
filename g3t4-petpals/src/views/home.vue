@@ -107,39 +107,32 @@
 <div class="container-flex">
     <div class="row">
 
-        <div class="col-md-4 order-md-2 content-login">
-            <div class="box">
-                <div v-if="forgot" class="login mt-5" style="padding-bottom:350px;">
-                    <h3>Reset Password</h3>
-                    <div class="my-3">
+            <div class="col-md-4 order-md-2 content-login">
+                <div class="box">
+                    <div v-if="forgot" class="login mt-5" style="padding-bottom:350px;">
+                        <h3>Reset Password</h3>
+                        <p class="py-1" style="font-style:italic;text-align:center;font-size:14px;">An email will be sent to your inbox to reset your password.</p>
+                        <div class="my-3">
 
-                        <div class="form w-100 mt-4 mb-1">
-                            <input type="text" autocomplete="off" v-model = 'email' id="email" required />
-                            <label for="text" class="label-name p-3">
-                                <span class="content-name">
-                                Enter Your Email:
-                                </span>
-                            </label>
+                            <div class="form w-100 mt-4 mb-1">
+                                <input type="text" autocomplete="off" v-model = 'email' id="email"  required />
+                                <label for="text" class="label-name p-3">
+                                  <span class="content-name">
+                                    Enter Your Email:
+                                  </span>
+                                </label>
+                            </div>
+                            <div class="login-btn mt-5" v-if="emailSent">
+                                <button class="btn login-btn btn-select" @click="forgot=false">Back to login</button>
+                            </div>
+                            <div class="login-btn mt-5" v-else>
+                                <button class="btn login-btn btn-select" @click="resetPassword()">Confirm</button>
+                            </div>
                         </div>
-
-                        <div v-if="emailSent">
-                            <small style="font-style:italic; color:brown" class="text-center py-4">Email sent!</small>
-                        </div>
-                        <small v-else style="font-style:italic">*An email will be sent to your inbox to reset your password.</small>
                     </div>
-
-
-                    <div class="login-btn mt-5" v-if="emailSent">
-                        <button class="btn login-btn btn-select" @click="forgot=false">Back to login</button>
-                    </div>
-                    <div class="login-btn mt-5" v-else>
-                        <button class="btn login-btn btn-select" @click="resetPassword()">Confirm</button>
-                    </div>
-
-                </div>
 
                 <div v-else class="login" style="padding-bottom:80px;">
-                    <h3 class="pt-5 mb-4">Login</h3>
+                    <h3 class="pt-5 mb-3">Login</h3>
 
                         <div class="form w-100">
                             <input type="text" autocomplete="off" v-model = 'email' id="email" required />
@@ -168,27 +161,27 @@
 
                         <button v-if='verified' class="btn login-btn btn-select mt-3 p-1 mx-auto px-2" @click="sendEmail">Resend email verification</button>
 
-                    <div class="login-btn">
-                        <button class="btn login-btn btn-select mt-4" @click="userLogin">Login</button>
-                    </div>
+                        <div class="login-btn">
+                            <button class="btn login-btn btn-select mt-4" @click="userLogin">Login</button>
+                        </div>
 
-                    <div class="text-center">
-                        <h4 class="mt-5 mb-3" style="font-style:italic">or</h4>
-                        <h3>New to PetPals?</h3>
-                        <div class="dropdown mt-3">
+                        <div class="text-center">
+                            <h4 class="mt-5 mb-3" style="font-style:italic">or</h4>
+                            <h3>New to PetPals?</h3>
+                            <div class="dropdown mt-3">
 
-                            <div class="d-block fade-in-text mx-auto">
-                                <img src="../img/doggieicon.png" style="width:50px;">
-                                <img src="../img/catto.png" style="width:50px;">
-                            </div>
+                                <div class="d-block fade-in-text mx-auto">
+                                    <img src="../img/doggieicon.png" style="width:50px;">
+                                    <img src="../img/catto.png" style="width:50px;">
+                                </div>
 
-                            <button class="btn btn-select">Register Here</button>
-                            <div class="dropdown-content">
-                                <router-link to="/registerowner" style="font-size:16px;text-decoration:none" class="text-center pt-2 ">I am a pet owner.</router-link>
-                                <router-link to="/registerprovider" style="font-size:16px;text-decoration:none;" class="text-center pt-2 ">I am a pet service provider.</router-link>
+                                <button class="btn btn-select">Register Here</button>
+                                <div class="dropdown-content">
+                                    <router-link to="/registerowner" style="font-size:16px;text-decoration:none" class="text-center pt-2 ">I am a pet owner.</router-link>
+                                    <router-link to="/registerprovider" style="font-size:16px;text-decoration:none;" class="text-center pt-2 ">I am a pet service provider.</router-link>
+                                </div>
                             </div>
                         </div>
-                    </div>
                 
                 </div>
 
@@ -385,47 +378,64 @@ export default {
 
     methods: {
         userLogin(){
-            const auth = getAuth();
-            signInWithEmailAndPassword(auth, this.email, this.pwd)
-            .then((userCredential) => {
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        if (user.emailVerified){
-                        onValue(ref(db, `users/${user.uid}/type`), (snapshot) => {
-                            if (snapshot.val() == 'Pet Owner'){
-                                window.location.href = `/search`;
-                            }else{
-                                window.location.href = `/bookingsProvider`;
-                            }   
-                        });               
-                        }else{
-                            this.errorMsg = 'Please verify your email first.'
-                            this.loginError = true
-                            this.verified = true
-                        }
-                    }
-                });  
 
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                console.log(error.message)
-                let msg = error.message.slice(22,(error.message.length)-2)
-                if (msg == 'wrong-password'){
-                    this.errorMsg = 'Password is invalid. Please try again.'
-                }else if (msg == 'user-not-found'){
-                    this.errorMsg = 'No account registered. Please register for one first.'
-                    this.email = ""
-                    this.pwd = "" 
-                } else if (msg == 'invalid-email'){
-                    this.errorMsg = 'Email is invalid. Please enter a valid email address.'
-                    this.email = ""
-                    this.pwd = "" 
-                }else if (msg == 'missing-password'){
-                    this.errorMsg = 'Please enter your password.'
-                }
+            if (this.email == "" && this.pwd == ""){
                 this.loginError = true
-            });
+                this.errorMsg = 'Please enter your email and password.'
+
+            } else if (this.email == ""){
+                this.loginError = true
+                this.errorMsg = 'Please enter your email address.'
+
+            } else if (this.pwd == ""){
+                this.loginError = true
+                this.errorMsg = 'Please enter your password.'
+
+            } else {
+
+                const auth = getAuth();
+                signInWithEmailAndPassword(auth, this.email, this.pwd)
+                .then((userCredential) => {
+                    onAuthStateChanged(auth, (user) => {
+                        if (user) {
+                            if (user.emailVerified){
+                            onValue(ref(db, `users/${user.uid}/type`), (snapshot) => {
+                                if (snapshot.val() == 'Pet Owner'){
+                                    window.location.href = `/search`;
+                                }else{
+                                    window.location.href = `/bookingsProvider`;
+                                }   
+                            });               
+                            }else{
+                                this.errorMsg = 'Please verify your email first.'
+                                this.loginError = true
+                                this.verified = true
+                            }
+                        }
+                    });  
+
+                })
+
+                .catch((error) => {
+                    const errorCode = error.code;
+                    console.log(error.message)
+                    let msg = error.message.slice(22,(error.message.length)-2)
+                    if (msg == 'wrong-password'){
+                        this.errorMsg = 'Password is invalid. Please try again.'
+                    }else if (msg == 'user-not-found'){
+                        this.errorMsg = 'No account registered. Please register for one first.'
+                        this.email = ""
+                        this.pwd = "" 
+                    } else if (msg == 'invalid-email'){
+                        this.errorMsg = 'Email is invalid. Please enter a valid email address.'
+                        this.email = ""
+                        this.pwd = "" 
+                    } else {
+                        this.errorMsg = 'Unsuccessful login. Please try again.'
+                    }
+                    this.loginError = true
+                });
+            }
         },
 
         resetPassword(){
@@ -439,7 +449,6 @@ export default {
             });
             
         },
-
         Nav(){
             if (this.counter == 1){
                 this.counter = 0;
@@ -459,8 +468,7 @@ export default {
                     });
                 }
             })
-        },
-
+        }
     },
     components: {
         services,
