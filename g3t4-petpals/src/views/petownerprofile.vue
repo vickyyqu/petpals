@@ -55,6 +55,18 @@ img.rounded {
     font-size: 18px;
   }
 }
+
+.vueper-slide {
+  &__content-wrapper:not(&__content-wrapper--outside-top):not(&__content-wrapper--outside-bottom) {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
 </style>
 
 <template>
@@ -83,7 +95,7 @@ img.rounded {
 
         <hr class="w-75">
 
-        <div class="my-4 text-start px-4">
+        <div class="my-4 text-align-center px-4">
           <h4>Bio</h4>
           <p class="mb-3 mt-1">
             {{ description }}
@@ -121,16 +133,21 @@ img.rounded {
           <img src="../img/animallogo/doglogo3.png" style="width: auto; height: auto" />My Pets
         </h3>
 
-        <vueper-slides fade :touchable="false">
-          <vueper-slide v-for="(pet, i) in pets" :key="i" :image="pet.photo" :title="pet.petname" :content="pet.age">
+        <vueper-slides autoplay fade :touchable="false" :slide-ratio="250/500" slide-content-outside="bottom">
+          <!-- :breakpoints="breakpoints"  -->
+          <vueper-slide v-for="(pet, i) in pets" :key="i" :image="pet.photo" :title="pet.petname" :content="pet.desc" >
+            <template #content>
+              <div class="vueperslide__content">
+                <h5 style="font-size:50px; ">{{ pet.petname }}</h5> <br>
+                <p>{{pet.desc}}</p>
+              </div>
+            </template>
           </vueper-slide>
         </vueper-slides>
       </div>
 
       <div class="row mt-3">
-        <div style="background-color: #fddcd74d;
-            padding: 14px 50px;
-          ">
+        <div style="background-color: #fddcd74d; padding: 14px 50px;">
           <h3>My Reviews</h3>
 
         </div>
@@ -160,7 +177,7 @@ img.rounded {
     <input class="form-control mb-2" type="text" id="username" v-model="username" />
 
     <label>Profile Picture:</label>
-    <input type="file" @change='getPic' class="form-control mb-2" id="profilepicture">
+    <input type="file" @change='getPic' class="form-control mb-2" id="profilepicture" accept=".png, .jpg, .jpeg">
 
     <label>Description:</label>
     <textarea class="form-control mb-2" rows="4" cols="10" id="bio" v-model="description"></textarea>
@@ -205,7 +222,7 @@ img.rounded {
       <input class="form-control mb-2" type="number" min="0" max="150" id="age" v-model="age" required />
 
       <label>Pet Photo:</label>
-      <input type="file" @change = 'getPic' class="form-control mb-2" id="profilepicture">
+      <input type="file" @change = 'getPic' class="form-control mb-2" id="profilepicture" accept=".png, .jpg, .jpeg">
 
       <label>Pet Description:</label>
       <textarea class="form-control mb-2" rows="4" cols="10" id="bio" placeholder="Describe your pet!"
