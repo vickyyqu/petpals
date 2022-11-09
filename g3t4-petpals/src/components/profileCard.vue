@@ -48,7 +48,7 @@
         <div class="card-body justify-content-center">
             <div class="text-align-horizontal">
                 <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-geo"></i> {{location}} &nbsp;</small>
-                <small class="card-text"> &nbsp;{{dist}} km away </small></button> <br>
+                <small class="card-text"> {{dist}} km away </small></button> <br>
                 <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small></button> 
                 <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-house-heart"></i>{{yrsOfExp}} Yrs of experience</small></button>
             </div>
@@ -95,18 +95,17 @@
             </div>
 
         </div>
-        <div class="card-body">
-            <h6 class="card-title">Description:</h6>
-            <small class="card-text">{{desc}}</small>
-            <br/>
-            <small class="card-text float-end"> &nbsp;{{dist}} km away</small>
+        <div class="card-body justify-content-center">
+            <div class="text-align-horizontal">
+                <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-geo"></i> {{location}} &nbsp;</small>
+                <small class="card-text"> {{dist}} km away </small></button> <br>
+                <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small></button> 
+                <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-house-heart"></i>{{yrsOfExp}} Yrs of experience</small></button>
+            </div>
         </div>
         <div class="card-footer">
-            <div class="text-end">
-                <small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small>
-                <small class="profile-details"><i class="bi bi-geo"></i> {{location}} &nbsp;</small>
-                <small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of Experience</small>
-            </div>
+            <h6 class="card-title">Description:</h6>
+            <small class="card-text">{{desc}}</small> 
         </div>
     </div>
 

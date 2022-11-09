@@ -63,18 +63,16 @@
         </div>
 
         <div class="card-body">
-            <h6 v-if='type == "Pet Owner"' class="card-title">Bio:</h6>
-            <h6 v-else class="card-title">Description:</h6>
-            <small class="card-text">{{desc}}</small>
+            <button v-if='type == "Pet Service Provider"' class="profile-details rounded-pill" disabled><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></button>&nbsp;
+            <button class="profile-details rounded-pill" disabled><i class="bi bi-geo"></i> {{location}} &nbsp;</button>&nbsp;
+            <button v-if='type == "Pet Service Provider"' class="profile-details rounded-pill" disabled><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of Experience</button>
         </div>
 
         <div class="card-footer">
-            <div class="text-end">
-
-                <small v-if='type == "Pet Service Provider"' class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small>
-                <small class="profile-details"><i class="bi bi-geo"></i> {{location}} &nbsp;</small>
-                <small v-if='type == "Pet Service Provider"' class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of Experience</small>
-
+            <div class="text-first">
+            <h6 v-if='type == "Pet Owner"' class="card-title">Bio:</h6>
+            <h6 v-else class="card-title">Description:</h6>
+            <small class="card-text">{{desc}}</small>
             </div>
         </div>
     </div>
