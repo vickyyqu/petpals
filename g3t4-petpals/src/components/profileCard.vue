@@ -63,7 +63,7 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        <button class="btn my-3 btn-select" @click="sendRequest();">Send Request</button>
+        <button class="btn my-3 btn-select" @click="sendRequest()">Send Request</button>
     </div>
 </div>
 
@@ -143,8 +143,11 @@ export default {
             sent: true,
         }
     },
+
     props: ['title', 'desc', 'rates', 'location', 'img', 'ratings', 'yrsOfExp', 'name', 'service', 'oid', 'dist'],
+
     emits: ['searchClick'],
+
     methods: {
         sendRequest() {
             this.sent = false
@@ -165,6 +168,7 @@ export default {
                                 'status' : 'pending'
                             })
                         }
+                        window.location.href = `/search`;
                     })
                     .catch((error) => {
                         console.error(error);
@@ -173,7 +177,9 @@ export default {
                     console.log('user is signed out')
                 }
             });
+            
             this.$emit('searchClick')
+            
 
 
         },

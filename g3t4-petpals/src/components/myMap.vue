@@ -94,6 +94,8 @@ export default {
         
         window.initMap = initMap;
 
+        this.searchClick()
+
     },
 
     methods: {

@@ -85,7 +85,11 @@ export default {
     },
     methods: {
         logOut() {
-            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    set(ref(db,`users/${user.uid}/filterHistory`), ['All'])
+                }
+            });  
             signOut(auth).then(() => {
                 window.location.href = `/`;
             }).catch((error) => {

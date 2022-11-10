@@ -144,10 +144,10 @@ import navbar from '@/components/navbar.vue'
 import myMap from '@/components/myMap.vue'
 import profileCard from '@/components/profileCard.vue'
 import petpalsFooter from '@/components/petpalsFooter.vue'
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { VueperSlides, VueperSlide } from "vueperslides";
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, set } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAS74F4gerXVK8OW-RBq3rSGNEoHuqLQ0A",
@@ -161,6 +161,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth();
 
 export default {
     data() {
@@ -172,6 +173,7 @@ export default {
             orderBy : '',
             inputAddr: '',
             noMatch: true,
+
         }
     },
     
@@ -188,16 +190,19 @@ export default {
         filterServices(out){
             this.filterResults = [] //clear previous filter results
             var searchServices = this.checkedServices
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    set(ref(db,`users/${user.uid}/filterHistory`), this.checkedServices)
+                }
+            });  
 
             if (this.checkedServices.includes('All')){
                 searchServices = this.services.slice(1,this.services.length)
             }
 
-            for (let key in searchServices){
-                var service = searchServices[key]
+            for (let key of searchServices){
                 this.noMatch = false //have matching listings
-
-                onValue(ref(db, `services/${service}`), (snapshot) => {
+                onValue(ref(db, `services/${key}`), (snapshot) => {
                     for (let uid in snapshot.val()){
                         onValue(ref(db,`users/${uid}`), (snapst) => {
                             var item = {}
@@ -208,14 +213,13 @@ export default {
                             item.img = snapst.val().profilepic 
                             item.ratings = snapst.val().ratings
                             item.location = snapst.val().region
-                            item.service = service
-                            item.service = service
+                            item.service = key
                             item.oid = uid
 
                             var coords = [snapst.val().coords.lat, snapst.val().coords.lng ]
                             var check = this.getSearchRad(out, coords)
 
-                            if (check != false && snapshot.val()[uid].price != ''){
+                            if (check != false && snapshot.val()[uid].price != '' && this.filterResults.includes(item) == false){
                                 item.dist = check.toFixed(1)
                                 this.filterResults.push(item) // sorted by service by default                              
                             }
@@ -265,6 +269,19 @@ export default {
             }
         }
     },
+
+    mounted(){
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // set(ref(db,`users/${user.uid}/filterHistory`), this.checkedServices)
+
+                onValue(ref(db, `users/${user.uid}/filterHistory`), (snapshot) => {
+                    this.checkedServices = snapshot.val()
+                })
+            }
+        });   
+    }
+
 
 }
 
