@@ -25,7 +25,7 @@
 
 <script>
 export default {
-    props: ['day','month','year','title','from', 'to'], // day: 9, month: 'Nov', year: '2022'
+    props: ['date','title','from', 'to'], // day: 9, month: 'Nov', year: '2022'
     methods: {
 
     },
