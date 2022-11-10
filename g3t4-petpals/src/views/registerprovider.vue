@@ -242,7 +242,7 @@ export default {
                             type: 'Pet Service Provider',
                             desc: this.desc, 
                             yrsOfExp : this.yrsOfExp,
-                            ratings : 0
+                            filterHistory: ['All'],
                         })
 
                         sendEmailVerification(user)

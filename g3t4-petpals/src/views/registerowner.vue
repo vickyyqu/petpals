@@ -228,7 +228,8 @@ export default {
                             postalcode: this.postal,
                             ratings: 0, //by default
                             coords: {'lat': this.lat, 'lng': this.lng},
-                            region: this.region
+                            region: this.region,
+                            filterHistory: ['All'],
                         })
 
                         sendEmailVerification(user)
