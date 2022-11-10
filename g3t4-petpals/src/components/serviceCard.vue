@@ -20,23 +20,23 @@
         <div class=" d-flex justify-content-between">
             <div class="d-flex justify-content-start">
                 <img class="rounded-circle mx-2"
-                src = "../img/png/walker.png"
-                style="width:70px;height:70px;object-fit:cover;" v-if="service=='Pet Walker'" >
+                src = "@/img/png/walker.png"
+                style="max-width:80px" v-if="service=='Pet Walker'" >
                 <img class="rounded-circle mx-2"
-                src = "../img/png/sitter.png"
-                style="width:70px;height:70px;object-fit:cover;" v-if="service=='Pet Sitter'" >
+                src = "@/img/png/sitter.png"
+                style="max-width:80px" v-if="service=='Pet Sitter'" >
                 <img class="rounded-circle mx-2"
-                src = "../img/png/hotel.png"
-                style="width:70px;height:70px;object-fit:cover;" v-if="service=='Pet Hotel'" >
+                src = "@/img/png/hotel.png"
+                style="max-width:80px" v-if="service=='Pet Hotel'" >
                 <img class="rounded-circle mx-2"
-                src = "../img/png/catincar.png"
-                style="width:70px;height:70px;object-fit:cover;" v-if="service=='Pet Mover'" >
+                src = "@/img/png/catincar.png"
+                style="max-width:80px" v-if="service=='Pet Mover'" >
                 <img class="rounded-circle mx-2"
-                src = "../img/png/groomer.png"
-                style="width:70px;height:70px;object-fit:cover;" v-if="service=='Pet Groomer'" >
+                src = "@/img/png/groomer.png"
+                style="max-width:80px" v-if="service=='Pet Groomer'" >
                 <img class="rounded-circle mx-2"
-                src = "../img/png/trainer.png"
-                style="width:70px;height:70px;object-fit:cover;" v-if="service=='Pet Trainer'" >
+                src = "@/img/png/trainer.png"
+                style="max-width:80px" v-if="service=='Pet Trainer'" >  
         
 
                 <div class="ms-1 text-start">

@@ -69,6 +69,15 @@ img.rounded {
     margin: 0px;
   }
 }
+
+.fade-in-text {
+  animation: fadeIn 5s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 </style>
 
 <template>
@@ -89,10 +98,10 @@ img.rounded {
           </div>
 
           <div class="row text-center">
-            <h3 class="mt-3 mb-1" style="letter-spacing: 3px; color: #dfd1cd">
+            <h3 class="mt-3 mb-1 fade-in-text" style="letter-spacing: 3px; color: #dfd1cd">
               hello,
             </h3>
-            <h3 class="username">{{ username }}</h3>
+            <h3 class="username fade-in-text">{{ username }}</h3>
             <p class="my-4" style="font-style: italic">Pet Owner</p>
           </div>
 
@@ -137,7 +146,7 @@ img.rounded {
 
           <h3 class="mb-3">
             <img
-              src="../img/animallogo/doglogo3.png"
+              src="@img/animallogo/doglogo3.png"
               style="width: 35px; height: auto"
               class="me-1" />My Pets
           </h3>
@@ -187,7 +196,7 @@ img.rounded {
 
               <div class="carousel-item">
                 <img
-                  src="../img/groomer.jpeg"
+                  src="@/img/groomer.jpeg"
                   style="width: 100%;height: 350px;object-fit: cover;"
                   class="rounded-3"
                 />
@@ -201,7 +210,7 @@ img.rounded {
 
               <div class="carousel-item">
                 <img
-                  src="../img/dogwalker.jpeg"
+                  src="@/img/dogwalker.jpeg"
                   style="width: 100%;height: 350px;object-fit: cover;"
                   class="rounded-3"
                 />
@@ -424,12 +433,12 @@ img.rounded {
 </template>
 
 <script>
-import navbar from "../components/navbar.vue";
-import reviewCard from "../components/reviewCard.vue";
+import navbar from "@/components/navbar.vue";
+import reviewCard from "@/components/reviewCard.vue";
 import { VueperSlides, VueperSlide } from "vueperslides";
-import Modal from "../components/Modal.vue";
+import Modal from "@/components/Modal.vue";
 import { ref as modalref } from "vue";
-import petpalsFooter from "../components/petpalsFooter.vue";
+import petpalsFooter from "@/components/petpalsFooter.vue";
 
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
