@@ -19,7 +19,7 @@
 
         <div class="col-10">
             <div class="mt-4 text-center">
-                <img src="../img/logo2.png" class="w-25 mx-auto d-block">
+                <img src="@/img/logo2.png" class="w-25 mx-auto d-block">
                 <h3 class="mt-4 mb-3">Register as a PetPals Pet Service Provider with us today!</h3>
                 <p>Enter your personal particulars below.</p>
             </div>
@@ -128,7 +128,7 @@
 
 <script>
 import petpalsFooter from '@/components/petpalsFooter.vue'
-import Modal from '../components/Modal.vue'
+import Modal from '@/components/Modal.vue'
 import { ref as modalref } from "vue";
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 import { initializeApp } from "firebase/app";
