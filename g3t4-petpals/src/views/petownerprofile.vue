@@ -146,7 +146,7 @@ img.rounded {
 
           <h3 class="mb-3">
             <img
-              src="@img/animallogo/doglogo3.png"
+              src="@/img/animallogo/doglogo3.png"
               style="width: 35px; height: auto"
               class="me-1" />My Pets
           </h3>
