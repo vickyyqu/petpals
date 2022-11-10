@@ -115,7 +115,7 @@
                         <div class="my-3">
 
                             <div class="form w-100 mt-4">
-                                <input type="text" autocomplete="off" v-model = 'email' id="email"  required />
+                                <input type="text" autocomplete="off" v-model = 'email' id="email"  class="form-control m-0 pb-0" required />
                                 <label for="text" class="label-name p-3">
                                   <span class="content-name">
                                     Enter Your Email:
@@ -134,18 +134,18 @@
                 <div v-else class="login" style="padding-bottom:80px;">
                     <h3 class="pt-5 mb-4">Login</h3>
 
-                        <div class="form w-100 pb-0">
-                            <input type="text" autocomplete="off" v-model = 'email' id="email" required />
-                            <label for="text" class="label-name">
+                        <div class="form w-100">
+                            <input type="text" autocomplete="off" v-model = 'email' id="email" class="form-control m-0 pb-0" required />
+                            <label for="text" class="label-name m-0">
                                 <span class="content-name">
                                 Enter Your Email:
                                 </span>
                             </label>
                         </div>
 
-                        <div class="form w-100 mt-4 pb-0">
-                            <input type="password" v-model = 'pwd' v-on:keyup.enter = 'userLogin()' class="form-control" id="pwd" autocomplete="off" required />
-                            <label for="password" class="label-name">
+                        <div class="form w-100 mt-4">
+                            <input type="password" v-model = 'pwd' v-on:keyup.enter = 'userLogin()' class="form-control m-0 pb-0" id="pwd" autocomplete="off" required />
+                            <label for="password" class="label-name m-0">
                                 <span class="content-name">
                                 Enter Your Password:
                                 </span>
