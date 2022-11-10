@@ -37,7 +37,6 @@
                 <img class="rounded-circle mx-2"
                 src = "../img/png/trainer.png"
                 style="max-width:80px" v-if="service=='Pet Trainer'" >
-
             </div>
             <div class="col-8">
                 <h4 class="card-reviewID">{{service}}</h4>
