@@ -7,7 +7,7 @@
 </style>
 
 <template>
-<!-- for pet owners and pet service providers -->
+
 <div class="m-4">
     <div class="card card-active mb-3">
         <div v-if="status=='confirmed'" class="d-flex justify-content-between mt-3 mx-3" >

@@ -144,7 +144,7 @@ export default {
         }
     },
     props: ['title', 'desc', 'rates', 'location', 'img', 'ratings', 'yrsOfExp', 'name', 'service', 'oid', 'dist'],
-    
+    emits: ['searchClick'],
     methods: {
         sendRequest() {
             this.sent = false
@@ -173,6 +173,7 @@ export default {
                     console.log('user is signed out')
                 }
             });
+            this.$emit('searchClick')
 
 
         },
