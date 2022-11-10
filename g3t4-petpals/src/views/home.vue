@@ -134,7 +134,7 @@
                 <div v-else class="login" style="padding-bottom:80px;">
                     <h3 class="pt-5 mb-4">Login</h3>
 
-                        <div class="form w-100">
+                        <div class="form w-100 pb-0">
                             <input type="text" autocomplete="off" v-model = 'email' id="email" required />
                             <label for="text" class="label-name">
                                 <span class="content-name">
@@ -143,7 +143,7 @@
                             </label>
                         </div>
 
-                        <div class="form w-100 mt-4">
+                        <div class="form w-100 mt-4 pb-0">
                             <input type="password" v-model = 'pwd' v-on:keyup.enter = 'userLogin()' class="form-control" id="pwd" autocomplete="off" required />
                             <label for="password" class="label-name">
                                 <span class="content-name">
