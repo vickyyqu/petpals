@@ -39,7 +39,7 @@ input[type='checkbox']:checked{
 </style>
 
 <template>
-<div class="container-fluid">
+<div class="container-fluid" style="height:100vh">
     <navbarProvider></navbarProvider>
 
     <div class="row pt-5">
@@ -116,7 +116,7 @@ input[type='checkbox']:checked{
 
             </div>
 
-            <label for="rate"><h4 class="mt-3">Your Hourly Rate (SGD):</h4></label>
+            <label for="rate"><h4 class="mt-3"><span v-if="service=='Pet Hotel'">Your Daily Rate (SGD):</span><span v-else>Your Hourly Rate (SGD):</span></h4></label>
             <div class="row mx-auto d-flex align-items-end">
                 <div class="col-md-6 mt-2 mx-auto">
                     <input type="number" class="form-control w-75 mx-auto" min="0" max="1000" v-model="rate" required >

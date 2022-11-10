@@ -104,7 +104,7 @@ img.rounded {
 </style>
 
 <template>
-<div class="container-fluid profile-page pb-5">
+<div class="container-fluid profile-page mb-5" style="height:100vh">
   <navbarProvider></navbarProvider>
   <div class="row p-4">
 
@@ -201,6 +201,7 @@ img.rounded {
 
 
 </div>
+
 </div>
 <petpalsFooter></petpalsFooter>
 
