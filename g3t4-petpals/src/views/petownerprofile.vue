@@ -74,6 +74,15 @@ img.rounded {
   }
 
 }
+
+.fade-in-text {
+  animation: fadeIn 5s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 </style>
 
 <template>
@@ -94,10 +103,10 @@ img.rounded {
           </div>
 
           <div class="row text-center">
-            <h3 class="mt-3 mb-1" style="letter-spacing: 3px; color: #dfd1cd">
+            <h3 class="mt-3 mb-1 fade-in-text" style="letter-spacing: 3px; color: #dfd1cd">
               hello,
             </h3>
-            <h3 class="username">{{ username }}</h3>
+            <h3 class="username fade-in-text">{{ username }}</h3>
             <p class="my-4" style="font-style: italic">Pet Owner</p>
           </div>
 
