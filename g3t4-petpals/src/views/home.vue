@@ -84,7 +84,7 @@
 <template>
 <!-- Header -->
 <div id="top-header" class="header-home">
-    <img src="../img/logo2.png" style="width: 125px">
+    <img src="@/img/logo2.png" style="width: 125px">
 
     <button class="btn openbtn" v-on:click="Nav()">&#9776; Menu</button>
 
@@ -171,8 +171,8 @@
                             <div class="dropdown mt-3">
 
                                 <div class="d-block fade-in-text mx-auto">
-                                    <img src="../img/doggieicon.png" style="width:50px;">
-                                    <img src="../img/catto.png" style="width:50px;">
+                                    <img src="@/img/doggieicon.png" style="width:50px;">
+                                    <img src="@/img/catto.png" style="width:50px;">
                                 </div>
 
                                 <button class="btn btn-select">Register Here</button>
@@ -229,13 +229,13 @@
             <div class="col-2"></div>
 
             <div class="col-lg-4">
-                <img src="../img/owner.png" class="img-fluid d-block mx-auto my-5" alt="">
+                <img src="@/img/owner.png" class="img-fluid d-block mx-auto my-5" alt="">
                 <h3 style="color:#F8AA9D">Pet Owner</h3>
                 <p>Sign up today and meet your best suited pet service provider with us!</p>
             </div>
 
             <div class="col-lg-4">
-                <img src="../img/service.png" class="img-fluid d-block mx-auto my-5"  alt="">
+                <img src="@/img/service.png" class="img-fluid d-block mx-auto my-5"  alt="">
                 <h3 style="color:#F8AA9D">Pet Service Provider</h3>
                 <p>Register today as a service provider and secure bookings from pet owners with us!</p>
             </div>
@@ -254,7 +254,7 @@
     </svg>
 
     <div class="dog">
-        <img src="../img/dog.jpeg" alt="">
+        <img src="@/img/dog.jpeg" alt="">
 
         <div class="about">
             <h1 class="abt fade-in-text" id="about">About Us</h1>
@@ -295,36 +295,36 @@
         <div class="row m-5">
             <div class="col-sm-4 mb-4 mb-lg-0 ">
             <img
-                src="../img/gallery/img1.jpeg"
+                src="@/img/gallery/img1.jpeg"
                 class="w-100 shadow-1-strong rounded mb-4"
             />
         
             <img
-                src="../img/gallery/img4.jpeg"
-                class="w-100 shadow-1-strong rounded mb-4"
-            />
-            </div>
-        
-            <div class="col-sm-4 mb-4 mb-lg-0">
-            <img
-                src="../img/gallery/img3.jpeg"
-                class="w-100 shadow-1-strong rounded mb-4"
-            />
-        
-            <img
-                src="../img/gallery/img2.jpeg"
+                src="@/img/gallery/img4.jpeg"
                 class="w-100 shadow-1-strong rounded mb-4"
             />
             </div>
         
             <div class="col-sm-4 mb-4 mb-lg-0">
             <img
-                src="../img/gallery/img6.jpeg"
+                src="@/img/gallery/img3.jpeg"
                 class="w-100 shadow-1-strong rounded mb-4"
             />
         
             <img
-                src="../img/gallery/img5.webp"
+                src="@/img/gallery/img2.jpeg"
+                class="w-100 shadow-1-strong rounded mb-4"
+            />
+            </div>
+        
+            <div class="col-sm-4 mb-4 mb-lg-0">
+            <img
+                src="@/img/gallery/img6.jpeg"
+                class="w-100 shadow-1-strong rounded mb-4"
+            />
+        
+            <img
+                src="@/img/gallery/img5.webp"
                 class="w-100 shadow-1-strong rounded mb-4"
             />
             </div>

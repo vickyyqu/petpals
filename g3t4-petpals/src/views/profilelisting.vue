@@ -54,7 +54,7 @@ input[type='checkbox']:checked{
                 <div class="col-sm-4 form-check d-flex align-items-start justify-content-center">
                     <input class="form-check-input" type="radio" v-model="service" v-bind:value = '"Pet Sitter"' id="petSitter" :disabled="services['Pet Sitter']">
                     <label class="form-check-label ps-4" for="petSitter">
-                        <img src="../img/png/sitter.png" style="width:60px; height:60px;"
+                        <img src="@/img/png/sitter.png" style="width:60px; height:60px;"
                             class="rounded rounded-circle mb-2">
                         <p>Pet Sitter</p>
                     </label>
@@ -63,7 +63,7 @@ input[type='checkbox']:checked{
                 <div class="col-sm-4 form-check d-flex align-items-start justify-content-center">
                     <input class="form-check-input" type="radio" v-model="service" v-bind:value="'Pet Walker'" id="petWalker" :disabled="services['Pet Walker']">
                     <label class="form-check-label ps-4" for="petWalker">
-                        <img src="../img/png/walker.png" style="width:60px; height:60px;"
+                        <img src="@/img/png/walker.png" style="width:60px; height:60px;"
                             class="rounded rounded-circle mb-2">
                         <p>Pet Walker</p>
                     </label>
@@ -72,7 +72,7 @@ input[type='checkbox']:checked{
                 <div class="col-sm-4 form-check d-flex align-items-start justify-content-center">
                     <input class="form-check-input" type="radio" v-model="service" v-bind:value="'Pet Groomer'" id="petGroomer" :disabled="services['Pet Groomer']">
                     <label class="form-check-label ps-4" for="petGroomer">
-                        <img src="../img/png/groomer.png" style="width:60px; height:60px;"
+                        <img src="@/img/png/groomer.png" style="width:60px; height:60px;"
                             class="rounded rounded-circle mb-2">
                         <p>Pet Groomer</p>
                     </label>
@@ -81,7 +81,7 @@ input[type='checkbox']:checked{
                 <div class="col-sm-4 form-check d-flex align-items-start justify-content-center">
                     <input class="form-check-input" type="radio" v-model="service" v-bind:value="'Pet Hotel'" id="petHotel" :disabled="services['Pet Hotel']">
                     <label class="form-check-label ps-4 pt-3" for="petHotel">
-                        <img src="../img/png/hotel.png" style="width:60px; height:60px;"
+                        <img src="@/img/png/hotel.png" style="width:60px; height:60px;"
                             class="rounded rounded-circle mb-2">
                         <p>Pet Hotel</p>
                     </label>
@@ -90,7 +90,7 @@ input[type='checkbox']:checked{
                 <div class="col-sm-4 form-check d-flex align-items-start justify-content-center">
                     <input class="form-check-input" type="radio" v-model="service" v-bind:value="'Pet Trainer'" id="petTrainer" :disabled="services['Pet Trainer']">
                     <label class="form-check-label ps-4 pt-3" for="petTrainer">
-                        <img src="../img/png/trainer.png" style="width:60px; height:60px;"
+                        <img src="@/img/png/trainer.png" style="width:60px; height:60px;"
                             class="rounded rounded-circle mb-2">
                         <p>Pet Trainer</p>
                     </label>
@@ -99,7 +99,7 @@ input[type='checkbox']:checked{
                 <div class="col-sm-4 form-check d-flex align-items-start justify-content-center">
                     <input class="form-check-input" type="radio" v-model="service" v-bind:value="'Pet Mover'" id="petMover" :disabled="services['Pet Mover']">
                     <label class="form-check-label ps-4 pt-3" for="petMover">
-                        <img src="../img/png/catincar.png" style="width:60px; height:60px;"
+                        <img src="@/img/png/catincar.png" style="width:60px; height:60px;"
                             class="rounded rounded-circle mb-2">
                         <p>Pet Mover</p>
                     </label>
@@ -144,10 +144,10 @@ input[type='checkbox']:checked{
 </template>
     
 <script>
-import Modal from '../components/Modal.vue'
-import navbarProvider from '../components/navbarProvider.vue'
+import Modal from '@/components/Modal.vue'
+import navbarProvider from '@/components/navbarProvider.vue'
 import { ref as modalref } from "vue";
-import petpalsFooter from "../components/petpalsFooter.vue"
+import petpalsFooter from "@/components/petpalsFooter.vue"
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, ref, set, onValue} from "firebase/database";
