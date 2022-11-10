@@ -263,7 +263,7 @@ img.rounded {
   <div class="container px-3">
     <div class="row">
       <div class="col"><h4 class="p-2 my-1" style="float:left;" >Edit My Service:</h4></div>
-      <div class="col"><button class="btn btn-cancel p-2 float-right" style="display:block; width:25%; margin-left: 75%;" @click="deleteService"><img src="../img/deleteicon.png"></button>
+      <div class="col"><button class="btn btn-cancel p-2 float-right" style="display:block; width:25%; margin-left: 75%;" @click="deleteService"><img src="@/img/deleteicon.png"></button>
       </div>
     </div>
 
@@ -291,13 +291,13 @@ img.rounded {
 </template>
 
 <script>
-import navbarProvider from "../components/navbarProvider.vue";
-import reviewCard from "../components/reviewCard.vue";
+import navbarProvider from "@/components/navbarProvider.vue";
+import reviewCard from "@/components/reviewCard.vue";
 import { VueperSlides, VueperSlide } from "vueperslides";
-import Modal from "../components/Modal.vue";
+import Modal from "@/components/Modal.vue";
 import { ref as modalref } from "vue";
 import petpalsFooter from "@/components/petpalsFooter.vue";
-import serviceCard from '../components/serviceCard.vue';
+import serviceCard from '@/components/serviceCard.vue';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { getDatabase, ref, set, onValue, get} from "firebase/database";

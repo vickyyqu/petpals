@@ -20,22 +20,22 @@
         <div class="row">
             <div class="col-4">
                 <img class="rounded-circle mx-2"
-                src = "../img/png/walker.png"
+                src = "@/img/png/walker.png"
                 style="max-width:80px" v-if="service=='Pet Walker'" >
                 <img class="rounded-circle mx-2"
-                src = "../img/png/sitter.png"
+                src = "@/img/png/sitter.png"
                 style="max-width:80px" v-if="service=='Pet Sitter'" >
                 <img class="rounded-circle mx-2"
-                src = "../img/png/hotel.png"
+                src = "@/img/png/hotel.png"
                 style="max-width:80px" v-if="service=='Pet Hotel'" >
                 <img class="rounded-circle mx-2"
-                src = "../img/png/catincar.png"
+                src = "@/img/png/catincar.png"
                 style="max-width:80px" v-if="service=='Pet Mover'" >
                 <img class="rounded-circle mx-2"
-                src = "../img/png/groomer.png"
+                src = "@/img/png/groomer.png"
                 style="max-width:80px" v-if="service=='Pet Groomer'" >
                 <img class="rounded-circle mx-2"
-                src = "../img/png/trainer.png"
+                src = "@/img/png/trainer.png"
                 style="max-width:80px" v-if="service=='Pet Trainer'" >
             </div>
             <div class="col-8">

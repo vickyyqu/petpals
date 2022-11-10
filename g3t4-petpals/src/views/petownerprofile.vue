@@ -151,7 +151,7 @@ img.rounded {
 
           <h3 class="mb-3">
             <img
-              src="../img/animallogo/doglogo3.png"
+              src="@/img/animallogo/doglogo3.png"
               style="width: auto; height: auto"
             />My Pets
           </h3>
@@ -210,7 +210,7 @@ img.rounded {
 
               <div class="carousel-item">
                 <img
-                  src="../img/groomer.jpeg"
+                  src="@/img/groomer.jpeg"
                   class="d-block w-100"
                   alt="..."
                 />
@@ -224,7 +224,7 @@ img.rounded {
 
               <div class="carousel-item">
                 <img
-                  src="../img/dogwalker.jpeg"
+                  src="@/img/dogwalker.jpeg"
                   class="d-block w-100"
                   alt="..."
                 />
@@ -447,12 +447,12 @@ img.rounded {
 </template>
 
 <script>
-import navbar from "../components/navbar.vue";
-import reviewCard from "../components/reviewCard.vue";
+import navbar from "@/components/navbar.vue";
+import reviewCard from "@/components/reviewCard.vue";
 import { VueperSlides, VueperSlide } from "vueperslides";
-import Modal from "../components/Modal.vue";
+import Modal from "@/components/Modal.vue";
 import { ref as modalref } from "vue";
-import petpalsFooter from "../components/petpalsFooter.vue";
+import petpalsFooter from "@/components/petpalsFooter.vue";
 
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
