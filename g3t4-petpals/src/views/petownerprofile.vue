@@ -56,23 +56,18 @@ img.rounded {
   }
 }
 
-// .vueper-slide {
-//   &__content-wrapper:not(&__content-wrapper--outside-top):not(&__content-wrapper--outside-bottom) {
-//     display: flex;
-//     flex: 1 1 auto;
-//     flex-direction: column;
-//     align-items: center;
-//     justify-content: center;
-//     text-align: center;
-//   }
-// }
 
 .carousel-caption {
-  h3,
-  p {
-    background-color: white;
-  }
+  border-radius:50px;
+  background-color: white;
+  padding: 5px;
+  margin-bottom: 30px;
+  align-items: center;
 
+
+  p{
+    margin: 0px;
+  }
 }
 </style>
 
@@ -147,17 +142,6 @@ img.rounded {
             />My Pets
           </h3>
 
-          <!-- <vueper-slides autoplay fade :touchable="false"  slide-content-outside="bottom" :slide-ratio="250/500"> -->
-          <!-- <vueper-slide v-for="(pet, i) in pets" :key="i" :image="pet.photo" :title="pet.petname" :content="pet.desc">
-            <template #content>
-              <div class="vueperslide__content">
-                <h5 style="font-size:50px; ">{{ pet.petname }}</h5> <br>
-                <p>{{pet.desc}}</p>
-              </div>
-            </template>
-          </vueper-slide>
-        </vueper-slides> -->
-
           <!-- Start of carousel -->
           <div
             id="carouselExampleCaptions"
@@ -190,9 +174,11 @@ img.rounded {
             <div class="carousel-inner" role="listbox" >
               <!-- put this in line 190 to fix the carousel display style=" width:100%; height: 500px !important;" -->
               <div class="carousel-item active">
-                <img src="https://www.kibrispdr.org/data/84/dog-background-pictures-19.jpg" class="d-block w-100" alt="..." />
+                <img src="https://www.kibrispdr.org/data/84/dog-background-pictures-19.jpg" style="
+                width: 100% ;height: 350px; object-fit: cover;" 
+                class="rounded-3"/>
                 <div class="carousel-caption d-none d-md-block">
-                  <h3>Pet name</h3>
+                  <h4>Pet name</h4>
                   <p>
                     Pet desc
                   </p>
@@ -202,11 +188,11 @@ img.rounded {
               <div class="carousel-item">
                 <img
                   src="../img/groomer.jpeg"
-                  class="d-block w-100"
-                  alt="..."
+                  style="width: 100%;height: 350px;object-fit: cover;"
+                  class="rounded-3"
                 />
                 <div class="carousel-caption d-none d-md-block">
-                  <h3>Pet name</h3>
+                  <h4>Pet name</h4>
                   <p>
                     Pet desc
                   </p>
@@ -216,11 +202,11 @@ img.rounded {
               <div class="carousel-item">
                 <img
                   src="../img/dogwalker.jpeg"
-                  class="d-block w-100"
-                  alt="..."
+                  style="width: 100%;height: 350px;object-fit: cover;"
+                  class="rounded-3"
                 />
                 <div class="carousel-caption d-none d-md-block">
-                  <h3>Pet name</h3>
+                  <h4>Pet name</h4>
                   <p>
                     Pet desc
                   </p>
