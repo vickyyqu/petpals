@@ -9,7 +9,7 @@
 </style>
 
 <template>
-<div class="container-fluid sides">
+<div class="container-fluid sides" style="height:100vh">
     <navbarProvider></navbarProvider>
 
     <div class="row" style="padding-top:80px; padding-bottom:50px;">

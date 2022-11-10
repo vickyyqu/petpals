@@ -7,7 +7,7 @@
 
 <template>
     
-<div class = 'container-fluid chat sides'>
+<div class = 'container-fluid chat sides' style="height:100vh">
 
     <navbar v-if="petOwner"></navbar>
     <navbarProvider v-else ></navbarProvider>
@@ -16,9 +16,8 @@
         <i class="m-5" style="color: #4b3830; font-family: 'Figtree';">Loading chat...</i>
     </div>
 
-    <petpalsFooter></petpalsFooter>
-
 </div>
+<petpalsFooter></petpalsFooter>
 
 </template>
 

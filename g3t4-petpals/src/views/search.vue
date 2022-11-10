@@ -118,7 +118,7 @@ input[type='radio']:checked{
                 </div>
     
                 <div id = 'profileCards' class="row pb-5">
-                    <profileCard v-for="result in filterResults" v-bind:dist = 'result.dist' v-bind:oid = 'result.oid' v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service'></profileCard>
+                    <profileCard v-for="result in filterResults" v-bind:dist = 'result.dist' v-bind:oid = 'result.oid' v-bind:desc = 'result.desc' v-bind:img = 'result.img' v-bind:yrsOfExp = 'result.yrsOfExp' v-bind:name = 'result.name' v-bind:rates = 'result.rates' v-bind:ratings = 'result.ratings' v-bind:location = 'result.location' v-bind:service = 'result.service' v-on:searchClick="location.reload()"></profileCard>
 
                     <div v-if="noMatch">
                         <p class="text-center m-5 p-4" style="background-color:#f8f1ef;border-radius:50px;">No search results yet...</p>
@@ -166,7 +166,7 @@ export default {
     data() {
         return {
             services: ['All', 'Pet Walker', 'Pet Groomer', 'Pet Hotel', 'Pet Sitter', 'Pet Trainer', 'Pet Mover'],
-            checkedServices : [],
+            checkedServices : ['All'],
             filterResults : [],
             sortBy : '',
             orderBy : '',
@@ -187,13 +187,14 @@ export default {
     methods : {
         filterServices(out){
             this.filterResults = [] //clear previous filter results
+            var searchServices = this.checkedServices
 
             if (this.checkedServices.includes('All')){
-                this.checkedServices = this.services.slice(1,this.services.length)
+                searchServices = this.services.slice(1,this.services.length)
             }
 
-            for (let key in this.checkedServices){
-                var service = this.checkedServices[key]
+            for (let key in searchServices){
+                var service = searchServices[key]
                 this.noMatch = false //have matching listings
 
                 onValue(ref(db, `services/${service}`), (snapshot) => {

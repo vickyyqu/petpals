@@ -70,7 +70,7 @@ a:hover {
 
                         <ul class="navbar-nav my-2">
                             <li class="nav-item active">
-                                <img v-bind:src="photoURL" class="rounded rounded-circle ms-1 me-3" style="width:40px;height:40px;">
+                                <img v-bind:src="photoURL" class="rounded rounded-circle ms-1 me-3" style="width:40px;height:40px;object-fit:cover;">
                                 <router-link to="/petownerprofile">{{ username }}</router-link>
                             </li>
                         </ul>

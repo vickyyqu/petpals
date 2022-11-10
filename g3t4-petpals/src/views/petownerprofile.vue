@@ -81,7 +81,7 @@ img.rounded {
 </style>
 
 <template>
-  <div class="container-fluid profile-page pb-5">
+  <div class="container-fluid profile-page pb-5" style="height:100vh">
     <navbar></navbar>
     <!--Left column-->
     <div class="row p-4">
@@ -147,8 +147,8 @@ img.rounded {
           <h3 class="mb-3">
             <img
               src="@/img/animallogo/doglogo3.png"
-              style="width: auto; height: auto"
-            />My Pets
+              style="width: 35px; height: auto"
+              class="me-1" />My Pets
           </h3>
 
           <!-- Start of carousel -->
