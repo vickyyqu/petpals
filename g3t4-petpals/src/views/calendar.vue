@@ -133,7 +133,7 @@ p {
                         <h6 class = 'text-center p-2'>{{chosenDate.day}}-{{months[chosenDate.month]}}-{{chosenDate.year}}</h6>
                         <h4 class = 'text-center'>BOOKINGS</h4>
                         <div class="bookings mt-3">
-                            <events v-for="item in events" :title='item.title' :start="item.start" :end="item.end" v-on:delete="deleteEvent(item)" class="my-2 mb-4"></events>
+                            <events v-for="item in events" :title='item.title' :venue="item.venue" :start="item.start" :end="item.end" v-on:delete="deleteEvent(item)" class="my-2 mb-4"></events>
                         </div>
                     </div>
                 </div>
@@ -156,6 +156,15 @@ p {
       type="text"
       id="title"
       v-model="title"
+      required
+    />
+
+    <label>Location:</label>
+    <input class="form-control mb-2"
+      type="text"
+      id="location"
+      placeholder="-"
+      v-model="location"
       required
     />
 
@@ -227,6 +236,7 @@ export default {
             eventDate: '',
             startTime: '09:00',
             endTime: '10:00',
+            location: '',
 
             addError: false,
             errorMsg: '',
@@ -341,6 +351,8 @@ export default {
                                 obj['title'] = event
                                 obj['start'] = snapshot.val()[event].start
                                 obj['end'] = snapshot.val()[event].end
+                                obj['venue'] = snapshot.val()[event].venue
+
                                 this.events.push(obj)
                                 lst.push(obj)
                             }
@@ -361,11 +373,14 @@ export default {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     if (this.title != '' && this.startTime <= this.endTime) {
-                        console.log(this.title, this.eventDate, this.startTime, this.endTime)
+                        if (this.location == ''){
+                            this.location = '-'
+                        }
                         
                         set(ref(db,`users/${user.uid}/calendar/${this.eventDate}/${this.title}`), {
                             'start': this.startTime,
-                            'end': this.endTime
+                            'end': this.endTime,
+                            'venue': this.location
                         })
 
                         this.toggleModal(false); 

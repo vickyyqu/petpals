@@ -16,6 +16,8 @@
             </div>
         </div>  
         <div class = 'row my-2'>
+            <small class="card-reviewer"> Venue: {{venue}}</small>
+                <br/>
             <small class="card-reviewer"> Starts: {{getTime(start)}}</small>
                 <br/>
             <small class="card-reviewer"> Ends: {{getTime(end)}}</small>
@@ -26,7 +28,7 @@
 
 <script>
 export default {
-    props: ['title','start','end'], 
+    props: ['title','venue','start','end'], 
     methods: {
         getTime(time){
             var stime = time.split(':')
