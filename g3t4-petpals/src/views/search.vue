@@ -49,16 +49,19 @@ input[type='radio']:checked{
         <div class="col-10">
 
                 <div id="carouselExampleFade" class="carousel slide carousel-fade mt-5 pt-4" data-bs-ride="carousel">
+
                 <div class="carousel-inner">
-                    <div class="carousel-item active" data-interval="2000">
+                    <div class="carousel-item active" data-bs-interval="2500">
                     <img class="d-block w-100 rounded-3" src="@/img/header.jpeg" alt="First slide">
                     </div>
-                    <div class="carousel-item" data-interval="2000">
+
+                    <div class="carousel-item" data-bs-interval="2500">
                     <img class="d-block w-100 rounded-3" src="@/img/header2.jpeg"  alt="Second slide">
                     </div>
-                    <div class="carousel-item" data-interval="2000">
+
+                    <div class="carousel-item" data-bs-interval="2500">
                     <img class="d-block w-100 rounded-3" src="@/img/header3.png"  alt="Third slide">
-                    </div>
+                    </div>   
                 </div>
                 </div>
             
