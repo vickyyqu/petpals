@@ -92,6 +92,15 @@ img.rounded {
   border: 1px solid white;
   border-top: none;
 }
+
+.fade-in-text {
+  animation: fadeIn 5s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 </style>
 
 <template>
@@ -113,8 +122,8 @@ img.rounded {
         </div>
 
         <div class="row text-center">
-          <h3 class="mt-3 mb-1" style="letter-spacing: 3px;color: #dfd1cd;">hello,</h3>
-          <h3 class="username">{{ username }}</h3>
+          <h3 class="mt-3 mb-1 fade-in-text" style="letter-spacing: 3px;color: #dfd1cd;">hello,</h3>
+          <h3 class="username fade-in-text">{{ username }}</h3>
           <p class="my-4" style="font-style:italic">Pet Service Provider</p>
         </div>
 
@@ -197,8 +206,8 @@ img.rounded {
 
 <!--Edit Profile page-->
 <Modal @close="toggleModal(); updateProfile()" :modalActive="modalActive">
-  <div class="modal-content p-3">
-    <h4 class="pb-4">Edit My Details:</h4>
+  <div class="modal-content p-3" >
+    <h4 class="p-2 my-1" style="background-color: #fddcd74d; border-radius: 4px;">Edit My Details:</h4>
 
     <label>Username:</label>
     <input class="form-control mb-2"
@@ -251,8 +260,12 @@ img.rounded {
 
 <!--Edit Services page-->
 <Modal @close="toggleModal2(); updateService()" :modalActive="modalActive2">
-  <div class="modal-content p-3">
-    <h4 class="pb-4">Edit My Service:</h4>
+  <div class="container px-3">
+    <div class="row">
+      <div class="col"><h4 class="p-2 my-1" style="float:left;" >Edit My Service:</h4></div>
+      <div class="col"><button class="btn btn-cancel p-2 float-right" style="display:block; width:25%; margin-left: 75%;" @click="deleteService"><img src="@/img/deleteicon.png"></button>
+      </div>
+    </div>
 
     <label>Price: </label>
     <input class="form-control mb-2"
@@ -272,19 +285,19 @@ img.rounded {
       v-model="serviceDesc"
     ></textarea>
 
-    <button class="btn btn-cancel p-2 w-50 mx-auto" @click="deleteService">Delete Service</button>
+    
   </div>
 </Modal>
 </template>
 
 <script>
-import navbarProvider from "../components/navbarProvider.vue";
-import reviewCard from "../components/reviewCard.vue";
+import navbarProvider from "@/components/navbarProvider.vue";
+import reviewCard from "@/components/reviewCard.vue";
 import { VueperSlides, VueperSlide } from "vueperslides";
-import Modal from "../components/Modal.vue";
+import Modal from "@/components/Modal.vue";
 import { ref as modalref } from "vue";
 import petpalsFooter from "@/components/petpalsFooter.vue";
-import serviceCard from '../components/serviceCard.vue';
+import serviceCard from '@/components/serviceCard.vue';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { getDatabase, ref, set, onValue, get} from "firebase/database";

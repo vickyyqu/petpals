@@ -28,7 +28,7 @@ a:hover {
         <div class="navbar-header" id="navbar-header">
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-sm ">
-                    <img src="../img/logo2.png" style="width: 80px">
+                    <img src="@/img/logo2.png" style="width: 80px">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@ a:hover {
                                 <router-link to="/chat" class="d-flex align-items-center">
                                     Chats
                                     <!-- if there is an unread chat -->
-                                    <img v-if="unread" src="../img/green-circle-icon.png" style="width:8px;" class="ms-1">
+                                    <img v-if="unread" src="@/img/green-circle-icon.png" style="width:8px;" class="ms-1">
                                 </router-link>
                                     
                             </li>
