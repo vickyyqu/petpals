@@ -197,8 +197,8 @@ img.rounded {
 
 <!--Edit Profile page-->
 <Modal @close="toggleModal(); updateProfile()" :modalActive="modalActive">
-  <div class="modal-content p-3">
-    <h4 class="pb-4">Edit My Details:</h4>
+  <div class="modal-content p-3" >
+    <h4 class="p-2 my-1" style="background-color: #fddcd74d; border-radius: 4px;">Edit My Details:</h4>
 
     <label>Username:</label>
     <input class="form-control mb-2"
@@ -251,8 +251,12 @@ img.rounded {
 
 <!--Edit Services page-->
 <Modal @close="toggleModal2(); updateService()" :modalActive="modalActive2">
-  <div class="modal-content p-3">
-    <h4 class="pb-4">Edit My Service:</h4>
+  <div class="container px-3">
+    <div class="row">
+      <div class="col"><h4 class="p-2 my-1" style="float:left;" >Edit My Service:</h4></div>
+      <div class="col"><button class="btn btn-cancel p-2 float-right" style="display:block; width:25%; margin-left: 75%;" @click="deleteService"><img src="../img/deleteicon.png"></button>
+      </div>
+    </div>
 
     <label>Price: </label>
     <input class="form-control mb-2"
@@ -272,7 +276,7 @@ img.rounded {
       v-model="serviceDesc"
     ></textarea>
 
-    <button class="btn btn-cancel p-2 w-50 mx-auto" @click="deleteService">Delete Service</button>
+    
   </div>
 </Modal>
 </template>
