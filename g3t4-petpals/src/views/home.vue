@@ -114,7 +114,7 @@
                         <p class="py-1" style="font-style:italic;text-align:center;font-size:14px;">An email will be sent to your inbox to reset your password.</p>
                         <div class="my-3">
 
-                            <div class="form w-100 mt-4 mb-1">
+                            <div class="form w-100 mt-4">
                                 <input type="text" autocomplete="off" v-model = 'email' id="email"  required />
                                 <label for="text" class="label-name p-3">
                                   <span class="content-name">
@@ -132,11 +132,11 @@
                     </div>
 
                 <div v-else class="login" style="padding-bottom:80px;">
-                    <h3 class="pt-5 mb-3">Login</h3>
+                    <h3 class="pt-5 mb-4">Login</h3>
 
                         <div class="form w-100">
                             <input type="text" autocomplete="off" v-model = 'email' id="email" required />
-                            <label for="text" class="label-name p-3">
+                            <label for="text" class="label-name">
                                 <span class="content-name">
                                 Enter Your Email:
                                 </span>
@@ -145,7 +145,7 @@
 
                         <div class="form w-100 mt-4">
                             <input type="password" v-model = 'pwd' v-on:keyup.enter = 'userLogin()' class="form-control" id="pwd" autocomplete="off" required />
-                            <label for="password" class="label-name p-3">
+                            <label for="password" class="label-name">
                                 <span class="content-name">
                                 Enter Your Password:
                                 </span>
@@ -218,7 +218,7 @@
         <h4 class="mt-3 text-center" style="font-style:normal;font-family:'Figtree';line-height:0.7em;color:#856658;">Match with the perfect pet service provider.</h4>
         
         <div class="row p-5">
-            <services v-for="(each) of services" v-bind:tag="tags[each]" v-bind:png="png[each]" v-bind:service="each"></services>
+            <services></services>
         </div>
 
         <hr>
@@ -356,14 +356,12 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-
+// ../assets/png/walker.png
 export default {
     data() {
         return {
             counter: 0,
             services: ['Pet Walking','Pet Grooming','Pet Hotels','Pet Sitters','Pet Trainers','Pet Transport'],
-            tags: {'Pet Walking': 'Take your pet out on scheduled walks with our Pet Walkers.', 'Pet Grooming': 'Be returned a clean and fresh pet with our experienced Pet Groomers.', 'Pet Hotels': 'Leave your pet with our trusted Pet Hotel Providers while on holiday.', 'Pet Sitters': 'Leave your pet with our trusted Pet Sitters while running errands.', 'Pet Trainers': 'Train your pet with our qualified Pet Trainers.', 'Pet Transport': 'Transport your pet safely with our Pet Movers.'},
-            png: {'Pet Walking': '../img/png/walker.png', 'Pet Grooming': '../img/png/groomer.png', 'Pet Hotels': '../img/png/hotel.png', 'Pet Sitters': '../img/png/sitter.png', 'Pet Trainers': '../img/png/trainer.png', 'Pet Transport': '../img/png/catincar.png'},
             msg1: "Bringing the best pet service providers to you",
             loginError: false,
             errorMsg: '',
