@@ -9,19 +9,19 @@
     color: #f8f1ef;
 }
 
-.card:hover {
+.card-active:hover {
     box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
-    transform: scale(1.08);
+    transform: scale(1.04);
 }
 </style>
 
 <template>
 <div v-if="sent" class="col-xl-3 col-md-6 pt-3">
-    <div class="card">
+    <div class="card card-active">
         <div class="d-flex align-items-center mt-3 mx-3">
 
             <div class="d-flex">
-                <img class="mr-3 rounded-circle" v-bind:src = 'img' style="max-width:70px">
+                <img class="mr-3 rounded-circle" v-bind:src = 'img' style="width:70px;height:70px;object-fit:cover;">
             </div>
 
             <div class="ms-2">
@@ -47,10 +47,11 @@
         </div>
         <div class="card-body justify-content-center">
             <div class="text-align-horizontal">
-                <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-geo"></i> {{location}} &nbsp;</small>
-                <small class="card-text"> {{dist}} km away </small></button> <br>
-                <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small></button> 
-                <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-house-heart"></i>{{yrsOfExp}} Yrs of experience</small></button>
+                <button type="button" class="rounded-pill p-1 p-1 mt-1 me-1" style="line-height: 0.9em" disabled><small class="profile-details"><i class="bi bi-geo"></i> {{location}}, &nbsp;{{dist}} km away </small></button> <br>
+
+                <button type="button" class="rounded-pill p-1 mt-1 me-1" style="line-height: 0.9em" disabled><small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small></button> 
+
+                <button type="button" class="rounded-pill p-1 mt-1 me-1" style="line-height: 0.9em" disabled><small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of experience</small></button>
             </div>
         </div>
         <div class="card-footer">
@@ -67,11 +68,11 @@
 </div>
 
 <div v-else class="col-xl-3 col-md-6 pt-3">
-    <div class="card card-sent" style="background-color: #fcf6f4;">
+    <div class="card card-sent">
         <div class="d-flex align-items-center mt-3 mx-3">
 
             <div class="d-flex justify-content-start align-items-center">
-                <img class="mr-3 rounded-circle" v-bind:src = 'img' style="max-width:70px">
+                <img class="mr-3 rounded-circle" v-bind:src = 'img' style="width:70px;height:70px;object-fit:cover;">
             </div>
 
             <div class="ms-2">
@@ -97,10 +98,11 @@
         </div>
         <div class="card-body justify-content-center">
             <div class="text-align-horizontal">
-                <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-geo"></i> {{location}} &nbsp;</small>
-                <small class="card-text"> {{dist}} km away </small></button> <br>
-                <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small></button> 
-                <button type="button" class="rounded-pill" disabled><small class="profile-details"><i class="bi bi-house-heart"></i>{{yrsOfExp}} Yrs of experience</small></button>
+                <button type="button" class="rounded-pill p-1 mt-1 me-1" style="line-height: 0.9em" disabled><small class="profile-details"><i class="bi bi-geo"></i> {{location}}, &nbsp;{{dist}} km away </small></button> <br>
+
+                <button type="button" class="rounded-pill p-1 mt-1 me-1" style="line-height: 0.9em" disabled><small class="profile-details"><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small></button> 
+
+                <button type="button" class="rounded-pill p-1 mt-1 me-1" style="line-height: 0.9em" disabled><small class="profile-details"><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of experience</small></button>
             </div>
         </div>
         <div class="card-footer">
