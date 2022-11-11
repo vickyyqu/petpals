@@ -273,11 +273,11 @@ export default {
     mounted(){
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // set(ref(db,`users/${user.uid}/filterHistory`), this.checkedServices)
-
                 onValue(ref(db, `users/${user.uid}/filterHistory`), (snapshot) => {
                     this.checkedServices = snapshot.val()
                 })
+            }else{
+                window.location.href = `/`;
             }
         });   
     }

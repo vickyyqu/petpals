@@ -171,24 +171,24 @@ img.rounded {
                 </h3>
                   
               <!-- Tab content -->
-              <div id="Services" class="tabcontent active" style="display:block">
-                <div class = 'd-flex flex-wrap justify-content-around'>
-                  <serviceCard v-for="serv of services" :service="Object.keys(serv)[0]" v-on:edit='toggleModal2(); service=Object.keys(serv)[0]; price=serv[Object.keys(serv)[0]].price; serviceDesc=serv[Object.keys(serv)[0]].desc' :price="serv[Object.keys(serv)[0]].price" :desc="serv[Object.keys(serv)[0]].desc"></serviceCard>
-                </div>
-
+              <div id="Services" class="tabcontent active" style="{overflow: scroll; height: 640px; display: block;}">
                 <div v-if="noServices" class="my-5">
                   <p class="text-center m-5 p-4" style="background-color:white;border-radius:50px;color:#856658">No services to show yet...</p>
+                </div>
+
+                <div class = 'd-flex flex-wrap justify-content-around'>
+                  <serviceCard v-for="serv of services" :service="Object.keys(serv)[0]" v-on:edit='toggleModal2(); service=Object.keys(serv)[0]; price=serv[Object.keys(serv)[0]].price; serviceDesc=serv[Object.keys(serv)[0]].desc' :price="serv[Object.keys(serv)[0]].price" :desc="serv[Object.keys(serv)[0]].desc"></serviceCard>
                 </div>
                   
               </div>
               
-              <div id="Reviews" class="tabcontent">
-                <div class="row p-3">
-                  <reviewCard v-for="rev in reviews" :reviewer="rev.username" :service = 'rev.service' :review="rev.review" :rating="rev.rating"></reviewCard>
-                </div>
-
+              <div id="Reviews" class="tabcontent" style="{overflow: scroll; height: 640px;}">
                 <div v-if="noReviews" class="my-5">
                   <p class="text-center m-5 p-4" style="background-color:white;border-radius:50px;color:#856658">No reviews to show yet...</p>
+                </div>
+
+                <div class="row p-3">
+                  <reviewCard v-for="rev in reviews" :reviewer="rev.username" :service = 'rev.service' :review="rev.review" :rating="rev.rating"></reviewCard>
                 </div>
               </div>
               
@@ -205,25 +205,29 @@ img.rounded {
 <petpalsFooter></petpalsFooter>
 
 <!--Edit Profile page-->
-<Modal @close="toggleModal(); updateProfile()" :modalActive="modalActive">
+<Modal @close="updateProfile()" :modalActive="modalActive">
   <div class="modal-content p-3" >
-    <h4 class="p-2 mt-1 mb-3" style="background-color: #fddcd74d; border-radius: 4px;">Edit My Details:</h4>
+    <h4 class="p-2 mt-1 mb-3" style="background-color: #fddcd74d; border-radius: 4px;">Edit My Details:
+      <span class = 'float-end'><button class = 'btn btn-select px-1 py-0' v-on:click="toggleModal(noChange); noChange=true"><i class="bi bi-x-lg"></i></button></span>
+    </h4>
 
     <label>Username:</label>
     <input class="form-control mb-2"
       type="text"
       id="username"
       v-model="username"
+      v-on:change='noChange=false'
     />
 
     <label>Profile Picture:</label>
-    <input type="file" @change = 'getPic' class="form-control mb-2" id="profilepicture" accept=".png, .jpg, .jpeg">
+    <input type="file" @change = 'getPic' v-on:change='noChange=false' class="form-control mb-2" id="profilepicture" accept=".png, .jpg, .jpeg">
 
     <label>Years of Experience:</label>
     <input class="form-control mb-2"
       type="text"
       id="number"
       v-model="yrsOfExp"
+      v-on:change='noChange=false'
     />
 
     <label>Description:</label>
@@ -232,6 +236,7 @@ img.rounded {
       cols="10"
       id="bio"
       v-model="description"
+      v-on:change='noChange=false'
     ></textarea>
 
     <label>Phone Number:</label>
@@ -239,6 +244,7 @@ img.rounded {
       type="text"
       id="number"
       v-model="mobile"
+      v-on:change='noChange=false'
     />
 
     <label>Address:</label>
@@ -247,6 +253,7 @@ img.rounded {
       cols="10"
       id="address"
       v-model="address"
+      v-on:change='noChange=false'
     ></textarea>
 
     <label>Postal Code:</label>
@@ -259,7 +266,7 @@ img.rounded {
 </Modal>
 
 <!--Edit Services page-->
-<Modal @close="toggleModal2(); updateService()" :modalActive="modalActive2">
+<Modal @close="updateService()" :modalActive="modalActive2">
   <div class="container modal-content p-3">
     <div class="d-flex justify-content-between mb-3">
       <h4 class="p-2 my-1" style="float:left;background-color: #fddcd74d; border-radius: 4px;">Edit My Service:</h4>
@@ -341,6 +348,8 @@ export default {
       noReviews: true,
       invalidAddr: false,
 
+      noChange: true,
+
     };
   },
 
@@ -355,6 +364,15 @@ export default {
   },
 
   methods: {
+    checkuser(){
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                console.log('user is not logged in')
+                window.location.href = `/`;
+            }
+        });
+    },
+
     openTab(evt, feature) {
             // Declare all variables
             var i, tabcontent, tablinks;
@@ -439,7 +457,7 @@ export default {
                           set(ref(db, `users/${user.uid}/region`), each.long_name) 
                       }
                   }
-                  window.location.href = `/petserviceprofile`;
+                  this.toggleModal(true)
 
               } else {
                   this.invalidAddr = true
@@ -465,7 +483,8 @@ export default {
           set(ref(db, `users/${user.uid}/services/${this.service}/desc`), this.serviceDesc) 
           set(ref(db, `services/${this.service}/${user.uid}/price`), this.price) 
           set(ref(db, `services/${this.service}/${user.uid}/desc`), this.serviceDesc) 
-          window.location.href = `/petserviceprofile`;
+
+          this.toggleModal2()
         }
       }); 
     },
@@ -545,6 +564,7 @@ export default {
   },
 
   mounted(){
+    this.checkuser()
     this.getProfile()
     this.getReviews()
     this.getServices()
@@ -554,11 +574,17 @@ export default {
     const modalActive = modalref(false);
     const modalActive2 = modalref(false);
 
-    const toggleModal = () => {
+    const toggleModal = (check) => {
       modalActive.value = !modalActive.value;
+      if (modalActive.value == modalref(false).value && check == false){
+        window.location.href = `/petserviceprofile`;
+      }
     };
     const toggleModal2 = () => {
       modalActive2.value = !modalActive2.value;
+      if (modalActive2.value == modalref(false).value){
+        window.location.href = `/petserviceprofile`;
+      }
     };
     return { modalActive, toggleModal, modalActive2, toggleModal2 };
   },

@@ -4,7 +4,7 @@
 </style>
 
 <template>
-<div class="card mx-auto " style="width:175px;" >
+<div class="card mx-auto " style="width:75%;" >
     <div class="card-body">
         <h4 class="card-reviewID text-center">{{title}}</h4>
 

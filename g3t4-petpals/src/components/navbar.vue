@@ -58,7 +58,7 @@ a:hover {
                             </li>
 
                             <li class="nav-item px-3 my-2">
-                                <router-link to="/chat" class="d-flex align-items-center">
+                                <router-link to="/chat">
                                     Chats
                                     <!-- if there is an unread chat -->
                                     <img v-if="unread" src="@/img/green-circle-icon.png" style="width:8px;" class="ms-1">

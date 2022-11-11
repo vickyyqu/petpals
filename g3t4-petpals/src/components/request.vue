@@ -81,17 +81,8 @@
 
         </div>
 
+        <button v-if='status == "confirmed"' class="btn btn-select px-3 mx-2" @click="addChat"><i class="bi bi-chat-heart"></i></button>
 
-        <button v-if='type == "Pet Owner" && status == "confirmed"' class="btn btn-select px-3 mx-2" @click="addChat"><i class="bi bi-chat-heart"></i></button>
-        <button v-if='type == "Pet Service Provider" && status == "confirmed"' class="btn btn-select px-3 mx-2" @click="addChat"><i class="bi bi-chat-heart"></i></button>
-        
-
-        <!-- <button v-if="type == 'Pet Service Provider' && status=='confirmed'" class="btn btn-select px-3 ms-1 me-2" @click="cfmBooking" style="background-color: #9ac4a2; color: #ffffff;">Confirm Booking</button>
-
-        <button v-if='type == "Pet Owner" && status ==  "pending"' class="btn btn-select px-3 mx-2" @click="acceptRequest">Accept Request</button>
-        <button v-if='type == "Pet Owner" && status ==  "pending"' class="btn btn-cancel p-2" @click="cancelRequest">Reject Request</button>
-
-        <button v-else class="btn btn-cancel p-2" @click="cancelRequest">Cancel Request</button> -->
     </div>
 
 </div>

@@ -54,12 +54,13 @@ p {
 
     <div class = 'row mt-5 pt-3 justify-content-center'>
         <div class="col sides">
-            <div class = 'row mx-2 mb-5'>
-                <div class="col-9">
+            <div class = 'row mx-2 my-5'>
+
+                <div class="col-sm-8 order-sm-last" >
                     <div id="carouselExampleControls" class="carousel carousel-dark slide"  data-bs-interval="false" data-bs-wrap="false">
                         <div class="carousel-inner" >
                             <div class="carousel-item" v-for="(obj,idx) of year" :class="{'active': idx==0}" >
-                                <h3 class = 'text-center mt-5'>{{obj.mth}}</h3>
+                                <h3 class = 'text-center'>{{obj.mth}}</h3>
                                 <h4 class = 'text-center mb-5'>{{obj.year}}</h4>
 
                                 <div class = 'row my-3'>
@@ -127,19 +128,22 @@ p {
                     </div>
                 </div>
 
-                <div class = 'col-3'>
-                    <button class="btn btn-select px-3 mt-5 mb-3 w-100" @click="toggleModal">Add Event &nbsp;<i class="bi bi-calendar-check"></i></button>
+                <div class = 'col-sm-4 order-sm-first'>
+                    <button class="btn btn-select px-3 mb-3 w-100" @click="toggleModal">Add Event &nbsp;<i class="bi bi-calendar-check"></i></button>
                     <div class="body">
                         <h6 class = 'text-center p-2'>{{chosenDate.day}}-{{months[chosenDate.month]}}-{{chosenDate.year}}</h6>
                         <h4 class = 'text-center'>BOOKINGS</h4>
-                        <div class="bookings mt-3">
+                        <div class="bookings mt-3"  style="width:100%;">
                             <events v-for="item in events" :title='item.title' :venue="item.venue" :start="item.start" :end="item.end" v-on:delete="deleteEvent(item)" class="my-2 mb-4"></events>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
+
+</div>
 
 <Modal @close="addEvent()" :modalActive="modalActive">
   <div class="modal-content p-3" >
@@ -193,9 +197,9 @@ p {
     />
   </div>
 </Modal> 
-</div>
 
 <petpalsFooter></petpalsFooter>
+
 </template>
 
 <script>
@@ -257,6 +261,14 @@ export default {
     },
 
     methods : {
+        checkuser(){
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    console.log('user is not logged in')
+                    window.location.href = `/`;
+                }
+            });
+        },
 
         getYear(){
             for (let i=this.today.month; i<this.today.month+12; i++){
@@ -435,6 +447,8 @@ export default {
     },
 
     mounted(){
+        this.checkuser()
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 onValue(ref(db, `users/${user.uid}`), (snapshot) => {
