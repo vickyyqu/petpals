@@ -136,8 +136,10 @@ input[type='checkbox']:checked{
 </div>
 
 <Modal @close="toggleModal" :modalActive="modalActive">
-    <h3 class="text-center">Received</h3>
-    <p class="text-center pt-2">Your listing will be published soon!</p>
+    <div class="my-2">
+        <h3 class="text-center">Received</h3>
+        <p class="text-center pt-2">Your listing will be published soon!</p>
+    </div>
 </Modal>
 
 <petpalsFooter></petpalsFooter>

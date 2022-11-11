@@ -1,13 +1,10 @@
 <style>
-    .chat {
-        height: 725px;
-    }
 
 </style>
 
 <template>
     
-<div class = 'container-fluid chat sides' style="height:100%">
+<div class = 'container-fluid sides' style="height:100vh">
 
     <navbar v-if="petOwner"></navbar>
     <navbarProvider v-else ></navbarProvider>
@@ -56,7 +53,7 @@ export default {
         components: {
             navbar,
             navbarProvider,
-            petpalsFooter,
+            petpalsFooter
         },
 
         async mounted() {

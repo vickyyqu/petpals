@@ -13,13 +13,13 @@
 }
 
 .profile-leftbox {
-  border-radius: 40px;
+  border-radius: 30px;
   background-color: #fddcd74d;
   box-shadow: 0 0 10px 0 #cec2c233;
 }
 
 .profile-rightbox {
-  border-radius: 40px;
+  border-radius: 30px;
   background-color: white;
   box-shadow: 0 0 10px 0 #cec2c233;
 }
@@ -104,7 +104,7 @@ img.rounded {
 </style>
 
 <template>
-<div class="container-fluid profile-page mb-5" style="height:100%">
+<div class="container-fluid profile-page pb-5" style="height:100%">
   <navbarProvider></navbarProvider>
   <div class="row p-4">
 
@@ -112,7 +112,7 @@ img.rounded {
     <div class="col-md-4 profile-leftbox">
       <div class="row">
         <div class="d-flex justify-content-end">
-          <button @click="toggleModal" class="btn btn-select me-2 mt-3">
+          <button @click="toggleModal" class="btn btn-select me-2 mt-3 px-3">
             <i class="bi bi-pencil-square"></i>
             </button>
         </div>
@@ -169,7 +169,6 @@ img.rounded {
                   <button class="tablinks" @click="openTab(event, 'Services')">My Services</button>
                   <button class="tablinks" @click="openTab(event, 'Reviews')">My Reviews</button>
                 </h3>
-
                   
               <!-- Tab content -->
               <div id="Services" class="tabcontent active" style="display:block">
@@ -178,7 +177,7 @@ img.rounded {
                 </div>
 
                 <div v-if="noServices" class="my-5">
-                  <h4>No services to show yet...</h4>
+                  <p class="text-center m-5 p-4" style="background-color:white;border-radius:50px;color:#856658">No services to show yet...</p>
                 </div>
                   
               </div>
@@ -189,7 +188,7 @@ img.rounded {
                 </div>
 
                 <div v-if="noReviews" class="my-5">
-                  <h4>No reviews to show yet...</h4>
+                  <p class="text-center m-5 p-4" style="background-color:white;border-radius:50px;color:#856658">No reviews to show yet...</p>
                 </div>
               </div>
               
@@ -208,7 +207,7 @@ img.rounded {
 <!--Edit Profile page-->
 <Modal @close="toggleModal(); updateProfile()" :modalActive="modalActive">
   <div class="modal-content p-3" >
-    <h4 class="p-2 my-1" style="background-color: #fddcd74d; border-radius: 4px;">Edit My Details:</h4>
+    <h4 class="p-2 mt-1 mb-3" style="background-color: #fddcd74d; border-radius: 4px;">Edit My Details:</h4>
 
     <label>Username:</label>
     <input class="form-control mb-2"
@@ -261,11 +260,10 @@ img.rounded {
 
 <!--Edit Services page-->
 <Modal @close="toggleModal2(); updateService()" :modalActive="modalActive2">
-  <div class="container px-3">
-    <div class="row">
-      <div class="col"><h4 class="p-2 my-1" style="float:left;" >Edit My Service:</h4></div>
-      <div class="col"><button class="btn btn-cancel p-2 float-right" style="display:block; width:25%; margin-left: 75%;" @click="deleteService"><img src="@/img/deleteicon.png"></button>
-      </div>
+  <div class="container modal-content p-3">
+    <div class="d-flex justify-content-between mb-3">
+      <h4 class="p-2 my-1" style="float:left;background-color: #fddcd74d; border-radius: 4px;">Edit My Service:</h4>
+        <button class="btn btn-cancel px-3 float-right" @click="deleteService"><i class="bi bi-trash3" style="color:white"></i></button>
     </div>
 
     <label>Price: </label>

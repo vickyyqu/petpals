@@ -4,7 +4,6 @@
 }
 
 .profile-page {
-  // padding-top:50px;
   align-items: center;
   justify-content: center;
   background-color: #fffbfa;
@@ -12,13 +11,13 @@
 }
 
 .profile-leftbox {
-  border-radius: 40px;
+  border-radius: 30px;
   background-color: #fddcd74d;
   box-shadow: 0 0 10px 0 #cec2c233;
 }
 
 .profile-rightbox {
-  border-radius: 40px;
+  border-radius: 30px;
   background-color: white;
   box-shadow: 0 0 10px 0 #cec2c233;
 }
@@ -88,7 +87,7 @@ img.rounded {
       <div class="col-md-4 profile-leftbox">
         <div class="row">
           <div class="d-flex justify-content-end">
-            <button @click="toggleModal" class="btn btn-select me-2 mt-3">
+            <button @click="toggleModal" class="btn btn-select me-2 mt-3 px-3">
               <i class="bi bi-pencil-square"></i>
             </button>
           </div>
@@ -137,7 +136,7 @@ img.rounded {
         <div class="row">
           <span>
             <button
-              class="btn btn-select mt-3 me-2 float-end"
+              class="btn btn-select mt-3 me-2 float-end px-3"
               @click="toggleModal2()"
             >
               <i class="bi bi-pencil-square"></i>
@@ -257,7 +256,7 @@ img.rounded {
           </div>
 
           <div v-if="noReviews" class="my-5">
-            <h4>No reviews to show yet...</h4>
+            <p class="text-center m-5 p-4" style="background-color:white;border-radius:50px;color:#856658">No reviews to show yet...</p>
           </div>
 
           <div class="p-3">
@@ -286,7 +285,7 @@ img.rounded {
   >
     <div class="modal-content p-3">
       <h4
-        class="p-2 my-1"
+        class="p-2 mt-1 mb-3"
         style="background-color: #fddcd74d; border-radius: 4px"
       >
         Edit My Details:
@@ -354,7 +353,7 @@ img.rounded {
   >
     <div class="modal-content p-3">
       <h4
-        class="p-2 my-1"
+        class="p-2 mt-1 mb-3"
         style="background-color: #fddcd74d; border-radius: 4px"
       >
         Add a Pet:
