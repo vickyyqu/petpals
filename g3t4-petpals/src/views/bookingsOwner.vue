@@ -18,7 +18,7 @@
             <div class="requests-made py-4">
                 <h3 class="my-2 text-center pb-2">Requests Made</h3>
 
-                <div style="height:500px; overflow:scroll;">
+                <div style="height:800px; overflow:scroll;">
                     <p v-if="!haveReq" class="my-4 text-center nil">No requests yet...</p>
                     <request v-for='item in pendings' :otherid = 'item.otherid' :type = 'type' :service = 'item.service'  :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></request>
                     <request v-for='item in reqs' :otherid = 'item.otherid' :type = 'type' :service = 'item.service'  :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></request>
@@ -31,7 +31,7 @@
 
                 <h3 class="my-2 text-center pb-2">Confirmed Bookings</h3>
 
-                <div style="height:500px; overflow:scroll;">
+                <div style="height:800px; overflow:scroll;">
                     <p v-if="!haveBookings" class="my-4 text-center nil">No bookings yet...</p>
                    <BookingConfirmed v-for='item in bookings' :otherid = 'item.otherid' :type = 'type' :service = 'item.service' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed> 
                 </div>

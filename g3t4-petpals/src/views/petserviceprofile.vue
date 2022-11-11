@@ -156,7 +156,7 @@ img.rounded {
                 </h3>
                   
               <!-- Tab content -->
-              <div id="Services" class="tabcontent active" style="{overflow: scroll; height: 640px; display: block;}">
+              <div id="Services" class="tabcontent active" style="{overflow: scroll; height: 615px; display: block;}">
                 <div v-if="noServices" class="my-5">
                   <p class="text-center m-5 p-4" style="background-color:white;border-radius:50px;color:#856658">No services to show yet...</p>
                 </div>
@@ -167,7 +167,7 @@ img.rounded {
                   
               </div>
               
-              <div id="Reviews" class="tabcontent" style="{overflow: scroll; height: 640px;}">
+              <div id="Reviews" class="tabcontent" style="{overflow: scroll; height: 615px;}">
                 <div v-if="noReviews" class="my-5">
                   <p class="text-center m-5 p-4" style="background-color:white;border-radius:50px;color:#856658">No reviews to show yet...</p>
                 </div>
@@ -191,7 +191,7 @@ img.rounded {
 
 <!--Edit Profile page-->
 <Modal @close="updateProfile()" :modalActive="modalActive">
-  <div class="modal-content p-3" >
+  <div class="container p-3" >
     <h4 class="p-2 mt-1 mb-3" style="background-color: #fddcd74d; border-radius: 4px;">Edit My Details:
       <span class = 'float-end'><button class = 'btn btn-select px-1 py-0' v-on:click="toggleModal(noChange); noChange=true"><i class="bi bi-x-lg"></i></button></span>
     </h4>

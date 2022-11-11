@@ -61,6 +61,6 @@
 
 <script>
 export default {
-    props: ['service','desc','price'],
+    props: ['service','desc','price']
 }
 </script>
