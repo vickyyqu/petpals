@@ -355,6 +355,6 @@ export default {
             }
         };
         return { modalActive, toggleModal };
-    },
+    }
 }
 </script>
