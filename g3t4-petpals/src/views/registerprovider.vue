@@ -13,7 +13,7 @@
 
 
 <template>
-<div class="container-fluid">
+<div class="container-fluid" style="height:100%">
     <div class="row">
         <div class="col-1 sides"></div>
 
@@ -234,13 +234,15 @@ export default {
                             username: this.username,
                             profilepic: this.pic,
                             mobile: this.mobile,
-                            type: 'Pet Owner',
-                            bio: this.desc,
                             address: this.address,
                             postalcode: this.postal,
                             ratings: 0, //by default
                             coords: {'lat': this.lat, 'lng': this.lng},
-                            region: this.region
+                            region: this.region,
+                            type: 'Pet Service Provider',
+                            desc: this.desc, 
+                            yrsOfExp : this.yrsOfExp,
+                            filterHistory: ['All'],
                         })
 
                         sendEmailVerification(user)

@@ -1,16 +1,17 @@
-import home from "../views/home.vue"
-import chat from "../views/chat.vue"
-import search from "../views/search.vue"
-import profilelisting from "../views/profilelisting.vue"
+import home from "@/views/home.vue"
+import chat from "@/views/chat.vue"
+import search from "@/views/search.vue"
+import profilelisting from "@/views/profilelisting.vue"
+import calendar from "@/views/calendar.vue"
 
-import bookingsOwner from "../views/bookingsOwner.vue"
-import bookingsProvider from "../views/bookingsProvider.vue"
+import bookingsOwner from "@/views/bookingsOwner.vue"
+import bookingsProvider from "@/views/bookingsProvider.vue"
 
-import petownerprofile from "../views/petownerprofile.vue"
-import petserviceprofile from "../views/petserviceprofile.vue"
+import petownerprofile from "@/views/petownerprofile.vue"
+import petserviceprofile from "@/views/petserviceprofile.vue"
 
-import registerowner from "../views/registerowner.vue"
-import registerprovider from "../views/registerprovider.vue"
+import registerowner from "@/views/registerowner.vue"
+import registerprovider from "@/views/registerprovider.vue"
 
 import {createRouter, createWebHistory} from "vue-router"
 
@@ -66,6 +67,11 @@ export const router = createRouter({
             path: "/profilelisting",
             name: "profilelisting",
             component: profilelisting
+        },
+        {
+            path: "/calendar",
+            name: "/calendar",
+            component: calendar
         },
     ]
 })

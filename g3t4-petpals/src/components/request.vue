@@ -1,12 +1,4 @@
 <style>
-.card {
-    border: none;
-    overflow: hidden;
-    border-radius: 20px;
-    box-shadow: 0 0 10px 0 rgba(122, 108, 108, 0.2);
-    background-color: rgb(255, 252, 252);
-
-}
 
 .profile-details, i{
     color: #856658;
@@ -15,17 +7,16 @@
 </style>
 
 <template>
-<!-- for pet owners and pet service providers -->
+
 <div class="m-4">
-    <div class="card mb-3">
+    <div class="card card-active mb-3">
         <div v-if="status=='confirmed'" class="d-flex justify-content-between mt-3 mx-3" >
 
             <div class="d-flex justify-content-start align-items-center">
                 <img class="rounded-circle"
                     v-bind:src = 'img'
-                    style="max-width:70px">
+                    style="width:70px;height:70px;object-fit:cover;">
             
-
                 <div class="ms-2">
                     <h6>{{name}}</h6>
                     <small v-if='type=="Pet Owner"' style="font-style:italic;">Looking for {{service}}</small>
@@ -45,8 +36,7 @@
         <div v-else class="d-flex justify-content-start mt-3 mx-3">
             <img class="rounded-circle"
             v-bind:src = 'img'
-            style="max-width:70px">
-            
+            style="width:70px;height:70px;object-fit:cover;">
 
             <div class="ms-2">
                 <h6>{{name}}</h6>
@@ -63,9 +53,9 @@
         </div>
 
         <div class="card-body">
-            <button v-if='type == "Pet Service Provider"' class="profile-details rounded-pill" disabled><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></button>&nbsp;
-            <button class="profile-details rounded-pill" disabled><i class="bi bi-geo"></i> {{location}} &nbsp;</button>&nbsp;
-            <button v-if='type == "Pet Service Provider"' class="profile-details rounded-pill" disabled><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of Experience</button>
+            <button v-if='type == "Pet Service Provider"' class="profile-details rounded-pill  p-1 mt-1 me-1" style="line-height: 0.9em" disabled><i class="bi bi-currency-dollar"></i>{{rates}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></button>&nbsp;
+            <button class="profile-details rounded-pill  p-1 mt-1 me-1" style="line-height: 0.9em" disabled><i class="bi bi-geo"></i> {{location}} &nbsp;</button>&nbsp;
+            <button v-if='type == "Pet Service Provider"' class="profile-details rounded-pill  p-1 mt-1 me-1" style="line-height: 0.9em" disabled><i class="bi bi-house-heart"></i> {{yrsOfExp}} Yrs of Experience</button>
         </div>
 
         <div class="card-footer">
@@ -77,16 +67,22 @@
         </div>
     </div>
 
-    <div class="buttons m-2 d-flex justify-content-end">
-        <button v-if='type == "Pet Owner" && status == "confirmed"' class="btn btn-select px-3 mx-2" @click="addChat"><i class="bi bi-chat-heart"></i></button>
-        <button v-if='type == "Pet Service Provider" && status == "confirmed"' class="btn btn-select px-3 mx-2" @click="addChat"><i class="bi bi-chat-heart"></i></button>
+    <div class="buttons m-2 d-flex justify-content-between">
 
-        <button v-if="type == 'Pet Service Provider' && status=='confirmed'" class="btn btn-select px-3 ms-1 me-2" @click="cfmBooking">Confirm Booking</button>
+        <div class="d-flex justify-content-start">
 
-        <button v-if='type == "Pet Owner" && status ==  "pending"' class="btn btn-select px-3 mx-2" @click="acceptRequest">Accept Request</button>
-        <button v-if='type == "Pet Owner" && status ==  "pending"' class="btn btn-cancel p-2" @click="cancelRequest">Reject Request</button>
+            <button v-if='type == "Pet Owner" && status ==  "pending"' class="btn btn-cancel px-3 mx-2" @click="cancelRequest">Reject Request</button>
 
-        <button v-else class="btn btn-cancel p-2" @click="cancelRequest">Cancel Request</button>
+            <button v-else class="btn btn-cancel px-3 mx-2" @click="cancelRequest">Delete Request</button>
+
+            <button v-if="type == 'Pet Service Provider' && status=='confirmed'" class="btn btn-select px-3 mx-2" @click="cfmBooking">Confirm Booking</button>
+
+            <button v-if='type == "Pet Owner" && status ==  "pending"' class="btn btn-select px-3 mx-2" @click="acceptRequest">Accept Request</button>
+
+        </div>
+
+        <button v-if='status == "confirmed"' class="btn btn-select px-3 mx-2" @click="addChat"><i class="bi bi-chat-heart"></i></button>
+
     </div>
 
 </div>

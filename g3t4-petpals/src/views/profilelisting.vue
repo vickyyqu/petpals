@@ -39,7 +39,7 @@ input[type='checkbox']:checked{
 </style>
 
 <template>
-<div class="container-fluid">
+<div class="container-fluid" style="height:100%">
     <navbarProvider></navbarProvider>
 
     <div class="row pt-5">
@@ -116,7 +116,7 @@ input[type='checkbox']:checked{
 
             </div>
 
-            <label for="rate"><h4 class="mt-3">Your Hourly Rate (SGD):</h4></label>
+            <label for="rate"><h4 class="mt-3"><span v-if="service=='Pet Hotel'">Your Daily Rate (SGD):</span><span v-else>Your Hourly Rate (SGD):</span></h4></label>
             <div class="row mx-auto d-flex align-items-end">
                 <div class="col-md-6 mt-2 mx-auto">
                     <input type="number" class="form-control w-75 mx-auto" min="0" max="1000" v-model="rate" required >
@@ -136,8 +136,10 @@ input[type='checkbox']:checked{
 </div>
 
 <Modal @close="toggleModal" :modalActive="modalActive">
-    <h3 class="text-center">Received</h3>
-    <p class="text-center pt-2">Your listing will be published soon!</p>
+    <div class="my-2">
+        <h3 class="text-center">Received</h3>
+        <p class="text-center pt-2">Your listing will be published soon!</p>
+    </div>
 </Modal>
 
 <petpalsFooter></petpalsFooter>
@@ -199,6 +201,15 @@ export default {
         }
     },
     methods : {
+        checkuser(){
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    console.log('user is not logged in')
+                    window.location.href = `/`;
+                }
+            });
+        },
+
         addService(){
             if (this.service == '' || this.description == '' || this.rate == 0){
                 this.error = 'Please enter all the details of the service'
@@ -240,6 +251,7 @@ export default {
     },
 
     mounted(){
+        this.checkuser()
         this.getServices()
     },
 

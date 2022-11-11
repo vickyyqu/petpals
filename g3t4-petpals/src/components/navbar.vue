@@ -54,7 +54,11 @@ a:hover {
                             </li>
 
                             <li class="nav-item px-3 my-2">
-                                <router-link to="/chat" class="d-flex align-items-center">
+                                <router-link to="/calendar">Calendar</router-link>
+                            </li>
+
+                            <li class="nav-item px-3 my-2">
+                                <router-link to="/chat">
                                     Chats
                                     <!-- if there is an unread chat -->
                                     <img v-if="unread" src="@/img/green-circle-icon.png" style="width:8px;" class="ms-1">
@@ -66,7 +70,7 @@ a:hover {
 
                         <ul class="navbar-nav my-2">
                             <li class="nav-item active">
-                                <img v-bind:src="photoURL" class="rounded rounded-circle ms-1 me-3" style="width:40px;height:40px;">
+                                <img v-bind:src="photoURL" class="rounded rounded-circle ms-1 me-3" style="width:40px;height:40px;object-fit:cover;">
                                 <router-link to="/petownerprofile">{{ username }}</router-link>
                             </li>
                         </ul>
@@ -109,13 +113,18 @@ export default {
     },
     methods: {
         logOut() {
-            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    set(ref(db,`users/${user.uid}/filterHistory`), ['All'])
+                }
+            });  
             signOut(auth).then(() => {
                 window.location.href = `/`;
             }).catch((error) => {
                 console.log('o no')
             });
         },
+
         getProfile() {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
@@ -127,6 +136,7 @@ export default {
             });
         },
     },
+
     mounted() {
         this.getProfile()
     }

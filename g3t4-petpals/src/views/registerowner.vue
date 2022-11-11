@@ -1,5 +1,5 @@
 <template>
-<div class="container-fluid">
+<div class="container-fluid" style="height:100%">
     <div class="row">
         <div class="col-1 sides"></div>
 
@@ -228,7 +228,8 @@ export default {
                             postalcode: this.postal,
                             ratings: 0, //by default
                             coords: {'lat': this.lat, 'lng': this.lng},
-                            region: this.region
+                            region: this.region,
+                            filterHistory: ['All'],
                         })
 
                         sendEmailVerification(user)
@@ -354,6 +355,6 @@ export default {
             }
         };
         return { modalActive, toggleModal };
-    },
+    }
 }
 </script>
