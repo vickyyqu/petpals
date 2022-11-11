@@ -52,11 +52,11 @@ p {
     <navbar v-if="petOwner"></navbar>
     <navbarProvider v-else></navbarProvider>
 
-    <div class = 'row mt-5 pt-3 justify-content-center' style="height:900px">
+    <div class = 'row mt-5 pt-3 justify-content-center h-100'  >
         <div class="col sides">
             <div class = 'row mx-2 my-5'>
 
-                <div class="col-sm-8 order-sm-last" >
+                <div class="col-sm-8 order-sm-last">
                     <div id="carouselExampleControls" class="carousel carousel-dark slide"  data-bs-interval="false" data-bs-wrap="false">
                         <div class="carousel-inner" >
                             <div class="carousel-item" v-for="(obj,idx) of year" :class="{'active': idx==0}" >
@@ -106,7 +106,7 @@ p {
                                         </div>
                                     </div>
                                     <div class = 'row'>
-                                        <div class = 'col days' v-for='n in (Object.keys(week))'>
+                                        <div class = 'col days ' v-for='n in (Object.keys(week))'>
                                             <p class="event rounded" v-for="event in week[n]"></p>
                                         </div>
                                         <div class = 'col days' v-for='n in (7-Object.keys(week).length)'>
@@ -128,7 +128,7 @@ p {
                     </div>
                 </div>
 
-                <div class = 'col-sm-4 order-sm-first px-3'>
+                <div class = 'col-sm-4 order-sm-first px-3' style="">
                     <button class="btn btn-select px-3 mb-3 w-100" @click="toggleModal">Add Event &nbsp;<i class="bi bi-calendar-check"></i></button>
                     <div class="body">
                         <h6 class = 'text-center p-2'>{{chosenDate.day}}-{{months[chosenDate.month]}}-{{chosenDate.year}}</h6>
@@ -144,7 +144,6 @@ p {
     </div>
     
 </div>
-<petpalsFooter></petpalsFooter>
 
 <Modal @close="addEvent()" :modalActive="modalActive">
   <div class="container p-3" >
@@ -199,6 +198,7 @@ p {
   </div>
 </Modal> 
 
+<petpalsFooter></petpalsFooter>
 </template>
 
 <script>
