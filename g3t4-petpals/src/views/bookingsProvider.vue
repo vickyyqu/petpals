@@ -12,7 +12,7 @@
 <div class="container-fluid sides" style="height:100%">
     <navbarProvider></navbarProvider>
 
-    <div class="row" style="padding-top:80px; padding-bottom:50px;">
+    <div class="row px-4" style="padding-top:80px; padding-bottom:50px;">
 
         <div class="col-lg-6 pt-3">
             <div class="requests-made py-4">
