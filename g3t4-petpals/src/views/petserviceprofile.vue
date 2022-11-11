@@ -191,7 +191,7 @@ img.rounded {
 
 <!--Edit Profile page-->
 <Modal @close="updateProfile()" :modalActive="modalActive">
-  <div class="container modal-content p-3 mt-2" >
+  <div class="modal-content p-3" >
     <h4 class="p-2 mt-1 mb-3" style="background-color: #fddcd74d; border-radius: 4px;">Edit My Details:
       <span class = 'float-end'><button class = 'btn btn-select px-1 py-0' v-on:click="toggleModal(noChange); noChange=true"><i class="bi bi-x-lg"></i></button></span>
     </h4>
