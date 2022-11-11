@@ -1,22 +1,5 @@
 <style>
-/* width 
-::-webkit-scrollbar {
-  width: 10px;
-  height: 15px;  
-}
-*/
 
-/* Handle 
-::-webkit-scrollbar-thumb {
-  background: #f8ab9dc8; 
-  border-radius: 5px;
-}
-*/
-/* Handle on hover 
-::-webkit-scrollbar-thumb:hover {
-  background: #fa9988; 
-}
-*/
 .fade-in-text {
     animation: fadeIn 5s;
     -webkit-animation: fadeIn 5s;

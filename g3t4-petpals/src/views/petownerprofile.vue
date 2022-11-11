@@ -153,7 +153,7 @@ img.rounded {
               <!-- put this in line 190 to fix the carousel display style=" width:100%; height: 500px !important;" -->
               <div class="carousel-item" v-for="(pet,idx) in pets"  :class="{'active': idx==0}">
                 <img
-                  v-bind:src = pet.photo 
+                  v-bind:src = pet.photo
                   style="width: 100%;height: 350px; object-fit: cover;"
                   class="rounded-3"
                 />
@@ -163,7 +163,6 @@ img.rounded {
                   <p>Description: <small>{{pet.desc}}</small></p>
                 </div>
               </div>
-
             </div>
 
             <button
