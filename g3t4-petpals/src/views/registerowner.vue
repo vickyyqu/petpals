@@ -66,6 +66,7 @@
                         <div class="col-md-6">
                             <label for="profilePicture">Profile Picture</label>
                             <input type="file" @change='getPic' class="form-control w-100" id="profilePicture">
+                            <small v-if="picError" style="color: brown; font-style:italic;display:block;">{{errors.pic}}</small>
                         </div>
                     </div>
 
@@ -163,8 +164,9 @@ export default {
             descEmpty: false,
             addEmpty: false,
             postalEmpty: false,
+            picError: false,
 
-            errors: {email: "", pwd: "", repeat: "", user: "", num: "", pic: "", desc: "", add: "", postal: ""},
+            errors: {email: "", pwd: "", repeat: "", user: "", num: "", pic: "", desc: "", add: "", postal: "", pic: ""},
             signupError: "",
             mainError: false
 
@@ -200,7 +202,7 @@ export default {
             this.mainError = false
 
 
-            if (this.psw == this.psw_repeat && this.psw.length >= 6 && this.email != '' && this.postal != '' && this.address != '' && this.username != '' && this.mobile != '' && !this.invalidAddr) {
+            if (this.psw == this.psw_repeat && this.psw.length >= 6 && this.email != '' && this.postal != '' && this.address != '' && this.username != '' && this.mobile != '' && !this.invalidAddr && this.pic.length < 10485760) {
     
                 this.pwdEmpty = false
                 this.repeatEmpty = false
@@ -293,6 +295,11 @@ export default {
             if (this.username == ''){
                 this.userEmpty = true
                 this.errors.user = "Display name field empty."
+            }
+
+            if(this.pic.length > 10485760){
+                this.picError = true
+                this.errors.pic = 'Photo size is too big.'
             }
 
             console.log(this.errors)
