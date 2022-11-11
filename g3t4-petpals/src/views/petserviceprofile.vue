@@ -38,21 +38,6 @@ img.rounded {
   width: 100px;
 }
 
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  h1,
-  p {
-    margin-bottom: 16px;
-  }
-  h1 {
-    font-size: 32px;
-  }
-  p {
-    font-size: 18px;
-  }
-}
-
 /* Style the tab */
 .tab {
   overflow: hidden;
