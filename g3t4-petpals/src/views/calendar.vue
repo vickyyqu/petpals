@@ -22,18 +22,18 @@ p {
 }
 
 .body{
-    height: 500px;
+    height: 700px;
     background-color: white;
     border-radius: 20px;
 }
 
 .bookings {
     overflow: scroll;
-    height: 400px;
+    height: 700px;
 }
 
 .event{
-    background-color: #F8AA9D;
+    background-color: #f3d1cb;
     color:white;
     padding: 5px;
     width: 100%;
@@ -48,11 +48,11 @@ p {
 </style>
 
 <template>
-<div class = 'container-fluid' style="height:100%">
+<div class = 'container-fluid'>
     <navbar v-if="petOwner"></navbar>
     <navbarProvider v-else></navbarProvider>
 
-    <div class = 'row mt-5 pt-3 justify-content-center'>
+    <div class = 'row mt-5 pt-3 justify-content-center' style="height:900px">
         <div class="col sides">
             <div class = 'row mx-2 my-5'>
 
@@ -128,7 +128,7 @@ p {
                     </div>
                 </div>
 
-                <div class = 'col-sm-4 order-sm-first'>
+                <div class = 'col-sm-4 order-sm-first px-3'>
                     <button class="btn btn-select px-3 mb-3 w-100" @click="toggleModal">Add Event &nbsp;<i class="bi bi-calendar-check"></i></button>
                     <div class="body">
                         <h6 class = 'text-center p-2'>{{chosenDate.day}}-{{months[chosenDate.month]}}-{{chosenDate.year}}</h6>
@@ -142,13 +142,14 @@ p {
             </div>
         </div>
     </div>
-
+    
 </div>
+<petpalsFooter></petpalsFooter>
 
 <Modal @close="addEvent()" :modalActive="modalActive">
-  <div class="modal-content p-3" >
-    <h4 class="p-2 my-1" style="background-color: #fddcd74d; border-radius: 4px;">Enter event details:
-        <span class = 'float-end'><button class = 'btn btn-select px-1 py-0' v-on:click="toggleModal(true);"><i class="bi bi-x-lg"></i></button></span>
+  <div class="container p-3" >
+    <h4 class="p-2 my-1" style="background-color: #fddcd74d; border-radius: 4px;">Enter Event Details:
+        <span class = 'float-end'><button class = 'btn btn-select px-2 py-0' v-on:click="toggleModal(true);"><i class="bi bi-x-lg"></i></button></span>
     </h4>
 
     <div v-if="addError" class="text-center mt-3">
@@ -197,8 +198,6 @@ p {
     />
   </div>
 </Modal> 
-
-<petpalsFooter></petpalsFooter>
 
 </template>
 
