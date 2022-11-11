@@ -18,7 +18,7 @@
     border-radius:15px;
     padding: 20px;
     overflow-y: auto;
-    max-height: calc(100vh - 150px);
+    max-height: calc(100vh - 250px);
   }
 }
 </style>

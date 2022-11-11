@@ -229,7 +229,7 @@ img.rounded {
     "
     :modalActive="modalActive" 
   >
-    <div class="container p-3 mt-2">
+    <div class="container p-3">
       <h4
         class="p-2 mt-1 mb-3"
         style="background-color: #fddcd74d; border-radius: 4px"
