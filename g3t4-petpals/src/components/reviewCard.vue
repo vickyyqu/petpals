@@ -5,7 +5,7 @@
 </style>
 
 <template>
-<div class="card pb-3">
+<div class="card my-3">
     <div class="card-body">
         <div class="row">
             <div class="col-4">
