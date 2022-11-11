@@ -5,10 +5,10 @@
 </style>
 
 <template>
-<div class="card pb-3">
+<div class="card pb-3 mb-3">
     <div class="card-body">
         <div class="row">
-            <div class="col-4">
+            <div class="col-5">
                 <h4 class="card-reviewID">{{reviewer}}</h4>
                 <h4 class="card-reviewer">「&nbsp;{{services[service]}}&nbsp;」</h4>
                 <br>
@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <div class="col-8 my-auto">
+            <div class="col-7 my-auto">
                 <p class="card-text">“ {{review}} ”</p>
             </div>
         </div>  

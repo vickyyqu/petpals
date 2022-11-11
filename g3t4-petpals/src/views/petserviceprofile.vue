@@ -156,7 +156,7 @@ img.rounded {
                 </h3>
                   
               <!-- Tab content -->
-              <div id="Services" class="tabcontent active" style="{position: relative; overflow: scroll; height: 615px; display: block;}">
+              <div id="Services" class="tabcontent active mb-3" style="{position: relative; overflow: scroll; height: 615px; display: block;}">
                 <div v-if="noServices" class="my-5">
                   <p class="text-center m-5 p-4" style="background-color:white;border-radius:50px;color:#856658">No services to show yet...</p>
                 </div>
@@ -167,7 +167,7 @@ img.rounded {
                   
               </div>
 
-              <div id="Reviews" class="tabcontent" style="{position: relative; overflow: scroll; height: 615px;}">
+              <div id="Reviews" class="tabcontent mb-3" style="{position: relative; overflow: scroll; height: 615px;}">
                 <div v-if="noReviews" class="my-5">
                   <p class="text-center m-5 p-4" style="background-color:white;border-radius:50px;color:#856658">No reviews to show yet...</p>
                 </div>
