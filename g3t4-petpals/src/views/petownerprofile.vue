@@ -157,7 +157,7 @@ img.rounded {
                   style="width: 100%;height: 350px; object-fit: cover;"
                   class="rounded-3"
                 />
-                <div class="carousel-caption d-none d-md-block mb-0">
+                <div class="carousel-caption mb-0">
                   <h4 class="mb-1">{{pet.petname}} ({{pet.type}})</h4>
                   <p>Age: <small>{{pet.age}}</small> &nbsp; Breed: <small>{{pet.breed}}</small></p>
                   <p>Description: <small>{{pet.desc}}</small></p>
@@ -306,7 +306,7 @@ img.rounded {
     :modalActive="modalActive2"
   >
     <div class="container p-0">
-      <span class = 'float-end'><button class = 'btn btn-select px-2 py-1' v-on:click="toggleModal2(true);"><i class="bi bi-x-lg"></i></button></span>
+      <span class = 'float-end'><button class = 'btn btn-select px-2 py-1' v-on:click="toggleModal2(true); pic=''"><i class="bi bi-x-lg"></i></button></span>
 
       <div class="p-3">
       <h4 class="mb-2">
@@ -373,7 +373,7 @@ img.rounded {
         @change="getPic"
         class="form-control mb-2"
         id="profilepicture"
-        accept=".png, .jpg, .jpeg"
+        accept=".jpg, .jpeg"
       />
 
       <label>Pet Description:</label>
@@ -608,45 +608,35 @@ export default {
 
       } else {
         this.addError = false
+        if (this.pic == ''){
+          this.pic = "https://www.kibrispdr.org/data/84/dog-background-pictures-19.jpg"
+        }
         onAuthStateChanged(auth, (user) => {
           if (user) {
-            set(
-              ref(db, `users/${user.uid}/pets/${this.petName}/age`),
-              this.age
-            );
-            set(
-              ref(db, `users/${user.uid}/pets/${this.petName}/breed`),
-              this.breed
-            );
-            set(
-              ref(db, `users/${user.uid}/pets/${this.petName}/desc`),
-              this.petDesc
-            );
-            set(
-              ref(db, `users/${user.uid}/pets/${this.petName}/type`),
-              this.petType
-            );
-
-            if (this.pic != "") {
-              set(
-                ref(db, `users/${user.uid}/pets/${this.petName}/photo`),
-                this.pic
-              )
+            set(ref(db,`users/${user.uid}/pets/${this.petName}`),{
+              age: this.age,
+              breed: this.breed,
+              desc: this.petDesc,
+              photo: this.pic,
+              type: this.petType
+            })
+            .then(() => {
+              this.age = 0;
+              this.petName = "";
+              this.petType = "default";
+              this.breed = '-';
+              this.petDesc = '-';
               this.pic = "";
-            } else {
-              set(
-                ref(db, `users/${user.uid}/pets/${this.petName}/photo`),
-                "https://www.kibrispdr.org/data/84/dog-background-pictures-19.jpg"
-              );
-            }
+              this.toggleModal2(false)
+            })
+            .catch( (error) => {
+              console.log(error)
+              console.log(error.message)
+            })
 
-            this.age = 0;
-            this.petName = "";
-            this.petType = "default";
-            this.breed = '-';
-            this.petDesc = '-';
+            
 
-            this.toggleModal2(false)
+            // this.toggleModal2(false)
           }
         });
       }
