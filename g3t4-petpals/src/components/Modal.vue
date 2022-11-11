@@ -9,7 +9,7 @@
   top: 0;
   left: 0;
 
-  .modal-inner {
+  .modal-dialog,.modal-inner {
     position: relative;
     max-width: 640px;
     width: 80%;
@@ -24,19 +24,39 @@
 </style>
 
 <template>
-<transition name="modal-animation">
+<!-- <transition name="modal-animation"> -->
+  <div class="modal" v-show="modalActive">
+    <!-- <transition name="modal-animation-inner"> -->
+      <div class="modal-dialog modal-dialog-scrollable"> 
+      <div class="modal-content" v-show="modalActive">
+      <div class="modal-body">
+        <i @click="close" class="far fa-times-circle"></i>
+        <!-- Modal Content -->
+       <slot></slot>
+      </div>
+      <div class="modal-footer border-0">
+        <button v-if="type=='register'" @click="close" class="btn btn-go mx-auto" style="width: 50%; margin-left: 25%; margin-top: 20px;">Back to Login</button>
+        <button v-else @click="close" class="btn btn-go mx-auto" style="width: 50%; margin-left: 25%; margin-top: 20px;">Done</button>
+      </div>
+      </div>
+      </div>
+    <!-- </transition> -->
+  </div>
+<!--</transition> -->
+<!-- <transition name="modal-animation">
   <div v-show="modalActive" class="modal">
     <transition name="modal-animation-inner">
       <div v-show="modalActive" class="modal-inner">
-        <i @click="close" class="far fa-times-circle"></i>
+        <i @click="close" class="far fa-times-circle"></i> -->
         <!-- Modal Content -->
-        <slot></slot>
+        <!-- <slot></slot>
         <button v-if="type=='register'" @click="close" class="btn btn-go" style="width: 50%; margin-left: 25%; margin-top: 20px;">Back to Login</button>
         <button v-else @click="close" class="btn btn-go" style="width: 50%; margin-left: 25%; margin-top: 20px;">Done</button>
       </div>
     </transition>
   </div>
-</transition>
+</transition> -->
+
 </template>
 
 <script>
