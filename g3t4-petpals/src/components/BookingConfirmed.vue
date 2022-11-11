@@ -63,7 +63,7 @@
 
     <!-- submit review -->
     <div class="buttons m-2 d-flex justify-content-end">
-        <button class="btn btn-cancel p-2" @click="addReview">Submit Review</button>
+        <button class="btn btn-go p-2" @click="addReview">Submit Review</button>
     </div>
 </div>
 

@@ -193,12 +193,12 @@ img.rounded {
           <!-- End of carousel -->
         </div>
 
-        <div class="row mt-3 mb-3">
+        <div class="row my-3">
           <div style="background-color: #fddcd74d; padding: 14px 50px">
             <h3>My Reviews</h3>
           </div>
 
-          <div style="{position: relative; overflow: scroll; height: 300px;}">
+          <div style="height: 400px;overflow: scroll;">
             <div v-if="noReviews" class="my-5">
               <p class="text-center m-5 p-4" style="background-color:white;border-radius:50px;color:#856658">No reviews to show yet...</p>
             </div>
