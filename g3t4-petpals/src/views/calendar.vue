@@ -55,6 +55,7 @@ p {
     <div class='sides' style="padding-top:80px;padding-bottom:50px;">
             <div class = 'row px-2 py-5'>
                 <div class="col-md-8 order-md-last">
+
                     <div id="carouselExampleControls" class="carousel carousel-dark slide"  data-bs-interval="false" data-bs-wrap="false">
                         <div class="carousel-inner" >
                             <div class="carousel-item" v-for="(obj,idx) of year" :class="{'active': idx==0}" >
@@ -104,7 +105,7 @@ p {
                                         </div>
                                     </div>
                                     <div class = 'row'>
-                                        <div class = 'col days' v-for='n in (Object.keys(week))'>
+                                        <div class = 'col days ' v-for='n in (Object.keys(week))'>
                                             <p class="event rounded" v-for="event in week[n]"></p>
                                         </div>
                                         <div class = 'col days' v-for='n in (7-Object.keys(week).length)'>
@@ -126,6 +127,7 @@ p {
                     </div>
                 </div>
 
+
                 <div class = 'col-md-4 order-md-first px-3'>
                     <button class="btn btn-select px-3 mb-3 w-100" @click="toggleModal">Add Event &nbsp;<i class="bi bi-calendar-check"></i></button>
                     <div class="body py-3">
@@ -142,7 +144,6 @@ p {
     </div>
     
 </div>
-<petpalsFooter></petpalsFooter>
 
 <Modal @close="addEvent()" :modalActive="modalActive">
   <div class="container p-0" >
@@ -202,6 +203,7 @@ p {
   </div>
 </Modal> 
 
+<petpalsFooter></petpalsFooter>
 </template>
 
 <script>
