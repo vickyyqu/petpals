@@ -37,25 +37,6 @@ img.rounded {
   width: 100px;
 }
 
-.modal-content {
-  display: flex;
-  flex-direction: column;
-
-  h1,
-  p {
-    margin-bottom: 16px;
-  }
-
-  h1 {
-    font-size: 32px;
-  }
-
-  p {
-    font-size: 18px;
-  }
-}
-
-
 .carousel-caption {
   border-radius:50px;
   background-color: white;
@@ -248,7 +229,7 @@ img.rounded {
     "
     :modalActive="modalActive" 
   >
-    <div class="modal-content p-3 mt-5">
+    <div class="container p-3 mt-2">
       <h4
         class="p-2 mt-1 mb-3"
         style="background-color: #fddcd74d; border-radius: 4px"
@@ -321,7 +302,7 @@ img.rounded {
     "
     :modalActive="modalActive2"
   >
-    <div class="modal-content p-3">
+    <div class="container p-3">
       <h4
         class="p-2 mt-1 mb-3"
         style="background-color: #fddcd74d; border-radius: 4px"
