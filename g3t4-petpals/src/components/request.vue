@@ -17,7 +17,6 @@
                     v-bind:src = 'img'
                     style="width:70px;height:70px;object-fit:cover;">
             
-
                 <div class="ms-2">
                     <h6>{{name}}</h6>
                     <small v-if='type=="Pet Owner"' style="font-style:italic;">Looking for {{service}}</small>
@@ -38,7 +37,6 @@
             <img class="rounded-circle"
             v-bind:src = 'img'
             style="width:70px;height:70px;object-fit:cover;">
-            
 
             <div class="ms-2">
                 <h6>{{name}}</h6>
@@ -69,16 +67,31 @@
         </div>
     </div>
 
-    <div class="buttons m-2 d-flex justify-content-end">
+    <div class="buttons m-2 d-flex justify-content-between">
+
+        <div class="d-flex justify-content-start">
+
+            <button v-if='type == "Pet Owner" && status ==  "pending"' class="btn btn-cancel px-3 mx-2" @click="cancelRequest">Reject Request</button>
+
+            <button v-else class="btn btn-cancel px-3 mx-2" @click="cancelRequest">Delete Request</button>
+
+            <button v-if="type == 'Pet Service Provider' && status=='confirmed'" class="btn btn-select px-3 mx-2" @click="cfmBooking">Confirm Booking</button>
+
+            <button v-if='type == "Pet Owner" && status ==  "pending"' class="btn btn-select px-3 mx-2" @click="acceptRequest">Accept Request</button>
+
+        </div>
+
+
         <button v-if='type == "Pet Owner" && status == "confirmed"' class="btn btn-select px-3 mx-2" @click="addChat"><i class="bi bi-chat-heart"></i></button>
         <button v-if='type == "Pet Service Provider" && status == "confirmed"' class="btn btn-select px-3 mx-2" @click="addChat"><i class="bi bi-chat-heart"></i></button>
+        
 
-        <button v-if="type == 'Pet Service Provider' && status=='confirmed'" class="btn btn-select px-3 ms-1 me-2" @click="cfmBooking">Confirm Booking</button>
+        <!-- <button v-if="type == 'Pet Service Provider' && status=='confirmed'" class="btn btn-select px-3 ms-1 me-2" @click="cfmBooking" style="background-color: #9ac4a2; color: #ffffff;">Confirm Booking</button>
 
         <button v-if='type == "Pet Owner" && status ==  "pending"' class="btn btn-select px-3 mx-2" @click="acceptRequest">Accept Request</button>
         <button v-if='type == "Pet Owner" && status ==  "pending"' class="btn btn-cancel p-2" @click="cancelRequest">Reject Request</button>
 
-        <button v-else class="btn btn-cancel p-2" @click="cancelRequest">Cancel Request</button>
+        <button v-else class="btn btn-cancel p-2" @click="cancelRequest">Cancel Request</button> -->
     </div>
 
 </div>

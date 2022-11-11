@@ -39,7 +39,7 @@ input[type='radio']:checked{
 
 <template>
 
-<div class="container-fluid">
+<div class="container-fluid" style="height:100%">
     <navbar></navbar>
 
     <div class="row">

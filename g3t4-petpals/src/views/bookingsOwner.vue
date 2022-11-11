@@ -9,14 +9,14 @@
 </style>
 
 <template>
-<div class="container-fluid sides" style="height:100vh">
+<div class="container-fluid sides" style="height:100%">
     <navbar></navbar>
 
     <div class="row" style="padding-top:80px; padding-bottom:50px;">
 
-        <div class="col-lg-6 pt-3 px-3">
-            <div class="requests-made py-5">
-                <h3 class="my-2 text-center">Requests Made</h3>
+        <div class="col-lg-6 pt-3">
+            <div class="requests-made py-4">
+                <h3 class="my-2 text-center pb-2">Requests Made</h3>
                 <p v-if="!haveReq" class="my-5 text-center nil">No requests yet...</p>
 
                 <request v-for='item in pendings' :otherid = 'item.otherid' :type = 'type' :service = 'item.service'  :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></request>
@@ -25,10 +25,10 @@
         
         </div> 
 
-        <div class="col-lg-6 pt-3 px-3">
-            <div class="requests-made py-5">
+        <div class="col-lg-6 pt-3">
+            <div class="requests-made py-4">
 
-                <h3 class="my-2 text-center">Confirmed Bookings</h3>
+                <h3 class="my-2 text-center pb-2">Confirmed Bookings</h3>
                 <p v-if="!haveBookings" class="my-5 text-center nil">No bookings yet...</p>
 
                 <BookingConfirmed v-for='item in bookings' :otherid = 'item.otherid' :type = 'type' :service = 'item.service' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :yrsOfExp = 'item.yrsOfExp' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed> 
@@ -39,7 +39,6 @@
     </div>
 
 </div>
-
 <petpalsFooter></petpalsFooter>
 
 </template>

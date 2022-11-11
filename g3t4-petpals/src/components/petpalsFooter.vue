@@ -2,13 +2,14 @@
 footer {
     position: sticky;
     width: 100%;
+    margin: 0;
 }
 
 </style>
 
 <template>
-    <footer>
-        <p>&#169 PetPals 2022</p>
+    <footer class="m-0">
+        <p class="m-0">&#169 PetPals 2022</p>
     </footer>
 </template>
 

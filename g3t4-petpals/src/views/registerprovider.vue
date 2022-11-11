@@ -13,7 +13,7 @@
 
 
 <template>
-<div class="container-fluid" style="height:100vh">
+<div class="container-fluid" style="height:100%">
     <div class="row">
         <div class="col-1 sides"></div>
 

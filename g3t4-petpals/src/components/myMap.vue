@@ -31,7 +31,7 @@
     <div id="googleMap" class="rounded-3"></div>
 </div>
 
-<button class="btn btn-go my-4" v-on:click="searchClick">Go</button>
+<button class="btn btn-go mt-4 mb-1" v-on:click="searchClick">Go</button>
 
 <component :is="'script'" type="application/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw&callback=initMap"></component>
 </template>

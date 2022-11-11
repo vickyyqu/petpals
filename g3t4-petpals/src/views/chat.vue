@@ -7,7 +7,7 @@
 
 <template>
     
-<div class = 'container-fluid chat sides' style="height:100vh">
+<div class = 'container-fluid chat sides' style="height:100%">
 
     <navbar v-if="petOwner"></navbar>
     <navbarProvider v-else ></navbarProvider>

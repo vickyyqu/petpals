@@ -104,7 +104,7 @@ img.rounded {
 </style>
 
 <template>
-<div class="container-fluid profile-page mb-5" style="height:100vh">
+<div class="container-fluid profile-page mb-5" style="height:100%">
   <navbarProvider></navbarProvider>
   <div class="row p-4">
 

@@ -368,7 +368,6 @@ Buttons
 
 .openbtn:hover,  .btn-light:hover, .btn-dark:hover, .btn-go:hover, .homebtn:hover, .btn-select:hover{
     background-color:#F8AA9D;
-    border-color: #F8AA9D;
     color: #fff;
 }
 
@@ -379,6 +378,11 @@ Buttons
     background-color: transparent;
     color: #9C796A;
     font-size: 18px;
+}
+
+.btn-cancel {
+    background-color:#b07777;
+    color: #fff;
 }
 
 .btn-light {
@@ -403,6 +407,12 @@ Buttons
     background-color: #efe2de;
     color: #9C796A;
     border-color: #f8f1ef;
+}
+
+.btn-disabled:disabled {
+    background-color: #66a772;
+    color: #ffffff;
+    font-style:italic;
 }
 
 .homebtn {
