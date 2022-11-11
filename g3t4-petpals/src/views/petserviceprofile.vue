@@ -38,21 +38,6 @@ img.rounded {
   width: 100px;
 }
 
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  h1,
-  p {
-    margin-bottom: 16px;
-  }
-  h1 {
-    font-size: 32px;
-  }
-  p {
-    font-size: 18px;
-  }
-}
-
 /* Style the tab */
 .tab {
   overflow: hidden;
@@ -207,7 +192,7 @@ img.rounded {
 
 <!--Edit Profile page-->
 <Modal @close="updateProfile()" :modalActive="modalActive">
-  <div class="modal-content p-3 mt-5" >
+  <div class="container p-3 mt-2" >
     <h4 class="p-2 my-1" style="background-color: #fddcd74d; border-radius: 4px;">Edit My Details:
       <span class = 'float-end'><button class = 'btn btn-select px-1 py-0' v-on:click="toggleModal(noChange); noChange=true"><i class="bi bi-x-lg"></i></button></span>
     </h4>
