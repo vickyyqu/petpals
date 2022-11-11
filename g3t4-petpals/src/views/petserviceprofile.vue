@@ -202,6 +202,10 @@ img.rounded {
     <h4 class="mb-2">Edit My Details:
     </h4>
 
+    <div v-if="updateError" class="text-center mt-3">
+      <small style="font-style:italic; color:brown">{{errorMsg}}</small>
+    </div>
+
     <label>Username:</label>
     <input class="form-control mb-2"
       type="text"
@@ -341,6 +345,8 @@ export default {
       noReviews: true,
       invalidAddr: false,
 
+      updateError: '',
+      errorMsg: '',
       noChange: true,
 
     };
@@ -416,56 +422,64 @@ export default {
     },
 
     updateProfile(){
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          updateProfile(user, { displayName: this.username })
-          set(ref(db, `users/${user.uid}/username`), this.username) 
-          set(ref(db, `users/${user.uid}/mobile`), this.mobile) 
-          set(ref(db, `users/${user.uid}/address`), this.address) 
-          set(ref(db, `users/${user.uid}/desc`), this.description) 
-          set(ref(db, `users/${user.uid}/yrsOfExp`), this.yrsOfExp) 
-          set(ref(db, `users/${user.uid}/postalcode`), this.postal) 
+      if (this.pic.length > 10485760){
+        this.updateError = true
+        this.errorMsg = 'Photo size is too big'
+      }else{
+        this.updateError = false
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            updateProfile(user, { displayName: this.username })
+            set(ref(db, `users/${user.uid}/username`), this.username) 
+            set(ref(db, `users/${user.uid}/mobile`), this.mobile) 
+            set(ref(db, `users/${user.uid}/address`), this.address) 
+            set(ref(db, `users/${user.uid}/desc`), this.description) 
+            set(ref(db, `users/${user.uid}/yrsOfExp`), this.yrsOfExp) 
+            set(ref(db, `users/${user.uid}/postalcode`), this.postal) 
 
-          if (this.pic != ''){
-            set(ref(db, `users/${user.uid}/profilepic`), this.pic) 
-            updateProfile(user, { photoURL: this.pic })
+            if (this.pic != ''){
+              set(ref(db, `users/${user.uid}/profilepic`), this.pic) 
+              updateProfile(user, { photoURL: this.pic })
+              this.pic = ''
+            }
+
+            axios.get("https://maps.googleapis.com/maps/api/geocode/json?", {
+                params: {
+                    address : this.postal,
+                    key: "AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw"
+                    }
+            })
+            .then(response => {
+                if (response.data.results.length > 0){
+                    this.invalidAddr = false
+                    var lat = response.data.results[0].geometry.location.lat
+                    var lng = response.data.results[0].geometry.location.lng
+                    set(ref(db, `users/${user.uid}/coords`), {'lat': lat, 'lng': lng}) 
+
+                    for (let i=0; i<response.data.results[0].address_components.length; i++){
+                        let each = response.data.results[0].address_components[i]
+                        if (each.types.includes('neighborhood')){
+                            set(ref(db, `users/${user.uid}/region`), each.long_name) 
+                        }
+                    }
+                    this.toggleModal(true)
+
+                } else {
+                    this.invalidAddr = true
+                }
+                
+            })
+            .catch( error => {
+
+                console.log(error.message)
+                this.invalidAddr = true
+
+            })
+
           }
+        });         
+      }
 
-          axios.get("https://maps.googleapis.com/maps/api/geocode/json?", {
-              params: {
-                  address : this.postal,
-                  key: "AIzaSyAk7Dq17v0SWL983LCrYA_nXdA5fjitXxw"
-                  }
-          })
-          .then(response => {
-              if (response.data.results.length > 0){
-                  this.invalidAddr = false
-                  var lat = response.data.results[0].geometry.location.lat
-                  var lng = response.data.results[0].geometry.location.lng
-                  set(ref(db, `users/${user.uid}/coords`), {'lat': lat, 'lng': lng}) 
-
-                  for (let i=0; i<response.data.results[0].address_components.length; i++){
-                      let each = response.data.results[0].address_components[i]
-                      if (each.types.includes('neighborhood')){
-                          set(ref(db, `users/${user.uid}/region`), each.long_name) 
-                      }
-                  }
-                  this.toggleModal(true)
-
-              } else {
-                  this.invalidAddr = true
-              }
-              
-          })
-          .catch( error => {
-
-              console.log(error.message)
-              this.invalidAddr = true
-
-          })
-
-        }
-      }); 
 
     },
 
