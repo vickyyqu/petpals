@@ -17,10 +17,13 @@
         <div class="col-lg-6 pt-3">
             <div class="requests-made py-4">
                 <h3 class="my-2 text-center pb-2">Requests Received</h3>
-                <p v-if="!haveReq" class="my-5 text-center nil">No requests yet...</p>
 
-                <request v-for='item in pendings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :img = 'item.img' :ratings = 'item.ratings'></request>
-                <request v-for='item in reqs' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :img = 'item.img' :ratings = 'item.ratings'></request>
+                <div style="height:500px; overflow:scroll;">
+                    <p v-if="!haveReq" class="my-4 text-center nil">No requests yet...</p>
+                    <request v-for='item in pendings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :img = 'item.img' :ratings = 'item.ratings'></request>
+                    <request v-for='item in reqs' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name= 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :img = 'item.img' :ratings = 'item.ratings'></request> 
+                </div>
+                
             </div>
         
         </div> 
@@ -29,10 +32,12 @@
             <div class="requests-made py-4">
 
                 <h3 class="my-2 text-center pb-2">Confirmed Bookings</h3>
-                <p v-if="!haveBookings" class="my-5 text-center nil">No bookings yet...</p>
 
-                <BookingConfirmed v-for='item in bookings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed>
-
+                <div style="height:500px; overflow:scroll;">
+                    <p v-if="!haveBookings" class="my-4 text-center nil">No bookings yet...</p>
+                    <BookingConfirmed v-for='item in bookings' :otherid = 'item.otherid' :service = 'item.service' :type = 'type' :name = 'item.name' :desc = 'item.desc' :rates = 'item.rates' :location = 'item.location' :img = 'item.img' :ratings = 'item.ratings'></BookingConfirmed>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -90,7 +95,15 @@ export default {
     },
 
     methods : {
-        // get Pet Owners
+        checkuser(){
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    console.log('user is not logged in')
+                    window.location.href = `/`;
+                }
+            });
+        },
+
         getRequests() {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
@@ -231,6 +244,7 @@ export default {
     },
     
     mounted(){
+        this.checkuser()
         this.getRequests()
         this.getBookings()
         this.getPendings()

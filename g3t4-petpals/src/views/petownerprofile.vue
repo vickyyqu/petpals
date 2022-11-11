@@ -157,70 +157,33 @@ img.rounded {
             class="carousel slide carousel-fade"
             data-bs-ride="carousel"
           >
-            <div class="carousel-indicators">
+            <div class="carousel-indicators mb-0">
               <button
+                v-for="idx in pets.length"
                 type="button"
                 data-bs-target="#carouselExampleCaptions"
-                data-bs-slide-to="0"
-                class="active"
-                aria-current="true"
-                aria-label="Slide 1"
-              ></button>
-              <button
-                type="button"
-                data-bs-target="#carouselExampleCaptions"
-                data-bs-slide-to="1"
-                aria-label="Slide 2"
-              ></button>
-              <button
-                type="button"
-                data-bs-target="#carouselExampleCaptions"
-                data-bs-slide-to="2"
-                aria-label="Slide 3"
+                v-bind:data-bs-slide-to = "idx-1"
+                v-bind:aria-current="idx==1"
+                v-bind:class="{'active': idx==1}"
+                v-bind:aria-label="'Slide'.concat(idx+1)"
               ></button>
             </div>
 
             <div class="carousel-inner" role="listbox" >
               <!-- put this in line 190 to fix the carousel display style=" width:100%; height: 500px !important;" -->
-              <div class="carousel-item active">
-                <img src="https://www.kibrispdr.org/data/84/dog-background-pictures-19.jpg" style="
-                width: 100% ;height: 350px; object-fit: cover;" 
-                class="rounded-3"/>
-                <div class="carousel-caption d-none d-md-block">
-                  <h4>Pet name</h4>
-                  <p>
-                    Pet desc
-                  </p>
+              <div class="carousel-item" v-for="(pet,idx) in pets"  :class="{'active': idx==0}">
+                <img
+                  v-bind:src = pet.photo 
+                  style="width: 100%;height: 350px; object-fit: cover;"
+                  class="rounded-3"
+                />
+                <div class="carousel-caption d-none d-md-block mb-0">
+                  <h4 class="mb-1">{{pet.petname}} ({{pet.type}})</h4>
+                  <p>Age: <small>{{pet.age}}</small> &nbsp; Breed: <small>{{pet.breed}}</small></p>
+                  <p>Description: <small>{{pet.desc}}</small></p>
                 </div>
               </div>
 
-              <div class="carousel-item">
-                <img
-                  src="@/img/groomer.jpeg"
-                  style="width: 100%;height: 350px;object-fit: cover;"
-                  class="rounded-3"
-                />
-                <div class="carousel-caption d-none d-md-block">
-                  <h4>Pet name</h4>
-                  <p>
-                    Pet desc
-                  </p>
-                </div>
-              </div>
-
-              <div class="carousel-item">
-                <img
-                  src="@/img/dogwalker.jpeg"
-                  style="width: 100%;height: 350px;object-fit: cover;"
-                  class="rounded-3"
-                />
-                <div class="carousel-caption d-none d-md-block">
-                  <h4>Pet name</h4>
-                  <p>
-                    Pet desc
-                  </p>
-                </div>
-              </div>
             </div>
 
             <button
@@ -256,19 +219,22 @@ img.rounded {
             <h3>My Reviews</h3>
           </div>
 
-          <div v-if="noReviews" class="my-5">
-            <h4>No reviews to show yet...</h4>
+          <div style="{overflow: scroll; height: 300px;}">
+            <div v-if="noReviews" class="my-5">
+              <h4>No reviews to show yet...</h4>
+            </div>
+
+            <div class="p-3">
+              <reviewCard
+                v-for="rev in reviews"
+                :reviewer="rev.username"
+                :service="rev.service"
+                :review="rev.review"
+                :rating="rev.rating"
+              ></reviewCard>
+            </div>            
           </div>
 
-          <div class="p-3">
-            <reviewCard
-              v-for="rev in reviews"
-              :reviewer="rev.username"
-              :service="rev.service"
-              :review="rev.review"
-              :rating="rev.rating"
-            ></reviewCard>
-          </div>
         </div>
       </div>
     </div>
@@ -279,17 +245,17 @@ img.rounded {
   <!--Edit Profile page-->
   <Modal
     @close="
-      toggleModal();
       updateProfile();
     "
-    :modalActive="modalActive"
+    :modalActive="modalActive" 
   >
-    <div class="modal-content p-3">
+    <div class="modal-content p-3 mt-5">
       <h4
         class="p-2 my-1"
         style="background-color: #fddcd74d; border-radius: 4px"
       >
         Edit My Details:
+        <span class = 'float-end'><button class = 'btn btn-select px-1 py-0' v-on:click="toggleModal(noChange); noChange=true"><i class="bi bi-x-lg"></i></button></span>
       </h4>
 
       <label>Username:</label>
@@ -298,12 +264,14 @@ img.rounded {
         type="text"
         id="username"
         v-model="username"
+        v-on:change='noChange=false'
       />
 
       <label>Profile Picture:</label>
       <input
         type="file"
         @change="getPic"
+        v-on:change='noChange=false'
         class="form-control mb-2"
         id="profilepicture"
         accept=".png, .jpg, .jpeg"
@@ -316,6 +284,7 @@ img.rounded {
         cols="10"
         id="bio"
         v-model="description"
+        v-on:change='noChange=false'
       ></textarea>
 
       <label>Phone Number:</label>
@@ -324,6 +293,7 @@ img.rounded {
         type="text"
         id="number"
         v-model="mobile"
+        v-on:change='noChange=false'
       />
 
       <label>Address:</label>
@@ -333,6 +303,7 @@ img.rounded {
         cols="10"
         id="address"
         v-model="address"
+        v-on:change='noChange=false'
       ></textarea>
 
       <label>Postal Code:</label>
@@ -347,7 +318,6 @@ img.rounded {
 
   <Modal
     @close="
-      toggleModal2();
       addPet();
     "
     :modalActive="modalActive2"
@@ -358,7 +328,12 @@ img.rounded {
         style="background-color: #fddcd74d; border-radius: 4px"
       >
         Add a Pet:
+        <span class = 'float-end'><button class = 'btn btn-select px-1 py-0' v-on:click="toggleModal2(true);"><i class="bi bi-x-lg"></i></button></span>
       </h4>
+
+      <div v-if="addError" class="text-center mt-3">
+        <small style="font-style:italic; color:brown">{{errorMsg}}</small>
+      </div>
 
       <label>Pet Name:</label>
       <input
@@ -494,6 +469,10 @@ export default {
       age: 0,
       petDesc: "",
       petType: "default",
+
+      addError: '',
+      errorMsg: '',
+      noChange: true,
     };
   },
 
@@ -508,6 +487,15 @@ export default {
   },
 
   methods: {
+    checkuser(){
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                console.log('user is not logged in')
+                window.location.href = `/`;
+            }
+        });
+    },
+
     getProfile() {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -577,7 +565,7 @@ export default {
                     set(ref(db, `users/${user.uid}/region`), each.long_name);
                   }
                 }
-                window.location.href = `/petownerprofile`;
+                this.toggleModal(true)
               } else {
                 this.invalidAddr = true;
               }
@@ -594,6 +582,9 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           onValue(ref(db, `users/${user.uid}/pets`), (snapshot) => {
+            if (snapshot.val() != null){
+              this.pets = []
+            }
             for (let pet in snapshot.val()) {
               var obj = {};
               obj["petname"] = pet;
@@ -613,6 +604,7 @@ export default {
     addPet() {
       if (this.petName == "" || this.age == 0 || this.petType == "default") {
         console.log("error");
+
       } else {
         onAuthStateChanged(auth, (user) => {
           if (user) {
@@ -649,8 +641,10 @@ export default {
             this.age = 0;
             this.petName = "";
             this.petType = "default";
+            this.breed = '';
+            this.petDesc = '';
 
-            window.location.href = `/petownerprofile`;
+            this.toggleModal2(false)
           }
         });
       }
@@ -686,6 +680,7 @@ export default {
   },
 
   mounted() {
+    this.checkuser()
     this.getProfile();
     this.getReviews();
     this.getPets();
@@ -695,11 +690,17 @@ export default {
     const modalActive = modalref(false);
     const modalActive2 = modalref(false);
 
-    const toggleModal = () => {
+    const toggleModal = (check) => {
       modalActive.value = !modalActive.value;
+      if (modalActive.value == modalref(false).value && check == false){
+        window.location.href = `/petownerprofile`;
+      }
     };
-    const toggleModal2 = () => {
+    const toggleModal2 = (check) => {
       modalActive2.value = !modalActive2.value;
+      if (modalActive2.value == modalref(false).value && check == false){
+        window.location.href = `/petownerprofile`;
+      }
     };
     return { modalActive, toggleModal, modalActive2, toggleModal2 };
   },

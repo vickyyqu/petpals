@@ -1,13 +1,9 @@
 <style>
-    .chat {
-        height: 725px;
-    }
-
 </style>
 
 <template>
     
-<div class = 'container-fluid chat sides' style="height:100%">
+<div class = 'container-fluid sides' style="height:100%">
 
     <navbar v-if="petOwner"></navbar>
     <navbarProvider v-else ></navbarProvider>
@@ -15,10 +11,10 @@
     <div ref="talkjs" style="width: 100%; height: 600px; position: absolute;" class = 'my-5 py-5'> 
         <i class="m-5" style="color: #4b3830; font-family: 'Figtree';">Loading chat...</i>
     </div>
-
+    
 </div>
-<petpalsFooter></petpalsFooter>
 
+<petpalsFooter></petpalsFooter>
 </template>
 
 <script>
@@ -43,6 +39,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth();
 
 export default {
         name: 'Inbox',
@@ -60,9 +57,14 @@ export default {
         },
 
         async mounted() {
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    console.log('user is not logged in')
+                    window.location.href = `/`;
+                }
+            });
             await Talk.ready 
 
-            const auth = getAuth();
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     onValue(ref(db, `users/${user.uid}`), (snapshot) => {

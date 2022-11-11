@@ -110,13 +110,17 @@
 
     </div>
 
-    <div v-if="reviewLeft" class="d-flex m-2 justify-content-end">
-        <button class="btn btn-disabled px-3" disabled>Review sent!</button>
+    <div v-if="reviewLeft" class="m-2">
+        <button class="btn btn-select px-3 mx-2" @click="addChat"><i class="bi bi-chat-heart"></i></button>
+        <button class="btn btn-disabled px-3 float-end" disabled>Review sent!</button>
     </div>
 
-    <div v-else class="buttons m-2 d-flex justify-content-end">
-        <button class="btn btn-select px-3" @click="review=true">Leave Review</button>
+    <div v-else class="buttons m-2">
+        <button class="btn btn-select px-3 mx-2" @click="addChat"><i class="bi bi-chat-heart"></i></button>
+        <button class="btn btn-select px-3 float-end" @click="review=true">Leave Review</button>
     </div>
+
+    
 </div>
 
 </template>

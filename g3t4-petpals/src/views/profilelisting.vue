@@ -199,6 +199,15 @@ export default {
         }
     },
     methods : {
+        checkuser(){
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    console.log('user is not logged in')
+                    window.location.href = `/`;
+                }
+            });
+        },
+
         addService(){
             if (this.service == '' || this.description == '' || this.rate == 0){
                 this.error = 'Please enter all the details of the service'
@@ -240,6 +249,7 @@ export default {
     },
 
     mounted(){
+        this.checkuser()
         this.getServices()
     },
 
