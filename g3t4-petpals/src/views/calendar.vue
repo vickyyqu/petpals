@@ -22,14 +22,14 @@ p {
 }
 
 .body{
-    height: 700px;
+    height: 530px;
     background-color: white;
     border-radius: 20px;
 }
 
 .bookings {
     overflow: scroll;
-    height: 700px;
+    height: 400px;
 }
 
 .event{
@@ -126,7 +126,6 @@ p {
                         </button>
                     </div>
                 </div>
-
 
                 <div class = 'col-md-4 order-md-first px-3'>
                     <button class="btn btn-select px-3 mb-3 w-100" @click="toggleModal">Add Event &nbsp;<i class="bi bi-calendar-check"></i></button>
