@@ -193,9 +193,13 @@ img.rounded {
 
 <!--Edit Profile page-->
 <Modal @close="updateProfile()" :modalActive="modalActive">
-  <div class="container p-3" >
-    <h4 class="p-2 mt-1 mb-3" style="background-color: #fddcd74d; border-radius: 4px;">Edit My Details:
-      <span class = 'float-end'><button class = 'btn btn-select px-1 py-0' v-on:click="toggleModal(noChange); noChange=true"><i class="bi bi-x-lg"></i></button></span>
+  <div class="container p-0" >
+    <span class = 'float-end'><button class = 'btn btn-select px-2 py-1' v-on:click="toggleModal(noChange); noChange=true"><i class="bi bi-x-lg"></i></button></span>
+
+
+    <div class="p-3">
+
+    <h4 class="mb-2">Edit My Details:
     </h4>
 
     <label>Username:</label>
@@ -250,14 +254,16 @@ img.rounded {
       v-model="postal"
     />
   </div>
+</div>
+
 </Modal>
 
 <!--Edit Services page-->
 <Modal @close="updateService()" :modalActive="modalActive2">
-  <div class="container modal-content p-3">
-    <div class="d-flex justify-content-between mb-3">
-      <h4 class="p-2 my-1" style="float:left;background-color: #fddcd74d; border-radius: 4px;">Edit My Service:</h4>
-        <button class="btn btn-cancel px-3 float-right" @click="deleteService"><i class="bi bi-trash3" style="color:white"></i></button>
+  <div class="container p-3">
+    <div class="d-flex justify-content-between">
+      <h4 class="mb-2">Edit My Service:</h4>
+        <button class="btn btn-cancel px-2 py-1 float-right" @click="deleteService"><i class="bi bi-trash3" style="color:white"></i></button>
     </div>
 
     <label>Price: </label>

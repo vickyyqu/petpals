@@ -229,15 +229,13 @@ img.rounded {
     "
     :modalActive="modalActive" 
   >
-    <div class="container p-3">
-      <h4
-        class="p-2 mt-1 mb-3"
-        style="background-color: #fddcd74d; border-radius: 4px"
-      >
-        Edit My Details:
-        <span class = 'float-end'><button class = 'btn btn-select px-1 py-0' v-on:click="toggleModal(noChange); noChange=true"><i class="bi bi-x-lg"></i></button></span>
-      </h4>
+  <div class="container p-0" >
+    <span class = 'float-end'><button class = 'btn btn-select px-2 py-1' v-on:click="toggleModal(noChange); noChange=true"><i class="bi bi-x-lg"></i></button></span>
 
+
+    <div class="p-3">
+
+    <h4 class="mb-2">Edit My Details:</h4>
       <label>Username:</label>
       <input
         class="form-control mb-2"
@@ -294,6 +292,7 @@ img.rounded {
         v-model="postal"
       />
     </div>
+  </div>
   </Modal>
 
   <Modal
@@ -302,13 +301,12 @@ img.rounded {
     "
     :modalActive="modalActive2"
   >
-    <div class="container p-3">
-      <h4
-        class="p-2 mt-1 mb-3"
-        style="background-color: #fddcd74d; border-radius: 4px"
-      >
+    <div class="container p-0">
+      <span class = 'float-end'><button class = 'btn btn-select px-2 py-1' v-on:click="toggleModal2(true);"><i class="bi bi-x-lg"></i></button></span>
+
+      <div class="p-3">
+      <h4 class="mb-2">
         Add a Pet:
-        <span class = 'float-end'><button class = 'btn btn-select px-1 py-0' v-on:click="toggleModal2(true);"><i class="bi bi-x-lg"></i></button></span>
       </h4>
 
       <div v-if="addError" class="text-center mt-3">
@@ -384,6 +382,7 @@ img.rounded {
         v-model="petDesc"
       ></textarea>
     </div>
+  </div>
   </Modal>
 </template>
 

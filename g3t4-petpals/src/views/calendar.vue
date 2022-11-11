@@ -48,15 +48,13 @@ p {
 </style>
 
 <template>
-<div class = 'container-fluid'>
+<div class="container-fluid sides">
     <navbar v-if="petOwner"></navbar>
     <navbarProvider v-else></navbarProvider>
 
-    <div class = 'row mt-5 pt-3 justify-content-center' style="height:900px">
-        <div class="col sides">
-            <div class = 'row mx-2 my-5'>
-
-                <div class="col-sm-8 order-sm-last" >
+    <div class='sides' style="padding-top:80px;padding-bottom:50px;">
+            <div class = 'row px-2 py-5'>
+                <div class="col-md-8 order-md-last">
                     <div id="carouselExampleControls" class="carousel carousel-dark slide"  data-bs-interval="false" data-bs-wrap="false">
                         <div class="carousel-inner" >
                             <div class="carousel-item" v-for="(obj,idx) of year" :class="{'active': idx==0}" >
@@ -128,9 +126,9 @@ p {
                     </div>
                 </div>
 
-                <div class = 'col-sm-4 order-sm-first px-3'>
+                <div class = 'col-md-4 order-md-first px-3'>
                     <button class="btn btn-select px-3 mb-3 w-100" @click="toggleModal">Add Event &nbsp;<i class="bi bi-calendar-check"></i></button>
-                    <div class="body">
+                    <div class="body py-3">
                         <h6 class = 'text-center p-2'>{{chosenDate.day}}-{{months[chosenDate.month]}}-{{chosenDate.year}}</h6>
                         <h4 class = 'text-center'>BOOKINGS</h4>
                         <div class="bookings mt-3"  style="width:100%;">
@@ -140,17 +138,21 @@ p {
                 </div>
 
             </div>
-        </div>
+
     </div>
     
 </div>
 <petpalsFooter></petpalsFooter>
 
 <Modal @close="addEvent()" :modalActive="modalActive">
-  <div class="container p-3" >
-    <h4 class="p-2 my-1" style="background-color: #fddcd74d; border-radius: 4px;">Enter Event Details:
-        <span class = 'float-end'><button class = 'btn btn-select px-2 py-0' v-on:click="toggleModal(true);"><i class="bi bi-x-lg"></i></button></span>
-    </h4>
+  <div class="container p-0" >
+    <button class = 'btn btn-select py-1 px-2 float-end d-inline' v-on:click="toggleModal(true);"><i class="bi bi-x"></i></button>
+
+    <div class="px-3">
+
+    <div  class="py-3">
+        <h4>Enter Event Details:</h4>
+    </div>
 
     <div v-if="addError" class="text-center mt-3">
         <small style="font-style:italic; color:brown">{{errorMsg}}</small>
@@ -196,6 +198,7 @@ p {
       id="endTime"
       v-model="endTime"
     />
+    </div>
   </div>
 </Modal> 
 

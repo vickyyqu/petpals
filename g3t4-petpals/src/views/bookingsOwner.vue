@@ -14,7 +14,7 @@
 
     <div class="row px-4" style="padding-top:80px; padding-bottom:50px;">
 
-        <div class="col-lg-6 pt-3">
+        <div class="col-lg-6 pt-4">
             <div class="requests-made py-4">
                 <h3 class="my-2 text-center pb-2">Requests Made</h3>
 
@@ -26,7 +26,7 @@
             </div>
         </div> 
 
-        <div class="col-lg-6 pt-3">
+        <div class="col-lg-6 pt-4">
             <div class="requests-made py-4">
 
                 <h3 class="my-2 text-center pb-2">Confirmed Bookings</h3>
