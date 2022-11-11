@@ -3,12 +3,12 @@
 
 <template>
     
-<div class = 'container-fluid sides' style="height:100vh">
+<div class = 'container-fluid sides' style="height:100vh;">
 
     <navbar v-if="petOwner"></navbar>
     <navbarProvider v-else ></navbarProvider>
 
-    <div ref="talkjs" style="width: 100%; height: 600px; position: absolute;" class = 'my-5 py-5'> 
+    <div ref="talkjs" style="width: 100%; height: 550px; position: absolute;" class = 'my-5 py-5'> 
         <i class="m-5" style="color: #4b3830; font-family: 'Figtree';">Loading chat...</i>
     </div>
     
