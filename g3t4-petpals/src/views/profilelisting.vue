@@ -39,7 +39,7 @@ input[type='checkbox']:checked{
 </style>
 
 <template>
-<div class="container-fluid" style="height:100vh">
+<div class="container-fluid" style="height:100%">
     <navbarProvider></navbarProvider>
 
     <div class="row pt-5">

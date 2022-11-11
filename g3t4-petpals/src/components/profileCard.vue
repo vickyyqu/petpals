@@ -13,6 +13,11 @@
     box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
     transform: scale(1.04);
 }
+
+button:disabled{
+    border:none;
+    background-color: rgb(245, 237, 239);
+}
 </style>
 
 <template>
@@ -112,7 +117,7 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        <small style="font-style:italic; color:brown" class="my-3">Request sent!</small>
+        <button class="btn btn-disabled my-3" disabled>Request sent!</button>
     </div>
 </div>
 </template>

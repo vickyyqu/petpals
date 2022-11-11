@@ -48,7 +48,7 @@ p {
 </style>
 
 <template>
-<div class = 'container-fluid'>
+<div class = 'container-fluid' style="height:100%">
     <navbar v-if="petOwner"></navbar>
     <navbarProvider v-else></navbarProvider>
 

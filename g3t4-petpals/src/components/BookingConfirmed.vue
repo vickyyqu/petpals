@@ -110,12 +110,12 @@
 
     </div>
 
-    <div v-if="reviewLeft" class="buttons m-2 d-flex justify-content-end">
-        <small style="color:brown;font-style:italic">Review sent!</small>
+    <div v-if="reviewLeft" class="d-flex m-2 justify-content-end">
+        <button class="btn btn-disabled px-3" disabled>Review sent!</button>
     </div>
 
     <div v-else class="buttons m-2 d-flex justify-content-end">
-        <button class="btn btn-cancel p-2" @click="review=true">Leave Review</button>
+        <button class="btn btn-select px-3" @click="review=true">Leave Review</button>
     </div>
 </div>
 
