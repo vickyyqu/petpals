@@ -631,10 +631,7 @@ export default {
               set(
                 ref(db, `users/${user.uid}/pets/${this.petName}/photo`),
                 this.pic
-              ).catch((error) => {
-                console.log('o no')
-              }) 
-              ;
+              )
               this.pic = "";
             } else {
               set(
