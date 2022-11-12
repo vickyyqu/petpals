@@ -7,27 +7,27 @@
 
             <div class="mt-4 text-center">
                 <img src="@/img/logo2.png" class="w-25 mx-auto d-block">
-                <h3 class="mt-4 mb-3">Register as a PetPals Pet Owner with us today!</h3>
+                <h3 class="mt-4 mb-3 ">Register as a PetPals Pet Owner with us today!</h3>
                 <p>Enter your personal particulars below.</p>
             </div>
             <div class="row">
                 <div class="col-1"></div>
 
-                <div class="col-10 px-5">
+                <div class="col-10 px-md-4">
 
 
                     <div v-if="mainError" class="alert alert-danger p-2 my-4">{{signupError}}</div>
 
-                    <div class="row my-4">
+                    <div class="row mt-3">
 
                         <!-- email and username-->
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             
                             <label for="inputEmail">Email</label>
                             <input type="email" v-model='email' class="form-control w-100" placeholder="" required>
                             <small v-if="emailEmpty" style="color: brown; font-style:italic">{{errors.email}}</small>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             <label for="inputUsername">Display Name</label>
                             <input type="text" v-model='username' class="form-control w-100" id="inputUsername" placeholder="" required>
                             <small v-if="userEmpty" style="color: brown; font-style:italic">{{errors.user}}</small>
@@ -41,7 +41,7 @@
                         <small v-if="pwdEmpty" style="color: brown; font-style:italic;display:block;">{{errors.pwd}}</small>
 
 
-                    <label for="inputRepeatPassword" class="mt-4">Repeat Password</label>
+                    <label for="inputRepeatPassword" class="mt-3">Repeat Password</label>
                     <input type="password" class="form-control w-100" id="inputRepeatPassword"
                         style="background-color:white" placeholder="" v-model="psw_repeat" required>
                         <small v-if="repeatEmpty" style="color: brown; font-style:italic">{{errors.repeat}}</small>
@@ -52,9 +52,9 @@
                     </div>
 
 
-                    <div class="row my-4">
+                    <div class="row mt-3">
                         <!-- username and photo-->
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
 
                             <label for="inputNumber">Phone Number</label>
                             <input type="text" v-model='mobile' class="form-control w-100" id="inputNumber"
@@ -63,7 +63,7 @@
                                 <small v-if="numEmpty" style="color: brown; font-style:italic">{{errors.num}}</small>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             <label for="profilePicture">Profile Picture</label>
                             <input type="file" @change='getPic' class="form-control w-100" id="profilePicture">
                             <small v-if="picError" style="color: brown; font-style:italic;display:block;">{{errors.pic}}</small>
@@ -79,7 +79,7 @@
                         required>
                         <small v-if="addEmpty" style="color: brown; font-style:italic;display:block;">{{errors.add}}</small>
 
-                    <label for="inputPostal" class="mt-4">Postal Code</label>
+                    <label for="inputPostal" class="mt-3">Postal Code</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">SG</span>
@@ -103,7 +103,7 @@
 </div>
 
 <Modal @close="toggleModal" :modalActive="modalActive" :type="'register'">
-    <h3 class="text-center">User Registered!</h3>
+    <h3 class="text-center mt-5">User Registered!</h3>
     <p class="text-center pt-2">An email has been sent to your email address for verification!</p>
 </Modal>
 

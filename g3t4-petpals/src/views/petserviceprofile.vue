@@ -161,7 +161,7 @@ img.rounded {
                   <p class="text-center m-5 p-4" style="background-color:white;border-radius:50px;color:#856658">No services to show yet...</p>
                 </div>
 
-                <div class = 'd-flex flex-wrap justify-content-around'>
+                <div class = 'row'>
                   <serviceCard v-for="serv of services" :service="Object.keys(serv)[0]" v-on:edit='toggleModal2(); service=Object.keys(serv)[0]; price=serv[Object.keys(serv)[0]].price; serviceDesc=serv[Object.keys(serv)[0]].desc' :price="serv[Object.keys(serv)[0]].price" :desc="serv[Object.keys(serv)[0]].desc"></serviceCard>
                 </div>
                   

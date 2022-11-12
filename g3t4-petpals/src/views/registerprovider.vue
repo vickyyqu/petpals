@@ -27,20 +27,20 @@
             <div class="row">
                 <div class="col-1"></div>
 
-                <div class="col-10 px-5">
+                <div class="col-10 px-md-4">
 
                     <div v-if="mainError" class="alert alert-danger p-2 my-4">{{signupError}}</div>
 
-                    <div class="row my-4">
+                    <div class="row mt-3">
 
                         <!-- email and username-->
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             
                             <label for="inputEmail">Email</label>
                             <input type="email" v-model='email' class="form-control w-100" placeholder="" required>
                             <small v-if="emailEmpty" style="color: brown; font-style:italic">{{errors.email}}</small>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             <label for="inputUsername">Display Name</label>
                             <input type="text" v-model='username' class="form-control w-100" id="inputUsername" placeholder="" required>
                             <small v-if="userEmpty" style="color: brown; font-style:italic">{{errors.user}}</small>
@@ -65,9 +65,9 @@
                     </div>
 
 
-                    <div class="row my-4">
+                    <div class="row mt-3">
                         <!-- username and photo-->
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
 
                             <label for="inputNumber">Phone Number</label>
                             <input type="text" v-model='mobile' class="form-control w-100" id="inputNumber"
@@ -76,7 +76,7 @@
                                 <small v-if="numEmpty" style="color: brown; font-style:italic">{{errors.num}}</small>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             <label for="profilePicture">Profile Picture</label>
                             <input type="file" @change='getPic' class="form-control w-100" id="profilePicture">
                             <small v-if="picError" style="color: brown; font-style:italic;display:block;">{{errors.pic}}</small>
@@ -92,7 +92,7 @@
                         required>
                         <small v-if="addEmpty" style="color: brown; font-style:italic;display:block;">{{errors.add}}</small>
 
-                    <label for="inputPostal" class="mt-4">Postal Code</label>
+                    <label for="inputPostal" class="mt-3">Postal Code</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">SG</span>
@@ -102,7 +102,7 @@
                     <small v-if="postalEmpty" style="color: brown; font-style:italic;display:block">{{errors.postal}}</small>
                     <div v-if="invalidAddr" class="alert alert-danger p-2 my-3">Invalid address entered.</div>
 
-                    <label class="mt-4" for="yearsofexp">Years of Experience</label>
+                    <label class="mt-3" for="yearsofexp">Years of Experience</label>
                     <input class="form-control w-100" v-model='yrsOfExp' type="number" id="yearsofexp" min="0" max="50">
 
                     <button class="btn btn-go d-block mx-auto my-5" @click="registerUser">Sign up!</button>
@@ -111,14 +111,13 @@
 
                 <div class="col-1"></div>
             </div>
-
-        <div class="col-1 sides"></div>
     </div>
+    <div class="col-1 sides"></div>
     </div>
 </div>
 
 <Modal @close="toggleModal" :modalActive="modalActive" :type="'register'">
-    <h3 class="text-center">User Registered!</h3>
+    <h3 class="text-center mt-5">User Registered!</h3>
     <p class="text-center pt-2">An email has been sent to your email address for verification!</p>
 </Modal>
 

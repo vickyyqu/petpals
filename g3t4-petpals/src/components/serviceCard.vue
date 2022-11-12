@@ -15,47 +15,56 @@
 </style>
 
 <template>
-<div class="card my-3" style="width:45%;">
-    <div class="card-body">
-        <div class=" d-flex justify-content-between">
-            <div class="d-flex justify-content-start">
-                <img class="rounded-circle mx-2"
-                src = "@/img/png/walker.png"
-                style="width:80px;height:80px;object-fit:cover;" v-if="service=='Pet Walker'" >
-                <img class="rounded-circle mx-2"
-                src = "@/img/png/sitter.png"
-                style="width:80px;height:80px;object-fit:cover;" v-if="service=='Pet Sitter'" >
-                <img class="rounded-circle mx-2"
-                src = "@/img/png/hotel.png"
-                style="width:80px;height:80px;object-fit:cover;" v-if="service=='Pet Hotel'" >
-                <img class="rounded-circle mx-2"
-                src = "@/img/png/catincar.png"
-                style="width:80px;height:80px;object-fit:cover;" v-if="service=='Pet Mover'" >
-                <img class="rounded-circle mx-2"
-                src = "@/img/png/groomer.png"
-                style="width:80px;height:80px;object-fit:cover;" v-if="service=='Pet Groomer'" >
-                <img class="rounded-circle mx-2"
-                src = "@/img/png/trainer.png"
-                style="width:80px;height:80px;object-fit:cover;" v-if="service=='Pet Trainer'" >  
-        
 
-                <div class="ms-1 text-start">
-                    <h4>{{service}}</h4>
-                    <small>Price: ${{price}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small>
-                </div>
+<div class="col-md-6">
+    <div class="card my-3 d-block">
+        <div class="card-body">
+            <div class=" d-flex justify-content-between">
+                <div class="d-flex justify-content-start">
+                    <img class="rounded-circle mx-2"
+                    src = "@/img/png/walker.png"
+                    style="width:80px;height:80px;object-fit:cover;" v-if="service=='Pet Walker'" >
+                    <img class="rounded-circle mx-2"
+                    src = "@/img/png/sitter.png"
+                    style="width:80px;height:80px;object-fit:cover;" v-if="service=='Pet Sitter'" >
+                    <img class="rounded-circle mx-2"
+                    src = "@/img/png/hotel.png"
+                    style="width:80px;height:80px;object-fit:cover;" v-if="service=='Pet Hotel'" >
+                    <img class="rounded-circle mx-2"
+                    src = "@/img/png/catincar.png"
+                    style="width:80px;height:80px;object-fit:cover;" v-if="service=='Pet Mover'" >
+                    <img class="rounded-circle mx-2"
+                    src = "@/img/png/groomer.png"
+                    style="width:80px;height:80px;object-fit:cover;" v-if="service=='Pet Groomer'" >
+                    <img class="rounded-circle mx-2"
+                    src = "@/img/png/trainer.png"
+                    style="width:80px;height:80px;object-fit:cover;" v-if="service=='Pet Trainer'" >  
             
-            </div>
-        </div>  
-        <div class = 'row my-3'>
-            <div class = 'col-9 text-start px-3'>
-                <h5 class="mb-1">Description:</h5>
-                <p class="card-text">{{desc}}</p>                       
-            </div>
-            <div class = 'col-3'>
-                <span><button class="btn btn-select px-3 float-end" v-on:click="$emit('edit')"><i class="bi bi-pencil-square"></i></button></span>
+    
+                    <div class="ms-1 text-start">
+                        <h4>{{service}}</h4>
+                        <small>Price: ${{price}}/<span v-if="service=='Pet Hotel'">day</span><span v-else>hr</span></small>
+                    </div>
+                
+                </div>
+            </div>  
+            <div class = 'row my-3'>
+                <div class = 'col-9 text-start px-3'>
+                    <h5 class="mb-1">Description:</h5>
+                    <p class="card-text">{{desc}}</p>                       
+                </div>
+                <div class = 'col-3'>
+                    <span><button class="btn btn-select px-3 float-end" v-on:click="$emit('edit')"><i class="bi bi-pencil-square"></i></button></span>
+                </div>
             </div>
         </div>
     </div>
+
+
+
+
+
+
 </div>
 </template>
 

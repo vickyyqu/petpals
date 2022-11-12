@@ -65,6 +65,7 @@
     margin: auto;
     padding-bottom: 50px;
     font-size: 4vh;
+    font-size:calc(18px + 1vw);
     line-height: 1.5em;
     letter-spacing: 2px;
     padding-top: 20%;
@@ -115,7 +116,7 @@
 .services-heading {
     font-style: normal;
     font-family: 'Figtree';
-    line-height: 0.7em;
+    line-height: 0.9em;
     color: #856658;
 }
 </style>
@@ -125,7 +126,7 @@
     <div id="top-header" class="header-home">
         <img src="@/img/logo2.png" style="width: 125px">
 
-        <button class="btn openbtn" v-on:click="Nav()">&#9776; Menu</button>
+        <button class="btn openbtn" v-on:click="Nav()" style="font-size:calc(12px + 0.5vw)">&#9776; Menu</button>
 
         <div v-if="counter == 0" id="mySidepanel" class="closed">
         </div>
@@ -143,7 +144,7 @@
     <!-- End Header -->
 
     <!-- Parallax Section -->
-    <div class="container-flex">
+    <div class="container-flex" >
         <div class="row">
 
             <div class="col-md-4 order-md-2 content-login">
@@ -251,7 +252,7 @@
 
             <div class="col-md-8 order-md-1 content parallax-section">
                 <vue-writer :array="arr" :eraseSpeed="50" :typeSpeed="100" :delay="3600" />
-                <p>Entrust your pet with us and allow our experienced service providers to elevate your pet-owning
+                <p style="font-size:calc(12px + 0.5vw)">Entrust your pet with us and allow our experienced service providers to elevate your pet-owning
                     experience. Join PetPals today and access these services offered by our providers!</p>
             </div>
 
@@ -269,8 +270,8 @@
         <div class="row pt-5" id="services">
             <h2 class="pt-5 text-center">Our Services</h2>
 
-            <h4 class="mt-4 text-center services-heading">Choose from as many services as you like.</h4>
-            <h4 class="mt-3 text-center services-heading">Match with the perfect pet service provider.</h4>
+            <h4 class="mt-4 px-5 text-center services-heading">Choose from as many services as you like.
+                Match with the perfect pet service provider.</h4>
 
             <div class="row p-5">
                 <services></services>
@@ -326,13 +327,13 @@
 
         <div class="container-flex about-bg">
             <div class="petpals-about">
-                <p>We are a team of pet lovers that strives to connect the pet community, matching pet service providers
+                <p style="font-size:calc(12px + 0.5vw)">We are a team of pet lovers that strives to connect the pet community, matching pet service providers
                     to pet owners. Owning a pet is never easy, and requiring additional help is more than normal. At
                     PetPals, we make this easy, and you can easily filter and select the best pet service provider for
                     you. Choose from our wide selection of service providers based on the services you need and elevate
                     your pet-owning experience!</p>
 
-                <p>We also provide pet lovers a platform to use their expertise and share their knowledge while earning
+                <p style="font-size:calc(12px + 0.5vw)">We also provide pet lovers a platform to use their expertise and share their knowledge while earning
                     some income on top of that. Choose the pet owners that fit you the best and enjoy connecting with
                     them and getting to know their plan. Let's grow the pet lovers community together!</p>
 
@@ -351,7 +352,7 @@
         </svg>
 
 
-        <div class="m-5 pt-5" id="gallery">
+        <div class="m-sm-5 pt-5" id="gallery">
             <h3 class="mt-5 text-center">Gallery</h3>
             <div class="row m-5">
                 <div class="col-sm-4 mb-4 mb-lg-0 ">
