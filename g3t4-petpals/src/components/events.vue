@@ -8,14 +8,14 @@
     <div class="card-body">
         <h4 class="card-reviewID text-center">{{title}}</h4>
 
-        <div class = 'row my-2'>
+        <div class = 'row mt-2'>
             <small class="card-reviewer">Venue: {{venue}}</small>
-            <div class = 'col-9 pe-0'>
+            <div class = 'col-sm-9 pe-0'>
             <small class="card-reviewer">Starts: {{getTime(start)}}</small>
                 <br/>
             <small class="card-reviewer">Ends: {{getTime(end)}}</small>
             </div>
-            <div class = 'col-3 px-0 d-flex align-items-center justify-content-start'>
+            <div class = 'col-sm-3 d-flex align-items-center justify-content-end'>
                 <span><button class="btn btn-select px-2 py-1" v-on:click = "$emit('delete')"><i class="bi bi-trash3"></i></button></span>
             </div>
         </div>

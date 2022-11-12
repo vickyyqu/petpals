@@ -24,10 +24,11 @@ a:hover {
 </style>
 
 <template>
+
     <div class="row">
         <div class="navbar-header" id="navbar-header">
             <div class="container-fluid">
-                <nav class="navbar navbar-expand-sm ">
+                <nav class="navbar navbar-expand-md">
                     <img src="@/img/logo2.png" style="width: 80px">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -37,7 +38,7 @@ a:hover {
 
                     <div class="collapse navbar-collapse justify-content-between text-center"
                         id="navbarSupportedContent">
-
+ 
                         <ul class="navbar-nav ms-2">
 
                             <li class="nav-item px-3 my-2">
@@ -60,16 +61,13 @@ a:hover {
                             <li class="nav-item px-3 my-2">
                                 <router-link to="/chat">
                                     Chats
-                                    <!-- if there is an unread chat -->
-                                    <img v-if="unread" src="@/img/green-circle-icon.png" style="width:8px;" class="ms-1">
                                 </router-link>
-                                    
                             </li>
 
                         </ul>
 
                         <ul class="navbar-nav my-2">
-                            <li class="nav-item active">
+                            <li class="nav-item active" >
                                 <img v-bind:src="photoURL" class="rounded rounded-circle ms-1 me-3" style="width:40px;height:40px;object-fit:cover;">
                                 <router-link to="/petownerprofile">{{ username }}</router-link>
                             </li>
@@ -103,12 +101,11 @@ const auth = getAuth();
 
 
 export default {
-
     data() {
         return {
             username: "",
             photoURL: "",
-            unread: false
+            visible: false
         }
     },
     methods: {
@@ -134,7 +131,7 @@ export default {
                     });
                 }
             });
-        },
+        }
     },
 
     mounted() {
