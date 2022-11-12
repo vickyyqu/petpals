@@ -31,12 +31,20 @@ PetPals is a fully responsive website that connects pet owners and pet service p
 > $ npm run dev
 
 ## <a name="login"></a>Login details (for testing purpose)
-### Pet owner
+### Pet Owner 
 Email: fiona.li.2021@smu.edu.sg
-
 Password: fiona123
 
-### Pet service provider
+### Pet Service Provider
 Email: iris.liew.2021@smu.edu.sg
-
 Password: iris123
+
+### Try Your Own
+Email: <register with your email>
+Password: <input your password>
+*Please verify your email first before logging into PetPals and check your spam folder if the verificiation email is not in your inbox
+
+
+
+
+
