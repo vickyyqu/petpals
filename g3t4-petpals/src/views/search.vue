@@ -14,7 +14,7 @@ input[type='radio']:checked{
 }
 
 .search-provider {
-    font-size: 3em;
+    font-size:calc(30px + 2vw);
 }
 
 .form-select {
@@ -65,7 +65,7 @@ input[type='radio']:checked{
                 </div>
                 </div>
             
-            <div class="search-providers px-5">
+            <div class="search-providers px-sm-5">
 
                 <h3 class="search-provider my-4 pt-2"><i class="bi bi-search-heart"></i> Search Providers</h3>
 
@@ -92,7 +92,7 @@ input[type='radio']:checked{
                     <div class="col-lg-8">
                         <h3 class="my-4">Best Matches Near You:</h3>
                     </div>
-                    <div class="col-lg-2 col-8">
+                    <div class="col-lg-2 col-sm-8">
                         <span class="required">Sort by:</span>
                         <select class="form-select" aria-label="Default select example" v-model="sortBy">
                             <option id="reviews" value = 'ratings'>Ratings</option>
@@ -101,18 +101,18 @@ input[type='radio']:checked{
                             <option id="dist" class="select-option" value = 'dist'>Distance</option>
                         </select>
                     </div>
-                    <div class="col-lg-2 col-4 mt-3">
+                    <div class="col-lg-2 col-sm-4 mt-3">
                         <div class="form-check">
                             <input class="form-check-input" v-model='orderBy' v-bind:value = '"desc"' type="radio" name="sortprofiles" id="highToLow">
-                            <label class="form-check-label" for="highToLow">
+                            <small class="form-check-label" for="highToLow">
                             From High to Low
-                            </label>
+                            </small>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" v-model='orderBy' v-bind:value = '"asc"'  type="radio" name="sortprofiles" id="lowToHigh">
-                            <label class="form-check-label" for="lowToHigh">
+                            <small class="form-check-label" for="lowToHigh">
                                 From Low to High
-                            </label>
+                            </small>
                         </div>
                     </div>
                 </div>

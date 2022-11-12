@@ -60,7 +60,7 @@
 </template>
 
 <script>
-export default {
-    props: ['service','desc','price']
-}
+    export default {
+        props: ['service','desc','price']
+    }
 </script>

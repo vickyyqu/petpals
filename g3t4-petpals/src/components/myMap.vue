@@ -64,7 +64,8 @@ export default {
             invalidAddr: false,
             msg: "Enter your location",
             searchRad: 50,
-            postal: ''
+            postal: '',
+            errorMsg: ''
         }
     },
     emits: ['searchClick'],
@@ -100,7 +101,6 @@ export default {
 
     methods: {
         searchClick(){
-            console.log(this.inputAddr)
 
             axios.get("https://maps.googleapis.com/maps/api/geocode/json?", {
                 params: {
@@ -109,18 +109,12 @@ export default {
                     }
                 })
             .then(response => {
-                console.log(this.inputAddr)
-                console.log(response.data.results)
 
                 if (response.data.results.length > 0){
 
                     this.invalidAddr = false
                     var currlat = response.data.results[0].geometry.location.lat
                     var currlng = response.data.results[0].geometry.location.lng
-
-                    console.log(currlat)
-                    console.log(currlng)
-
                     const uluru = { lat: currlat, lng: currlng};
 
                     const map = new google.maps.Map(document.getElementById("googleMap"), {

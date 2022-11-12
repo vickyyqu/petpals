@@ -3,7 +3,7 @@
     <div class="row">
         <div class="navbar-header" id="navbar-header">
             <div class="container-fluid">
-                <nav class="navbar navbar-expand-sm ">
+                <nav class="navbar navbar-expand-md">
                     <img src="@/img/logo2.png" style="width: 80px">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

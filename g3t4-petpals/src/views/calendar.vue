@@ -22,14 +22,14 @@ p {
 }
 
 .body{
-    height: 530px;
+    height: 660px;
     background-color: white;
     border-radius: 20px;
 }
 
 .bookings {
     overflow: scroll;
-    height: 400px;
+    height: 550px;
 }
 
 .event{
@@ -48,32 +48,32 @@ p {
 </style>
 
 <template>
-<div class="container-fluid sides">
+<div class="container-fluid sides" style="height:100%">
     <navbar v-if="petOwner"></navbar>
     <navbarProvider v-else></navbarProvider>
 
-    <div class='sides' style="padding-top:80px;padding-bottom:50px;">
+    <div class='sides' style="padding-top:70px;padding-bottom:50px;">
             <div class = 'row px-2 py-5'>
                 <div class="col-md-8 order-md-last">
 
                     <div id="carouselExampleControls" class="carousel carousel-dark slide"  data-bs-interval="false" data-bs-wrap="false">
-                        <div class="carousel-inner" >
+                        <div class="carousel-inner px-3" >
                             <div class="carousel-item" v-for="(obj,idx) of year" :class="{'active': idx==0}" >
                                 <h3 class = 'text-center'>{{obj.mth}}</h3>
                                 <h4 class = 'text-center mb-5'>{{obj.year}}</h4>
 
-                                <div class = 'row my-3'>
-                                    <div class = 'col text-center' style='width:16px;' v-for='day in days'>
+                                <div class = 'row pt-3 my-4'>
+                                    <div class = 'col text-start' style='width:16px;' v-for='day in days'>
                                         <h6>{{day.slice(0,3).toUpperCase()}}</h6>
                                     </div>
                                 </div>
 
                                 <div class = 'row mt-1' v-for="week in obj.arr.slice(0,1)">
                                     <div class = 'row'>
-                                        <div class = 'col' style='width:100px;' v-for='n in (7-Object.keys(week).length)'>
+                                        <div class = 'col' style='width:200px;' v-for='n in (7-Object.keys(week).length)'>
                                             <p></p>
                                         </div>
-                                        <div class = 'col' style='width:100px;' v-for='n in (Object.keys(week))'>
+                                        <div class = 'col' style='width:200px;' v-for='n in (Object.keys(week))'>
                                             <p v-if='today.day==n && months[today.month].toUpperCase()==obj.mth' v-on:click="updateChosen(n,idx)">
                                                 <span class=" btn current">{{n}}</span>
                                             </p>
@@ -93,14 +93,14 @@ p {
 
                                 <div class = 'row mt-1' v-for="week in obj.arr.slice(1,obj.arr.length)">
                                     <div class = 'row'>
-                                        <div class = 'col' style='width:100px;' v-for='n in (Object.keys(week))'>
+                                        <div class = 'col' style='width:200px;' v-for='n in (Object.keys(week))'>
                                             <p v-if='today.day==n && months[today.month].toUpperCase()==obj.mth' v-on:click="updateChosen(n,idx)">
                                                 <span class="current">{{n}}</span> 
                                             </p>
                                             <p v-else v-on:click="updateChosen(n,idx)">
                                                 <span :class="{current2: n==chosenDate.day && months[chosenDate.month].toUpperCase()==obj.mth}">{{n}}</span></p>
                                         </div>
-                                        <div class = 'col' style='width:100px;' v-for='n in (7-Object.keys(week).length)'>
+                                        <div class = 'col' style='width:200px;' v-for='n in (7-Object.keys(week).length)'>
                                             <p></p>
                                         </div>
                                     </div>
