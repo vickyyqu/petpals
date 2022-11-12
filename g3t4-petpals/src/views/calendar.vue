@@ -387,7 +387,15 @@ export default {
         addEvent(){
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    if (this.title != '' && this.startTime <= this.endTime) {
+                    var check = true
+                    var temp = this.eventDate.split('-')
+                    console.log(temp)
+                    console.log(this.today)
+                    if (temp[1] == this.today.month + 1 && temp[2] < this.today.day){
+                        check = false
+                    }
+
+                    if (this.title != '' && this.startTime <= this.endTime && check) {
                         if (this.location == ''){
                             this.location = '-'
                         }
@@ -398,6 +406,12 @@ export default {
                             'venue': this.location
                         })
 
+                        this.title = ''
+                        this.startTime = '09:00'
+                        this.endTime = '10:00'
+                        this.location = ''
+                        
+
                         this.toggleModal(false); 
 
                     }else{
@@ -406,6 +420,8 @@ export default {
                             this.errorMsg = 'Please enter a title.'
                         }else if(this.startTime > this.endTime){
                             this.errorMsg = 'Start time has to be earlier than end time.'
+                        }else{
+                            this.errorMsg = 'Event date must either be today or future date'
                         }
                     }
 
@@ -443,7 +459,11 @@ export default {
             }else{
                 this.chosenDate.year = this.today.year + 1
             }
-
+            if (this.chosenDate.month == this.today.month && this.chosenDate.day >= this.today.day){
+                this.eventDate = this.chosenDate.year + '-' + (this.chosenDate.month+1) + '-' + this.chosenDate.day
+            }else{
+                this.eventDate = this.today.year + '-' + (this.today.month+1) + '-' + this.today.day
+            }
             this.getEvents(this.chosenDate.year + '-' + (this.chosenDate.month+1) + '-' + (this.chosenDate.day))
         }
 
