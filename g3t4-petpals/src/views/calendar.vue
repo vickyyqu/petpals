@@ -389,8 +389,6 @@ export default {
                 if (user) {
                     var check = true
                     var temp = this.eventDate.split('-')
-                    console.log(temp)
-                    console.log(this.today)
                     if (temp[1] == this.today.month + 1 && temp[2] < this.today.day){
                         check = false
                     }
