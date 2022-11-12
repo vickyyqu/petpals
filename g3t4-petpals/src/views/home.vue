@@ -211,15 +211,15 @@
                             <small style="font-style:italic; color:brown">{{ errorMsg }}</small>
                         </div>
 
-                        <button v-if='verified' class="btn login-btn btn-select mt-3 p-1 mx-auto px-2"
-                            @click="sendEmail">Resend email verification</button>
+                        <button v-if="verified" class="btn login-btn btn-dark mt-2 py-1 px-2 mx-auto"
+                            @click="sendEmail" style="font-size:15px;"><i class="bi bi-envelope"></i>&nbsp;Resend email verification?</button>
 
                         <div class="login-btn">
                             <button class="btn login-btn btn-select mt-4" @click="userLogin">Login</button>
                         </div>
 
                         <div class="text-center">
-                            <h4 class="mt-5 mb-3" style="font-style:italic">or</h4>
+                            <h4 class="mt-3 mb-3" style="font-style:italic">or</h4>
                             <h3>New to PetPals?</h3>
                             <div class="dropdown mt-3">
 
