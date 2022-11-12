@@ -65,7 +65,7 @@
 
                         <div class="col-md-6 mb-3">
                             <label for="profilePicture">Profile Picture</label>
-                            <input type="file" @change='getPic' class="form-control w-100" id="profilePicture">
+                            <input type="file" @change='getPic' class="form-control w-100" id="profilePicture" accept=".jpg, .jpeg">
                             <small v-if="picError" style="color: brown; font-style:italic;display:block;">{{errors.pic}}</small>
                         </div>
                     </div>

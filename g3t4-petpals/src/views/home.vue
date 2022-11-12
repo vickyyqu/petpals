@@ -502,6 +502,7 @@ export default {
             }
 
         },
+
         Nav() {
             if (this.counter == 1) {
                 this.counter = 0;
@@ -515,10 +516,10 @@ export default {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     sendEmailVerification(user)
-                        .then(() => {
-                            this.errorMsg = 'Email verification sent.'
-                            this.verified = false
-                        });
+                    .then(() => {
+                        this.errorMsg = 'Email verification sent.'
+                        this.verified = false
+                    });
                 }
             })
         }
