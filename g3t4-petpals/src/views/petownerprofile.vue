@@ -150,7 +150,6 @@ img.rounded {
             </div>
 
             <div class="carousel-inner" role="listbox" >
-              <!-- put this in line 190 to fix the carousel display style=" width:100%; height: 500px !important;" -->
               <div class="carousel-item" v-for="(pet,idx) in pets"  :class="{'active': idx==0}">
                 <img
                   v-bind:src = pet.photo
