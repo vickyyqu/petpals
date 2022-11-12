@@ -515,10 +515,18 @@ export default {
             const auth = getAuth();
             onAuthStateChanged(auth, (user) => {
                 if (user) {
+                    console.log('hi')
                     sendEmailVerification(user)
                     .then(() => {
+                        // window.location.href = `/`;
                         this.errorMsg = 'Email verification sent.'
                         this.verified = false
+                    })
+                    .catch((error) => {
+                        if (error.message = "Firebase: Error (auth/too-many-requests)."){
+                            this.errorMsg = 'Please wait for a while before requesting for email resend.'
+                            this.verified = false
+                        }
                     });
                 }
             })
