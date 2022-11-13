@@ -1,15 +1,5 @@
 # g3t4-petpals
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
 ## Project Setup
 
 ```sh
@@ -26,4 +16,28 @@ npm run dev
 
 ```sh
 npm run build
+```
+```sh
+npm run preview
+```
+
+
+## Login Details (for testing purpose)
+### Pet Owner 
+Email: weiqi.qu.2021@smu.edu.sg
+<br>
+Password: vicky123
+
+### Pet Service Provider
+Email: iris.liew.2021@smu.edu.sg
+<br>
+Password: iris123
+
+### Register with Your Own Email
+
+```diff
+Verify your email first before logging in.
+```
+```diff
+Check your spam folder if the verification email is not in your inbox.
 ```
