@@ -35,9 +35,9 @@ https://g3t4petpals.vercel.app/
 
 ## <a name="login"></a>Login Details (for testing purpose)
 ### Pet Owner 
-Email: fiona.li.2021@smu.edu.sg
+Email: weiqi.qu.2021@smu.edu.sg
 <br>
-Password: fiona123
+Password: vicky123
 
 ### Pet Service Provider
 Email: iris.liew.2021@smu.edu.sg
