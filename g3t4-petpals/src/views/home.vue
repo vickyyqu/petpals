@@ -65,7 +65,7 @@
     margin: auto;
     padding-bottom: 50px;
     font-size: 4vh;
-    font-size:calc(18px + 1vw);
+    font-size:calc(15px + 1vw);
     line-height: 1.5em;
     letter-spacing: 2px;
     padding-top: 20%;
@@ -149,7 +149,7 @@
 
             <div class="col-md-4 order-md-2 content-login">
                 <div class="box">
-                    <div v-if="forgot" class="login mt-5" style="padding-bottom:304px;">
+                    <div v-if="forgot" class="login mt-5" style="padding-bottom:282px;">
                         <h3>Reset Password</h3>
                         <p class="py-1" style="font-style:italic;text-align:center;font-size:14px;">An email will be
                             sent to your inbox to reset your password.</p>
@@ -179,7 +179,7 @@
                         </div>
                     </div>
 
-                    <div v-else class="login">
+                    <div v-else class="login" style="padding-bottom:60px;">
                         <h3 class="pt-5 mb-4">Login</h3>
 
                         <div class="form w-100 p-0">
