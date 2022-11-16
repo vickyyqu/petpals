@@ -7,10 +7,13 @@
    * Installation
    * Run
 
-3. [Login details (for testing purpose)](#login)
+3. [Login Details (for testing purpose)](#login)
 
 ## <a name="about"></a>About
-PetPals is a fully responsive website that connects pet owners and pet service providers built using Vuejs.
+PetPals is a fully responsive website that helps to match pet owners and pet service providers in Singapore. The site is built using Vuejs and deployed via Vercel.
+```diff
+https://g3t4petpals.vercel.app/
+```
 
 ## <a name="getting-started"></a>Getting Started
 
@@ -30,13 +33,26 @@ PetPals is a fully responsive website that connects pet owners and pet service p
 1. *Compiles and hot-reloads for development*
 > $ npm run dev
 
-## <a name="login"></a>Login details (for testing purpose)
-### Pet owner
-Email: fiona.li.2021@smu.edu.sg
+## <a name="login"></a>Login Details (for testing purpose)
+### Pet Owner 
+Email: weiqi.qu.2021@smu.edu.sg
+<br>
+Password: vicky123
 
-Password: fiona123
-
-### Pet service provider
+### Pet Service Provider
 Email: iris.liew.2021@smu.edu.sg
-
+<br>
 Password: iris123
+
+### Register with Your Own Email
+
+```diff
+Verify your email first before logging in.
+```
+```diff
+Check your spam folder if the verification email is not in your inbox.
+```
+
+
+
+

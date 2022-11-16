@@ -255,7 +255,7 @@ img.rounded {
         v-on:change='noChange=false'
         class="form-control mb-2"
         id="profilepicture"
-        accept=".png, .jpg, .jpeg"
+        accept=".jpg, .jpeg"
       />
 
       <label>Description:</label>

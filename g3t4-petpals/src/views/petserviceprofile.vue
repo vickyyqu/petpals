@@ -215,7 +215,7 @@ img.rounded {
     />
 
     <label>Profile Picture:</label>
-    <input type="file" @change = 'getPic' v-on:change='noChange=false' class="form-control mb-2" id="profilepicture" accept=".png, .jpg, .jpeg">
+    <input type="file" @change = 'getPic' v-on:change='noChange=false' class="form-control mb-2" id="profilepicture" accept=".jpg, .jpeg">
 
     <label>Years of Experience:</label>
     <input class="form-control mb-2"

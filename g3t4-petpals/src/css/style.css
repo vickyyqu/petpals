@@ -371,6 +371,7 @@ Buttons
 .openbtn:hover,  .btn-light:hover, .btn-dark:hover, .btn-go:hover, .homebtn:hover, .btn-select:hover{
     background-color:#F8AA9D;
     color: #fff;
+    border-color:transparent;
 }
 
 .openbtn {
@@ -396,7 +397,7 @@ Buttons
 .btn-dark {
     color: #9C796A;
     background-color: transparent;
-    border-color: #f8f1ef;
+    border-color:transparent;
 }
 
 .btn-go {
